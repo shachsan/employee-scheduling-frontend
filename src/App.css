@@ -290,7 +290,8 @@ form input[type='submit']:enabled:hover{
 .emp-name{
   height: 50px;
   width: 120px;
-  margin: 10px 0px;
+  /* margin-top: 12px; */
+  /* margin: 10px 0px; */
   text-align: center;
   display: inline-block;
   border: 2px solid blue;
@@ -299,6 +300,9 @@ form input[type='submit']:enabled:hover{
 .shift{
   height: 50px;
   width: 120px;
+  padding:0;
+  font-size: .9em;
+  /* margin-top: 10px; */
   display: inline-block;
   text-align: center;
   margin-right: 5px;
@@ -306,6 +310,7 @@ form input[type='submit']:enabled:hover{
 }
 .name-header{
   width: 120px;
+  /* margin-bottom: 20px; */
 }
 
 .emp-name div:first-child{

@@ -132,7 +132,7 @@ class Calendar extends React.Component {
                 if(shiftExist){
                   shift.push(<div className="shift" key={i}>{shiftExist.shift_id}</div>)
                 }else{
-                  shift.push(<div className="shift" key={i}></div>)
+                  shift.push(<div className="shift" key={i}>No Shift Assigned</div>)
                 }
             }
             row.push(<div className="shift-container" key={shiftContainerCounter}>{shift}</div>)
