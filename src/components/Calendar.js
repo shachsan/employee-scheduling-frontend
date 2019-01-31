@@ -53,6 +53,7 @@ class Calendar extends React.Component {
               <div className="col col-end" onClick={this.nextWeek}>
                 <div className="icon">chevron_right</div>
               </div>
+              <button>Auto Generate Schedule</button>
             </div>
           </div>
         );
@@ -109,6 +110,15 @@ class Calendar extends React.Component {
           
     }
 
+    getShiftTime=(id)=>{
+      if(id===1)
+        return "8AM - 4PM"
+      if(id===2)
+        return "11AM - 7PM"
+      if(id===3)
+        return "2PM - 10PM"
+    }
+
     componentDidMount(){
       this.props.fetchGetSchedules();
     }
@@ -130,7 +140,7 @@ class Calendar extends React.Component {
               
               let shiftExist=associate.schedules.find(schedule=>schedule.date===dateFns.format(i, 'YYYY-MM-DD'));
                 if(shiftExist){
-                  shift.push(<div className="shift" key={i}>{shiftExist.shift_id}</div>)
+                  shift.push(<div className="shift" key={i}>{this.getShiftTime(shiftExist.shift_id)}</div>)
                 }else{
                   shift.push(<div className="shift" key={i}>No Shift Assigned</div>)
                 }
@@ -158,6 +168,7 @@ class Calendar extends React.Component {
     return (
       <div className="calendar">
             {this.renderHeader()}
+            
             {this.renderDays()}
             {/* <div className='emp-container'> */}
               <div className="name-header">Name</div>
