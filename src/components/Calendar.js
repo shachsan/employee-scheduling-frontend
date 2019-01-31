@@ -11,6 +11,9 @@ class Calendar extends React.Component {
   state={
     currentDate:new Date(),
     dept:1,
+    shiftsAvailable:0,
+    dailyShifts:[],//populate it with shift id for randomly picking up for auto generation
+    deptAssociates:[],
     
   
     // selectedDate:'',
@@ -90,7 +93,7 @@ class Calendar extends React.Component {
 
     componentDidMount(){
       this.props.fetchGetSchedules();
-      
+      this.props.fetchGetDeptShifts();
     }
 
     renderShift=()=>{
@@ -123,19 +126,36 @@ class Calendar extends React.Component {
       return row;
     }
 
-    handleAutoGenerateShifts=()=>{
-      this.props.fetchGetDeptShifts();
-      let shifts=[];
+    handleAutoGenerateShifts=()=>{  //right name for this function would be 'setupDataForAutoScheduling'
+      let availableDeptShifts=0;
+      let dailyShifts=[];
+      const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.state.dept)//hard code 1, 1 is department id
+      const all_dept_shifts=this.props.dept_shifts;
+      const deptShifts=all_dept_shifts.filter(ds=>ds.department_id===this.state.dept)
+      console.log('available shift',deptShifts);
+      deptShifts.forEach(shift=>{
+        for(let i=1;i<=shift.no_of_shift;i++){
+          dailyShifts.push(shift.shift_id)
+        }
+        availableDeptShifts=availableDeptShifts+shift.no_of_shift;
+      })
+      availableDeptShifts=availableDeptShifts*7//total shifts for a week
+      // console.log('dept', dept);
+      console.log('dailyShifts', dailyShifts);
+
+      this.setState({
+        shiftsAvailable:availableDeptShifts,
+        deptAssociates:dept,
+      })
 
       const startOfWeek = dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1})
       const endOfWeek = dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1})
-      const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.state.dept)//hard code 1, 1 is department id
       if(dept){
-        dept.associates.forEach(associate=>{
-          for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
+        for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
+          dept.associates.forEach(associate=>{
 
-          }
-        })
+          })
+        }
       }
         
     }
