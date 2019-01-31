@@ -1,4 +1,5 @@
 import { getSchedules } from '../action/actionCreater';
+import {getDeptShifts} from '../action/actionCreater';
 
 export const fetchGetSchedules = () => {
         return function (dispatch) {
@@ -10,3 +11,15 @@ export const fetchGetSchedules = () => {
           })
       }
 }
+
+export const fetchGetDeptShifts = () => {
+  return function (dispatch) {
+
+    fetch('http://localhost:3000/api/v1/dept_shifts')
+     .then(res => res.json())
+     .then(deptShifts => {
+       dispatch(getDeptShifts(deptShifts))
+     })
+ }
+}
+ 

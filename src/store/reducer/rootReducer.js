@@ -1,5 +1,6 @@
 const initialState={
-    dept_asso_schedule:[]
+    dept_asso_schedule:[],
+    dept_shifts:[],
 }
 
 
@@ -9,6 +10,12 @@ export default function rootReducer(state=initialState, action){
             return {
                 ...state,
                 dept_asso_schedule:action.payload,
+            }
+
+        case 'FETCH_DEPT_SHIFTS':
+            return {
+                ...state, 
+                dept_shifts:action.payload
             }
     
         default:
