@@ -115,6 +115,9 @@ class Calendar extends React.Component {
 
     renderShift=()=>{
       let shift=[];
+      let row=[];
+      // let i=1;//day counter to be used as key in shift div
+      let shiftContainerCounter=0;
       const startOfWeek = dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1})
       const endOfWeek = dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1})
       const dept=this.props.dept_asso_schedules.find(dept=>dept.id===1)//hard code 1, 1 is department id
@@ -123,14 +126,21 @@ class Calendar extends React.Component {
             // shift.push(<div>)
             shift.push(<div className="emp-name" key={associate.id}>{associate.name}</div>);
             for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
+              shiftContainerCounter++;
+              
               let shiftExist=associate.schedules.find(schedule=>schedule.date===dateFns.format(i, 'YYYY-MM-DD'));
-                if(shiftExist)
-            shift.push(<div className="shift">{shiftExist.shift_id}</div>)
+                if(shiftExist){
+                  shift.push(<div className="shift" key={i}>{shiftExist.shift_id}</div>)
+                }else{
+                  shift.push(<div className="shift" key={i}></div>)
+                }
             }
+            row.push(<div className="shift-container" key={shiftContainerCounter}>{shift}</div>)
+            shift=[];
             // shift.push(</div>)
           })
       }
-      return shift;
+      return row;
     }
 
 
@@ -148,12 +158,12 @@ class Calendar extends React.Component {
     return (
       <div className="calendar">
             {this.renderHeader()}
-            <div className='emp-container'>
-              <div>Name</div>
+            {this.renderDays()}
+            {/* <div className='emp-container'> */}
+              <div className="name-header">Name</div>
               <div>{this.renderShift()}</div>
            
-            </div>
-            {/* {this.renderDays()} */}
+            {/* </div> */}
             {/* {this.renderEmptyDiv()} */}
             {/* {this.renderCells()} */}
 
