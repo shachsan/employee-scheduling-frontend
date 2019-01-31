@@ -1,0 +1,1 @@
+export const getSchedules=(schedules)=>({type:'FETCH_SCHEDULES',payload:schedules})
