@@ -11,12 +11,11 @@ class Calendar extends React.Component {
   state={
     currentDate:new Date(),
     dept:1,
-    shiftsAvailable:0,
+    totalWeeklyShifts:0,
     dailyShifts:[],//populate it with shift id for randomly picking up for auto generation
     deptAssociates:[],
     
   
-    // selectedDate:'',
   }
 
 
@@ -31,15 +30,7 @@ class Calendar extends React.Component {
     });
   };
 
-  // onDateClick = day => {
-  //   this.setState({
-  //     selectedDate: day
-  //   });
-  // };
-   
  
-
-  
 
     renderHeader() {
         const dateFormat = "MM/DD/YY";
@@ -99,14 +90,12 @@ class Calendar extends React.Component {
     renderShift=()=>{
       let shift=[];
       let row=[];
-      // let i=1;//day counter to be used as key in shift div
       let shiftContainerCounter=0;
       const startOfWeek = dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1})
       const endOfWeek = dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1})
       const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.state.dept)//hard code 1, 1 is department id
       if(dept){
         dept.associates.forEach(associate=>{
-            // shift.push(<div>)
             shift.push(<div className="emp-name" key={associate.id}>{associate.name}</div>);
             for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
               shiftContainerCounter++;
@@ -120,34 +109,52 @@ class Calendar extends React.Component {
             }
             row.push(<div className="shift-container" key={shiftContainerCounter}>{shift}</div>)
             shift=[];
-            // shift.push(</div>)
           })
       }
       return row;
     }
 
+    getRandomShift=()=>{
+      // console.log(this.state.dailyShifts);
+      const newArr=this.state.dailyShifts;
+      console.log("newarr", newArr);//this.state.dailyShifts is empty
+      const pickedShift=newArr.splice(Math.floor(Math.random()*newArr.length), 1);
+      this.setState({
+        dailyShifts:newArr
+      })
+
+      console.log(pickedShift);
+      return pickedShift;
+    }
+
     handleAutoGenerateShifts=()=>{  //right name for this function would be 'setupDataForAutoScheduling'
-      let availableDeptShifts=0;
-      let dailyShifts=[];
+      // debugger;
+      let totalWeeklyShifts=0;
+      let dailyShiftsAvailable=[];
       let newShifts=[];
+      
       const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.state.dept)//hard code 1, 1 is department id
       const all_dept_shifts=this.props.dept_shifts;
       const deptShifts=all_dept_shifts.filter(ds=>ds.department_id===this.state.dept)
       console.log('available shift',deptShifts);
+
+      
       deptShifts.forEach(shift=>{
         for(let i=1;i<=shift.no_of_shift;i++){
-          dailyShifts.push(shift.shift_id)
+          dailyShiftsAvailable.push(shift.shift_id) //populating dailyShifts with shift_id to be used at 
+          //remaining shift left for each day.
         }
-        availableDeptShifts=availableDeptShifts+shift.no_of_shift;
+        totalWeeklyShifts=totalWeeklyShifts+shift.no_of_shift;// total weekly shifts 
       })
-      availableDeptShifts=availableDeptShifts*7//total shifts for a week
+      totalWeeklyShifts=totalWeeklyShifts*7//total shifts for a week
       // console.log('dept', dept);
-      console.log('dailyShifts', dailyShifts);
+      console.log('available shifts', totalWeeklyShifts);
+      console.log('dailyShifts', dailyShiftsAvailable);
 
       this.setState({
-        shiftsAvailable:availableDeptShifts,
+        dailyShifts:dailyShiftsAvailable,
+        totalWeeklyShifts:totalWeeklyShifts,
         deptAssociates:dept,
-        dailyShifts:dailyShifts,
       })
       
       const startOfWeek = dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1})
@@ -160,25 +167,18 @@ class Calendar extends React.Component {
             shift_id:this.getRandomShift()})
           })
         }
+        console.log('newShifts', newShifts);
       }
       
     }
     
-    getRandomShift=()=>{
-      console.log(this.state.dailyShifts);
-      const newArr=this.state.dailyShifts;
-      const pickedShift=newArr.splice(Math.floor(Math.random()*newArr.length), 1);
-      this.setState({
-        dailyShifts:newArr
-      })
-
-      // console.log(pickedShift);
-      return pickedShift;
-    }
+   
     
     
     render() {
-    
+    console.log('render dailyShifts',this.state.dailyShifts);
+    console.log('render shift available',this.state.totalWeeklyShifts);
+    console.log('render deptAss',this.state.deptAssociates);
     return (
       <div className="calendar">
             {this.renderHeader()}
