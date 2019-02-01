@@ -11,7 +11,7 @@ class Calendar extends React.Component {
 
   state={
     currentDate:new Date(),
-    dept:1,
+    dept:1,//this needs to come from Auth
     totalWeeklyShifts:0,
     dailyShifts:[],//populate it with shift id for randomly picking up for auto generation
     // cloneDailyShifts:[],
@@ -116,22 +116,13 @@ class Calendar extends React.Component {
       return row;
     }
 
-    // componentDidUpdate(prevState, prevProps){
-    //   console.log('component did update',this.state);
-    //   // console.log('prevstate',prevState);
-    //   // console.log('prevProps',prevProps);
-    // }
 
     getRandomShift=(shiftsAvailable)=>{
       const newArr= shiftsAvailable;
       const pickedShift=newArr.splice(Math.floor(Math.random()*newArr.length), 1);
       console.log('picked shift',pickedShift[0]);
-      // if(pickedShift[0]){
         return pickedShift[0]
-      // }else{ 
-        // return 1
-      // }
-      // return pickedShift[0];
+     
     }
 
 
@@ -160,7 +151,6 @@ class Calendar extends React.Component {
 
       this.setState({
         dailyShifts:dailyShiftsAvailable,
-        // cloneDailyShifts:dailyShiftsAvailable,
         totalWeeklyShifts:totalWeeklyShifts,
         deptAssociates:dept,
       },()=>{
