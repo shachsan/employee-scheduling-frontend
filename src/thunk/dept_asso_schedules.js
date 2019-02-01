@@ -31,7 +31,8 @@ export const fetchPostSchedules=(schedule)=>{
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify(schedule)
     }).then(res=>res.json())
-      .then(schedule=>dispatch(postSchedules(schedule)))
+      .then(justAddedSchedule=>console.log('schedule posted',justAddedSchedule))
+        // dispatch(postSchedules(justAddedSchedule)))
       // .then(res=>res.json())
   }
 }

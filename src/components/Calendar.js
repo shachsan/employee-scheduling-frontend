@@ -14,7 +14,7 @@ class Calendar extends React.Component {
     dept:1,
     totalWeeklyShifts:0,
     dailyShifts:[],//populate it with shift id for randomly picking up for auto generation
-    cloneDailyShifts:[],
+    // cloneDailyShifts:[],
     deptAssociates:[],
     
   
@@ -139,6 +139,7 @@ class Calendar extends React.Component {
       // debugger;
       let totalWeeklyShifts=0;
       let dailyShiftsAvailable=[];
+      let shiftsObj={};
       let newShifts=[];
       
       const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.state.dept)//hard code 1, 1 is department id
@@ -159,7 +160,7 @@ class Calendar extends React.Component {
 
       this.setState({
         dailyShifts:dailyShiftsAvailable,
-        cloneDailyShifts:dailyShiftsAvailable,
+        // cloneDailyShifts:dailyShiftsAvailable,
         totalWeeklyShifts:totalWeeklyShifts,
         deptAssociates:dept,
       },()=>{
@@ -167,13 +168,8 @@ class Calendar extends React.Component {
             const endOfWeek = dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1})
             if(dept){
               for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
-                // debugger;
-                this.setState({
-                  cloneDailyShifts:[...this.state.dailyShifts],
-                }, ()=>{
-
+               
                   console.log('dailyShift',this.state.dailyShifts);
-                  console.log('cloneDailyShift',this.state.cloneDailyShifts);
                   let cloneOfDailyShift = [...this.state.dailyShifts];
 
                   dept.associates.forEach(associate=>{
@@ -182,10 +178,11 @@ class Calendar extends React.Component {
                     shift_id:this.getRandomShift(cloneOfDailyShift)})
                   })
 
-                })
+              
               }
-              console.log('newShifts', newShifts);
-              // this.props.fetchPostSchedules(newShifts);
+              shiftsObj.schedules=newShifts
+              console.log('newShifts',shiftsObj);
+              this.props.fetchPostSchedules(shiftsObj);
             }
           }
       );
