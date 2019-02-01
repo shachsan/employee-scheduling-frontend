@@ -122,17 +122,16 @@ class Calendar extends React.Component {
     //   // console.log('prevProps',prevProps);
     // }
 
-    getRandomShift=()=>{
-      // console.log(this.state.dailyShifts);
-      const newArr=this.state.cloneDailyShifts;
-      console.log("newarr", newArr);//this.state.dailyShifts is empty
+    getRandomShift=(shiftsAvailable)=>{
+      const newArr= shiftsAvailable;
       const pickedShift=newArr.splice(Math.floor(Math.random()*newArr.length), 1);
-      this.setState({
-        cloneDailyShifts:newArr
-      })
-
-      console.log(pickedShift[0]);
-      return pickedShift[0];
+      console.log('picked shift',pickedShift[0]);
+      // if(pickedShift[0]){
+        return pickedShift[0]
+      // }else{ 
+        // return 1
+      // }
+      // return pickedShift[0];
     }
 
 
@@ -168,13 +167,19 @@ class Calendar extends React.Component {
             const endOfWeek = dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1})
             if(dept){
               for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
+                // debugger;
                 this.setState({
-                  cloneDailyShifts:this.state.dailyShifts,
+                  cloneDailyShifts:[...this.state.dailyShifts],
                 }, ()=>{
+
+                  console.log('dailyShift',this.state.dailyShifts);
+                  console.log('cloneDailyShift',this.state.cloneDailyShifts);
+                  let cloneOfDailyShift = [...this.state.dailyShifts];
+
                   dept.associates.forEach(associate=>{
                     newShifts.push({date:dateFns.format(i, 'YYYY-MM-DD'), 
                     associate_id:associate.id, department_id:dept.id, 
-                    shift_id:this.getRandomShift()})
+                    shift_id:this.getRandomShift(cloneOfDailyShift)})
                   })
 
                 })
