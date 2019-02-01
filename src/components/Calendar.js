@@ -14,6 +14,7 @@ class Calendar extends React.Component {
     dept:1,
     totalWeeklyShifts:0,
     dailyShifts:[],//populate it with shift id for randomly picking up for auto generation
+    cloneDailyShifts:[],
     deptAssociates:[],
     
   
@@ -115,18 +116,25 @@ class Calendar extends React.Component {
       return row;
     }
 
+    // componentDidUpdate(prevState, prevProps){
+    //   console.log('component did update',this.state);
+    //   // console.log('prevstate',prevState);
+    //   // console.log('prevProps',prevProps);
+    // }
+
     getRandomShift=()=>{
       // console.log(this.state.dailyShifts);
-      const newArr=this.state.dailyShifts;
+      const newArr=this.state.cloneDailyShifts;
       console.log("newarr", newArr);//this.state.dailyShifts is empty
       const pickedShift=newArr.splice(Math.floor(Math.random()*newArr.length), 1);
       this.setState({
-        dailyShifts:newArr
+        cloneDailyShifts:newArr
       })
 
-      console.log(pickedShift);
-      return pickedShift;
+      console.log(pickedShift[0]);
+      return pickedShift[0];
     }
+
 
     handleAutoGenerateShifts=()=>{  //right name for this function would be 'setupDataForAutoScheduling'
       // debugger;
@@ -148,29 +156,37 @@ class Calendar extends React.Component {
         totalWeeklyShifts=totalWeeklyShifts+shift.no_of_shift;// total weekly shifts 
       })
       totalWeeklyShifts=totalWeeklyShifts*7//total shifts for a week
-      // console.log('dept', dept);
-      console.log('available shifts', totalWeeklyShifts);
-      console.log('dailyShifts', dailyShiftsAvailable);
+      console.log('dailyShiftsAvailable', dailyShiftsAvailable);
 
       this.setState({
         dailyShifts:dailyShiftsAvailable,
+        cloneDailyShifts:dailyShiftsAvailable,
         totalWeeklyShifts:totalWeeklyShifts,
         deptAssociates:dept,
-      })
+      },()=>{
+            const startOfWeek = dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1})
+            const endOfWeek = dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1})
+            if(dept){
+              for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
+                this.setState({
+                  cloneDailyShifts:this.state.dailyShifts,
+                }, ()=>{
+                  dept.associates.forEach(associate=>{
+                    newShifts.push({date:dateFns.format(i, 'YYYY-MM-DD'), 
+                    associate_id:associate.id, department_id:dept.id, 
+                    shift_id:this.getRandomShift()})
+                  })
+
+                })
+              }
+              console.log('newShifts', newShifts);
+              // this.props.fetchPostSchedules(newShifts);
+            }
+          }
+      );
+
       
-      const startOfWeek = dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1})
-      const endOfWeek = dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1})
-      if(dept){
-        for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
-          dept.associates.forEach(associate=>{
-            newShifts.push({date:dateFns.format(i, 'YYYY-MM-DD'), 
-            associate_id:associate.id, department_id:dept.id, 
-            shift_id:this.getRandomShift()})
-          })
-        }
-        console.log('newShifts', newShifts);
-        this.props.fetchPostSchedules(newShifts);
-      }
+     
       
     }
     

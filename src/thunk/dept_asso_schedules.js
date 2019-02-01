@@ -1,6 +1,6 @@
 import { getSchedules, postSchedules } from '../action/actionCreater';
 import {getDeptShifts} from '../action/actionCreater';
-import {postSchedule} from '../action/actionCreater';
+// import {postSchedule} from '../action/actionCreater';
 
 export const fetchGetSchedules = () => {
         return function (dispatch) {
@@ -31,7 +31,7 @@ export const fetchPostSchedules=(schedule)=>{
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify(schedule)
     }).then(res=>res.json())
-      .then(schedule=>dispatch(postSchedule(schedule)))
+      .then(schedule=>dispatch(postSchedules(schedule)))
       // .then(res=>res.json())
   }
 }
