@@ -129,6 +129,7 @@ class Calendar extends React.Component {
     handleAutoGenerateShifts=()=>{  //right name for this function would be 'setupDataForAutoScheduling'
       let availableDeptShifts=0;
       let dailyShifts=[];
+      let newShifts=[];
       const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.state.dept)//hard code 1, 1 is department id
       const all_dept_shifts=this.props.dept_shifts;
       const deptShifts=all_dept_shifts.filter(ds=>ds.department_id===this.state.dept)
@@ -146,22 +147,37 @@ class Calendar extends React.Component {
       this.setState({
         shiftsAvailable:availableDeptShifts,
         deptAssociates:dept,
+        dailyShifts:dailyShifts,
       })
-
+      
       const startOfWeek = dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1})
       const endOfWeek = dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1})
       if(dept){
         for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
           dept.associates.forEach(associate=>{
-
+            newShifts.push({date:dateFns.format(i, 'YYYY-MM-DD'), 
+            associate_id:associate.id, department_id:dept.id, 
+            shift_id:this.getRandomShift()})
           })
         }
       }
-        
+      
     }
+    
+    getRandomShift=()=>{
+      console.log(this.state.dailyShifts);
+      const newArr=this.state.dailyShifts;
+      const pickedShift=newArr.splice(Math.floor(Math.random()*newArr.length), 1);
+      this.setState({
+        dailyShifts:newArr
+      })
 
-
-  render() {
+      // console.log(pickedShift);
+      return pickedShift;
+    }
+    
+    
+    render() {
     
     return (
       <div className="calendar">
