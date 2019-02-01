@@ -17,6 +17,12 @@ export default function rootReducer(state=initialState, action){
                 ...state, 
                 dept_shifts:action.payload
             }
+
+        case 'POST_SCHEDULE':
+            return{
+                ...state,
+                dept_asso_schedule
+            }
     
         default:
             return state

@@ -3,6 +3,7 @@ import dateFns from "date-fns";
 import {connect} from 'react-redux';
 import { fetchGetSchedules } from '../thunk/dept_asso_schedules';
 import {fetchGetDeptShifts} from '../thunk/dept_asso_schedules';
+import {fetchPostSchedules} from '../thunk/dept_asso_schedules';
 
 
 
@@ -168,6 +169,7 @@ class Calendar extends React.Component {
           })
         }
         console.log('newShifts', newShifts);
+        this.props.fetchPostSchedules(newShifts);
       }
       
     }
@@ -176,9 +178,6 @@ class Calendar extends React.Component {
     
     
     render() {
-    console.log('render dailyShifts',this.state.dailyShifts);
-    console.log('render shift available',this.state.totalWeeklyShifts);
-    console.log('render deptAss',this.state.deptAssociates);
     return (
       <div className="calendar">
             {this.renderHeader()}
@@ -202,7 +201,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps=(dispatch)=>{
   return {
     fetchGetSchedules:()=>dispatch(fetchGetSchedules()),
-    fetchGetDeptShifts:()=>dispatch(fetchGetDeptShifts())
+    fetchGetDeptShifts:()=>dispatch(fetchGetDeptShifts()),
+    fetchPostSchedules:(schedule)=>dispatch(fetchPostSchedules(schedule))
   }
 }
 
