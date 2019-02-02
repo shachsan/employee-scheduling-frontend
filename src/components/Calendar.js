@@ -114,7 +114,7 @@ class Calendar extends React.Component {
               }
               //end
 
-              console.log('associate Shifts',associateShifts);
+              // console.log('associate Shifts',associateShifts);
 
 
               /* working code, uncomment to do back
@@ -137,7 +137,7 @@ class Calendar extends React.Component {
     getRandomShift=(shiftsAvailable)=>{
       const newArr= shiftsAvailable;
       const pickedShift=newArr.splice(Math.floor(Math.random()*newArr.length), 1);
-      console.log('picked shift',pickedShift[0]);
+      // console.log('picked shift',pickedShift[0]);
         return pickedShift[0]
      
     }
@@ -153,7 +153,7 @@ class Calendar extends React.Component {
       const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.state.dept)//hard code 1, 1 is department id
       const all_dept_shifts=this.props.dept_shifts;
       const deptShifts=all_dept_shifts.filter(ds=>ds.department_id===this.state.dept)
-      console.log('available shift',deptShifts);
+      // console.log('available shift',deptShifts);
 
       
       deptShifts.forEach(shift=>{
@@ -164,7 +164,7 @@ class Calendar extends React.Component {
         totalWeeklyShifts=totalWeeklyShifts+shift.no_of_shift;// total weekly shifts 
       })
       totalWeeklyShifts=totalWeeklyShifts*7//total shifts for a week
-      console.log('dailyShiftsAvailable', dailyShiftsAvailable);
+      // console.log('dailyShiftsAvailable', dailyShiftsAvailable);
 
       this.setState({
         dailyShifts:dailyShiftsAvailable,
@@ -173,22 +173,28 @@ class Calendar extends React.Component {
       },()=>{
             const startOfWeek = dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1})
             const endOfWeek = dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1})
+            let shiftCounter={};
             if(dept){
               for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
                
-                  console.log('dailyShift',this.state.dailyShifts);
                   let cloneOfDailyShift = [...this.state.dailyShifts];
 
                   dept.associates.forEach(associate=>{
+                    // let id=associate.id;
+                    shiftCounter[associate.id]=shiftCounter[associate.id] + 1 || 1;
+                    if(shiftCounter[associate.id]<=5){
                     newShifts.push({date:dateFns.format(i, 'YYYY-MM-DD'), 
                     associate_id:associate.id, department_id:dept.id, 
                     shift_id:this.getRandomShift(cloneOfDailyShift)})
+                    console.log('shift counter', shiftCounter);
+                    }
+                    // shiftCounter++;
                   })
 
               
               }
               shiftsObj.schedules=newShifts
-              console.log('newShifts',shiftsObj);
+              // console.log('newShifts',shiftsObj);
               this.props.fetchPostSchedules(shiftsObj);
             }
           }
@@ -215,7 +221,7 @@ class Calendar extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("state", state);
+  // console.log("state", state);
   return {
     dept_asso_schedules:state.dept_asso_schedule,
     dept_shifts:state.dept_shifts,
