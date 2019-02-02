@@ -107,10 +107,12 @@ class Calendar extends React.Component {
             idsToBeDeleted.push(schedule.id)
           }
         })
-        console.log(idsToBeDeleted);
+        // console.log(idsToBeDeleted);
+        if(idsToBeDeleted.length!==0){
             fetch(`http://localhost:3000/api/v1/schedules/${idsToBeDeleted}`,{
               method:'DELETE'})
-          }
+        }
+      }
       
     }
 
