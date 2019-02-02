@@ -20,6 +20,7 @@ class Calendar extends React.Component {
     totalWeeklyShifts:0,
     dailyShifts:[],//populate it with shift id for randomly picking up for auto generation
     // cloneDailyShifts:[],
+    // idsToBeDeleted:[],
     deptAssociates:[],
     
   
@@ -96,8 +97,21 @@ class Calendar extends React.Component {
       this.props.fetchGetDeptShifts();
     }
 
-    componentDidUpdate(){
-      console.log('componnetdidupate');
+    componentDidUpdate(prevProps, prevState){
+      // console.log('prevProps', prevProps.schedules);
+      // console.log('current redux store', this.props.schedules);
+      if(prevProps.schedules.length!==this.props.schedules.length){
+        let idsToBeDeleted=[];
+        prevProps.schedules.forEach(schedule=>{
+          if(!this.props.schedules.includes(schedule)){
+            idsToBeDeleted.push(schedule.id)
+          }
+        })
+        console.log(idsToBeDeleted);
+            fetch(`http://localhost:3000/api/v1/schedules/${idsToBeDeleted}`,{
+              method:'DELETE'})
+          }
+      
     }
 
     renderShift=()=>{
@@ -214,17 +228,22 @@ class Calendar extends React.Component {
     }
     
     handleDeleteAllShifts=()=>{
+      // let idsToBeDeleted=[]
       const startOfWeek = dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1})
       const endOfWeek = dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1})
-      console.log(this.props.schedules);
+      // console.log(this.props.schedules);
       const shiftsToBeDeleted=this.props.schedules.filter(
         schedule=>{
+          // idsToBeDeleted.push(schedule.id)
           return (!(dateFns.parse(schedule.date) >= startOfWeek && 
                 dateFns.parse(schedule.date) <= endOfWeek) && 
                 schedule.department_id===this.state.dept)
               })
       //this.state.dept needs to be store in redux store and assigned the dept based on the dept managers logs in
-      // console.log(shiftsToBeDeleted);
+      // // console.log(shiftsToBeDeleted);
+      // this.setState({
+      //   idsToBeDeleted:idsToBeDeleted,
+      // })
       this.props.deleteWholeWeekShifts(shiftsToBeDeleted)
 
     }

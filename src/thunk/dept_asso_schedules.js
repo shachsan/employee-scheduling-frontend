@@ -49,10 +49,5 @@ export const fetchPostSchedules=(schedule)=>{
   }
 }
 
-export const deleteWholeWeekShifts=(startDate)=>{
-  return function(dispatch){
-    fetch(`http://localhost:3000/api/v1/schedules/${startDate}`,{
-      method:'DELETE'})
-  }
-}
+
  
