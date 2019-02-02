@@ -1,7 +1,13 @@
 import React from "react";
 import dateFns from "date-fns";
 import {connect} from 'react-redux';
-import { fetchGetSchedules, fetchGetDeptShifts, fetchPostSchedules, fetchGetSchedulesOnly } from '../thunk/dept_asso_schedules';
+import { 
+          fetchGetSchedules, fetchGetDeptShifts, 
+          fetchPostSchedules, fetchGetSchedulesOnly, 
+           
+        } from '../thunk/dept_asso_schedules';
+
+import {deleteWholeWeekShifts} from '../action/actionCreater';
 
 
 
@@ -53,6 +59,7 @@ class Calendar extends React.Component {
                 <div className="icon">chevron_right</div>
               </div>
               <button onClick={this.handleAutoGenerateShifts}>Auto Generate Schedule</button>
+              <button onClick={this.handleDeleteAllShifts}>Clear All Shifts</button>
             </div>
           </div>
         );
@@ -87,6 +94,10 @@ class Calendar extends React.Component {
       this.props.fetchGetSchedules();
       this.props.fetchGetSchedulesOnly();
       this.props.fetchGetDeptShifts();
+    }
+
+    componentDidUpdate(){
+      console.log('componnetdidupate');
     }
 
     renderShift=()=>{
@@ -199,13 +210,24 @@ class Calendar extends React.Component {
             }
           }
       );
-
-      
-     
       
     }
     
-   
+    handleDeleteAllShifts=()=>{
+      const startOfWeek = dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1})
+      const endOfWeek = dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1})
+      console.log(this.props.schedules);
+      const shiftsToBeDeleted=this.props.schedules.filter(
+        schedule=>{
+          return (!(dateFns.parse(schedule.date) >= startOfWeek && 
+                dateFns.parse(schedule.date) <= endOfWeek) && 
+                schedule.department_id===this.state.dept)
+              })
+      //this.state.dept needs to be store in redux store and assigned the dept based on the dept managers logs in
+      // console.log(shiftsToBeDeleted);
+      this.props.deleteWholeWeekShifts(shiftsToBeDeleted)
+
+    }
     
     
     render() {
@@ -236,6 +258,7 @@ const mapDispatchToProps=(dispatch)=>{
     fetchGetSchedulesOnly:()=>dispatch(fetchGetSchedulesOnly()),
     fetchGetDeptShifts:()=>dispatch(fetchGetDeptShifts()),
     fetchPostSchedules:(schedule)=>dispatch(fetchPostSchedules(schedule)),
+    deleteWholeWeekShifts:(schedules)=>dispatch(deleteWholeWeekShifts(schedules)),
   }
 }
 

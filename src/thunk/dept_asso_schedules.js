@@ -1,6 +1,6 @@
-import { getSchedules, postSchedules, getSchedulesOnly } from '../action/actionCreater';
-import {getDeptShifts} from '../action/actionCreater';
-// import {postSchedule} from '../action/actionCreater';
+import { 
+  getSchedules, getDeptShifts, postSchedules, getSchedulesOnly 
+} from '../action/actionCreater';
 
 export const fetchGetSchedules = () => {
         return function (dispatch) {
@@ -46,6 +46,13 @@ export const fetchPostSchedules=(schedule)=>{
       // console.log('justAddedSchedule', justAddedSchedule))
       //dispatch(fetchGetSchedules()))
       // .then(res=>res.json())
+  }
+}
+
+export const deleteWholeWeekShifts=(startDate)=>{
+  return function(dispatch){
+    fetch(`http://localhost:3000/api/v1/schedules/${startDate}`,{
+      method:'DELETE'})
   }
 }
  

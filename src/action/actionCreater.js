@@ -2,3 +2,4 @@ export const getSchedules=(schedules)=>({type:'FETCH_SCHEDULES',payload:schedule
 export const getSchedulesOnly=(schedules)=>({type:'FETCH_SCHEDULES_ONLY',payload:schedules})
 export const getDeptShifts=(deptShifts)=>({type:'FETCH_DEPT_SHIFTS', payload:deptShifts})
 export const postSchedules=(schedule)=>({type:'POST_SCHEDULE', payload:schedule})
+export const deleteWholeWeekShifts=(schedules)=>({type:'DELETE_WHOLEWEEKSCHEDULES', payload:schedules})

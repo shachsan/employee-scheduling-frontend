@@ -26,16 +26,16 @@ export default function rootReducer(state=initialState, action){
             }
 
         case 'POST_SCHEDULE':
-            //make a copy of state
-            //go to the department you are updating
-            //go to associate you are updating schedules
-            //make a copy of schedules of that associate
-            //add schedules for that associate(schedules comes from payload)
-            
             return{
                 ...state,
                 schedules:action.payload
             }
+
+        case 'DELETE_WHOLEWEEKSCHEDULES':
+        return{
+            ...state,
+            schedules:action.payload
+        }
     
         default:
             return state
