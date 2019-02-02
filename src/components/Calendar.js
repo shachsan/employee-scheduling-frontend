@@ -1,9 +1,8 @@
 import React from "react";
 import dateFns from "date-fns";
 import {connect} from 'react-redux';
-import { fetchGetSchedules } from '../thunk/dept_asso_schedules';
-import {fetchGetDeptShifts} from '../thunk/dept_asso_schedules';
-import {fetchPostSchedules} from '../thunk/dept_asso_schedules';
+import { fetchGetSchedules, fetchGetDeptShifts, fetchPostSchedules, fetchGetSchedulesOnly } from '../thunk/dept_asso_schedules';
+
 
 
 
@@ -86,6 +85,7 @@ class Calendar extends React.Component {
 
     componentDidMount(){
       this.props.fetchGetSchedules();
+      this.props.fetchGetSchedulesOnly();
       this.props.fetchGetDeptShifts();
     }
 
@@ -98,16 +98,33 @@ class Calendar extends React.Component {
       const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.state.dept)//hard code 1, 1 is department id
       if(dept){
         dept.associates.forEach(associate=>{
+          
             shift.push(<div className="emp-name" key={associate.id}>{associate.name}</div>);
             for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
               shiftContainerCounter++;
-              
+
+              //delete these lines if needs to back
+              let associateShifts=this.props.schedules.find(schedule=>schedule.date===dateFns.format(i, 'YYYY-MM-DD')
+                && associate.id===schedule.associate_id
+              );
+              if(associateShifts){
+                shift.push(<div className="shift" key={i}>{this.getShiftTime(associateShifts.shift_id)}</div>)
+              }else{
+                shift.push(<div className="shift" key={i}>No Shift Assigned</div>)
+              }
+              //end
+
+              console.log('associate Shifts',associateShifts);
+
+
+              /* working code, uncomment to do back
               let shiftExist=associate.schedules.find(schedule=>schedule.date===dateFns.format(i, 'YYYY-MM-DD'));
-                if(shiftExist){
+              if(shiftExist){
                   shift.push(<div className="shift" key={i}>{this.getShiftTime(shiftExist.shift_id)}</div>)
                 }else{
                   shift.push(<div className="shift" key={i}>No Shift Assigned</div>)
                 }
+                */
             }
             row.push(<div className="shift-container" key={shiftContainerCounter}>{shift}</div>)
             shift=[];
@@ -201,7 +218,8 @@ const mapStateToProps = (state) => {
   console.log("state", state);
   return {
     dept_asso_schedules:state.dept_asso_schedule,
-    dept_shifts:state.dept_shifts
+    dept_shifts:state.dept_shifts,
+    schedules:state.schedules,
   }
 }
  
@@ -209,8 +227,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps=(dispatch)=>{
   return {
     fetchGetSchedules:()=>dispatch(fetchGetSchedules()),
+    fetchGetSchedulesOnly:()=>dispatch(fetchGetSchedulesOnly()),
     fetchGetDeptShifts:()=>dispatch(fetchGetDeptShifts()),
-    fetchPostSchedules:(schedule)=>dispatch(fetchPostSchedules(schedule))
+    fetchPostSchedules:(schedule)=>dispatch(fetchPostSchedules(schedule)),
   }
 }
 

@@ -1,4 +1,4 @@
-import { getSchedules, postSchedules } from '../action/actionCreater';
+import { getSchedules, postSchedules, getSchedulesOnly } from '../action/actionCreater';
 import {getDeptShifts} from '../action/actionCreater';
 // import {postSchedule} from '../action/actionCreater';
 
@@ -11,6 +11,17 @@ export const fetchGetSchedules = () => {
             dispatch(getSchedules(schedules))
           })
       }
+}
+
+export const fetchGetSchedulesOnly = () => {
+  return function (dispatch) {
+
+   fetch('http://localhost:3000/api/v1/schedules')
+    .then(res => res.json())
+    .then(schedules => {
+      dispatch(getSchedulesOnly(schedules))
+    })
+}
 }
 
 export const fetchGetDeptShifts = () => {
@@ -31,8 +42,9 @@ export const fetchPostSchedules=(schedule)=>{
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify(schedule)
     }).then(res=>res.json())
-    .then(justAddedSchedule=>dispatch(fetchGetSchedules()))
-        // console.log('justAddedSchedule', justAddedSchedule))
+    .then(justAddedSchedule=>dispatch(postSchedules(justAddedSchedule)))
+      // console.log('justAddedSchedule', justAddedSchedule))
+      //dispatch(fetchGetSchedules()))
       // .then(res=>res.json())
   }
 }

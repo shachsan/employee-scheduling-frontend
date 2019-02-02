@@ -1,6 +1,7 @@
 const initialState={
     dept_asso_schedule:[],
     dept_shifts:[],
+    schedules:[],
 }
 
 
@@ -11,6 +12,12 @@ export default function rootReducer(state=initialState, action){
                 ...state,
                 dept_asso_schedule:action.payload,
             }
+
+        case 'FETCH_SCHEDULES_ONLY':
+        return {
+            ...state,
+            schedules:action.payload,
+        }
 
         case 'FETCH_DEPT_SHIFTS':
             return {
@@ -25,17 +32,10 @@ export default function rootReducer(state=initialState, action){
             //make a copy of schedules of that associate
             //add schedules for that associate(schedules comes from payload)
             
-            // return{
-            //     ...state,
-            //     dept_asso_schedule:action.payload,
-            //     // ...state,
-            //     // dept_asso_schedule:{
-            //     //     ...state.dept_asso_schedule[action.deptId].associates[]
-            //     // }
-                
-            //     // action.payload
-            //     // dept_asso_schedule
-            // }
+            return{
+                ...state,
+                schedules:action.payload
+            }
     
         default:
             return state
