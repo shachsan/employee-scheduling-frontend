@@ -28,7 +28,8 @@ export default function rootReducer(state=initialState, action){
         case 'POST_SCHEDULE':
             return{
                 ...state,
-                schedules:action.payload
+                // schedules:[...state.schedules, action.payload]
+                schedules:state.schedules.concat(action.payload)
             }
 
         case 'DELETE_WHOLEWEEKSCHEDULES':

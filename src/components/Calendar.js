@@ -97,24 +97,41 @@ class Calendar extends React.Component {
       this.props.fetchGetDeptShifts();
     }
 
-    componentDidUpdate(prevProps, prevState){
-      // console.log('prevProps', prevProps.schedules);
-      // console.log('current redux store', this.props.schedules);
-      if(prevProps.schedules.length!==this.props.schedules.length){
-        let idsToBeDeleted=[];
-        prevProps.schedules.forEach(schedule=>{
-          if(!this.props.schedules.includes(schedule)){
-            idsToBeDeleted.push(schedule.id)
-          }
-        })
-        // console.log(idsToBeDeleted);
-        if(idsToBeDeleted.length!==0){
-            fetch(`http://localhost:3000/api/v1/schedules/${idsToBeDeleted}`,{
-              method:'DELETE'})
+    deleteWholeWeekShiftsFromBackEnd=(idsToBeDeleted)=>{
+      // console.log(idsToBeDeleted);
+
+        // if(prevProps.schedules.length>this.props.schedules.length){
+          // let idsToBeDeleted=[];/
+          // prevProps.schedules.forEach(schedule=>{
+          //   if(!this.props.schedules.includes(schedule)){
+          //     idsToBeDeleted.push(schedule.id)
+          //   }
+          // })
+          // if(idsToBeDeleted.length!==0){
+            // console.log('run component did update and idsToBeDeleted', idsToBeDeleted);
+              fetch(`http://localhost:3000/api/v1/schedules/${idsToBeDeleted}`,{
+                method:'DELETE'})
+          // // }
         }
-      }
+        
+      // }
+
+    // componentDidUpdate(prevProps, prevState){
+    //   if(prevProps.schedules.length>this.props.schedules.length){
+    //     let idsToBeDeleted=[];
+    //     prevProps.schedules.forEach(schedule=>{
+    //       if(!this.props.schedules.includes(schedule)){
+    //         idsToBeDeleted.push(schedule.id)
+    //       }
+    //     })
+    //     if(idsToBeDeleted.length!==0){
+    //       console.log('run component did update and idsToBeDeleted', idsToBeDeleted);
+    //         fetch(`http://localhost:3000/api/v1/schedules/${idsToBeDeleted}`,{
+    //           method:'DELETE'})
+    //     }
+    //   }
       
-    }
+    // }
 
     renderShift=()=>{
       let shift=[];
@@ -208,12 +225,13 @@ class Calendar extends React.Component {
 
                   dept.associates.forEach(associate=>{
                     // let id=associate.id;
+                    console.log('cloneOfDailyShift', cloneOfDailyShift);
                     shiftCounter[associate.id]=shiftCounter[associate.id] + 1 || 1;
                     if(shiftCounter[associate.id]<=5){
                     newShifts.push({date:dateFns.format(i, 'YYYY-MM-DD'), 
                     associate_id:associate.id, department_id:dept.id, 
                     shift_id:this.getRandomShift(cloneOfDailyShift)})
-                    console.log('shift counter', shiftCounter);
+                    // console.log('shift counter', shiftCounter);
                     }
                     // shiftCounter++;
                   })
@@ -230,23 +248,29 @@ class Calendar extends React.Component {
     }
     
     handleDeleteAllShifts=()=>{
-      // let idsToBeDeleted=[]
+      let idsToBeDeleted=[]
       const startOfWeek = dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1})
       const endOfWeek = dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1})
       // console.log(this.props.schedules);
-      const shiftsToBeDeleted=this.props.schedules.filter(
+      const remainingShiftsAfterDeletion=this.props.schedules.filter(
         schedule=>{
-          // idsToBeDeleted.push(schedule.id)
+          if((dateFns.parse(schedule.date) >= startOfWeek && 
+          dateFns.parse(schedule.date) <= endOfWeek) && 
+          schedule.department_id===this.state.dept){
+
+            idsToBeDeleted.push(schedule.id)
+          }
           return (!(dateFns.parse(schedule.date) >= startOfWeek && 
                 dateFns.parse(schedule.date) <= endOfWeek) && 
                 schedule.department_id===this.state.dept)
               })
       //this.state.dept needs to be store in redux store and assigned the dept based on the dept managers logs in
-      // // console.log(shiftsToBeDeleted);
+      // // console.log(remainingShiftsAfterDeletion);
       // this.setState({
       //   idsToBeDeleted:idsToBeDeleted,
       // })
-      this.props.deleteWholeWeekShifts(shiftsToBeDeleted)
+      this.deleteWholeWeekShiftsFromBackEnd(idsToBeDeleted);//for pessimistic operation
+      this.props.deleteWholeWeekShifts(remainingShiftsAfterDeletion)//for optimistic rendering, this will update redux store
 
     }
     
