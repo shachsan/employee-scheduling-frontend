@@ -19,11 +19,8 @@ class Calendar extends React.Component {
     dept:1,//this needs to come from Auth
     totalWeeklyShifts:0,
     dailyShifts:[],//populate it with shift id for randomly picking up for auto generation
-    // cloneDailyShifts:[],
-    // idsToBeDeleted:[],
     deptAssociates:[],
-    
-  
+    mandotoryShifts:[],
   }
 
 
@@ -177,13 +174,58 @@ class Calendar extends React.Component {
       return row;
     }
 
+    getRandomAssociateId=(associatesIds)=>{
+      
+      // const ids=associates.map(associate=>associate.id)
+      if(associatesIds.length===1){
+        return associatesIds[0]
+      }else{
+      const pickedAssociateId=associatesIds.splice(Math.floor(Math.random()*associatesIds.length), 1);
+      return pickedAssociateId[0];
+      }
+    }
 
-    getRandomShift=(shiftsAvailable)=>{
-      const newArr= shiftsAvailable;
+    // removeSelectedAssociates=(toBeRemoved, cloneDailyAssociates)=>{
+    //   console.log('to be removed', toBeRemoved);
+    //   console.log('cloneDailyAssociates', cloneDailyAssociates);
+    //   for( let i = 0; i < cloneDailyAssociates.length-1; i++){ 
+    //     if ( cloneDailyAssociates[i] === toBeRemoved) {
+    //       cloneDailyAssociates.splice(i, 1); 
+    //       return cloneDailyAssociates;
+    //     }
+    //   }
+    // }
+
+    getRandomShiftFromExtraShifts=(availableShifts)=>{
+      if(availableShifts.length===1){
+        return availableShifts[0]
+      }else{
+      const pickedShift=availableShifts.splice(Math.floor(Math.random()*availableShifts.length), 1);
+      return pickedShift[0]
+      }
+    }
+
+    getRandomShift=(mandotoryShift, cloneDailyShift )=>{
+      const newArr= mandotoryShift;
       const pickedShift=newArr.splice(Math.floor(Math.random()*newArr.length), 1);
+
+
+      for( let i = 0; i < cloneDailyShift.length-1; i++){ 
+        if ( cloneDailyShift[i] === pickedShift[0]) {
+          cloneDailyShift.splice(i, 1); 
+        }
+      }
       // console.log('picked shift',pickedShift[0]);
         return pickedShift[0]
      
+    }
+
+    calculateMandotoryShifts=()=>{
+      if(this.state.deptAssociates.length>3){
+        return [1,2,3]
+      }else if(this.state.deptAssociates.length<=3){
+        return [1,3]
+      }
     }
 
 
@@ -194,7 +236,9 @@ class Calendar extends React.Component {
       let shiftsObj={};
       let newShifts=[];
       
+      
       const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.state.dept)//hard code 1, 1 is department id
+      const deptAssociatesId=dept.associates.map(associate=>associate.id)
       const all_dept_shifts=this.props.dept_shifts;
       const deptShifts=all_dept_shifts.filter(ds=>ds.department_id===this.state.dept)
       // console.log('available shift',deptShifts);
@@ -213,38 +257,69 @@ class Calendar extends React.Component {
       this.setState({
         dailyShifts:dailyShiftsAvailable,
         totalWeeklyShifts:totalWeeklyShifts,
-        deptAssociates:dept,
+        deptAssociates:deptAssociatesId,
+        mandotoryShifts:this.calculateMandotoryShifts(),
       },()=>{
+          // console.log(this.state.deptAssociates);
             const startOfWeek = dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1})
             const endOfWeek = dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1})
-            let shiftCounter={};
+            let shiftCounter={};//store number of shifts of assigned for each associate
             if(dept){
+             
               for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
-               
+                  let cloneMandotoryShift=[...this.state.mandotoryShifts];
                   let cloneOfDailyShift = [...this.state.dailyShifts];
+                  let cloneDailyAssociates = [...this.state.deptAssociates];
+                  // let totalAssociate=cloneDailyAssociates.length;
+                  // console.log('cloneDailyAssociates',cloneDailyAssociates);
+                  // console.log('cloneMandotoryShift',cloneMandotoryShift);
+                  // console.log('cloneOfDailyShift',cloneOfDailyShift);
+                  for (let j=1; j<=this.state.deptAssociates.length; j++){
+                    
+                    // console.log('day-',i,'j-',j,'cloneDailyAssociates',cloneDailyAssociates);
+                    let randSelectedAssociate = this.getRandomAssociateId(cloneDailyAssociates);
+                    // cloneDailyAssociates=this.removeSelectedAssociates(randSelectedAssociate, cloneDailyAssociates)
+                    // console.log('day-',i,'j-',j,'randSelectedAssociate',randSelectedAssociate);
+                    shiftCounter[randSelectedAssociate]=shiftCounter[randSelectedAssociate] + 1 || 1;
+                    console.log('shiftCounter', shiftCounter);
+                    if(shiftCounter[randSelectedAssociate]<=5){
+                      console.log('no of shifts of currently selected associate:',shiftCounter[randSelectedAssociate]);
+                      if(cloneMandotoryShift.length===0 && cloneDailyAssociates.length>0){
+                        newShifts.push({
+                          date:dateFns.format(i, 'YYYY-MM-DD'),
+                          associate_id:randSelectedAssociate,
+                          department_id:dept.id,
+                          shift_id:this.getRandomShiftFromExtraShifts(cloneOfDailyShift)
+                        })
+                      }else{
 
-                  dept.associates.forEach(associate=>{
-                    // let id=associate.id;
-                    console.log('cloneOfDailyShift', cloneOfDailyShift);
-                    shiftCounter[associate.id]=shiftCounter[associate.id] + 1 || 1;
-                    if(shiftCounter[associate.id]<=5){
-                    newShifts.push({date:dateFns.format(i, 'YYYY-MM-DD'), 
-                    associate_id:associate.id, department_id:dept.id, 
-                    shift_id:this.getRandomShift(cloneOfDailyShift)})
-                    // console.log('shift counter', shiftCounter);
+                        newShifts.push({
+                            date:dateFns.format(i, 'YYYY-MM-DD'),
+                            associate_id:randSelectedAssociate,
+                            department_id:dept.id,
+                            shift_id:this.getRandomShift(cloneMandotoryShift, cloneOfDailyShift)
+                        })
+                      }
                     }
-                    // shiftCounter++;
-                  })
+                  }
+
+                  // dept.associates.forEach(associate=>{
+                  //   shiftCounter[associate.id]=shiftCounter[associate.id] + 1 || 1;
+                  //   if(shiftCounter[associate.id]<=5){
+                  //   newShifts.push({date:dateFns.format(i, 'YYYY-MM-DD'), 
+                  //   associate_id:associate.id, department_id:dept.id, 
+                  //   shift_id:this.getRandomShift(cloneOfDailyShift)})
+                  //   }
+                  // })
 
               
               }
+              //*****Uncomment below code for autogeneration. commented just for testing other feature */
               shiftsObj.schedules=newShifts
-              // console.log('newShifts',shiftsObj);
-              this.props.fetchPostSchedules(shiftsObj);
+              this.props.fetchPostSchedules(shiftsObj); 
             }
-          }
-      );
-      
+            // console.log('newShifts',newShifts);
+        });
     }
     
     handleDeleteAllShifts=()=>{
