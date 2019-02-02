@@ -308,6 +308,23 @@ form input[type='submit']:enabled:hover{
   margin-right: 5px;
   border: 2px solid blue;
 }
+
+.open{
+  background-color: lightgreen;
+}
+
+.mid{
+  background-color: yellow;
+}
+
+.close{
+  background-color:lightgrey;
+}
+
+.day-off{
+ background-color:lightcoral;
+}
+
 .name-header{
   width: 120px;
   /* margin-bottom: 20px; */

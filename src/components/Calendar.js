@@ -88,6 +88,18 @@ class Calendar extends React.Component {
         return "2PM - 10PM"
     }
 
+    getShiftColor=(shiftId)=>{
+      if(shiftId===1){
+        return 'open'
+      }else if(shiftId===2){
+        return 'mid'
+      }else if(shiftId===3){
+        return 'close'
+      }else{
+        return 'day-off'
+      }
+    }
+
     componentDidMount(){
       this.props.fetchGetSchedules();
       this.props.fetchGetSchedulesOnly();
@@ -149,9 +161,9 @@ class Calendar extends React.Component {
                 && associate.id===schedule.associate_id
               );
               if(associateShifts){
-                shift.push(<div className="shift" key={i}>{this.getShiftTime(associateShifts.shift_id)}</div>)
+                shift.push(<div className={`shift ${this.getShiftColor(associateShifts.shift_id)}`} key={i}>{this.getShiftTime(associateShifts.shift_id)}</div>)
               }else{
-                shift.push(<div className="shift" key={i}>No Shift Assigned</div>)
+                shift.push(<div className="shift day-off" key={i}>No Shift Assigned</div>)
               }
               //end
 
@@ -232,7 +244,7 @@ class Calendar extends React.Component {
     handleAutoGenerateShifts=()=>{  //right name for this function would be 'setupDataForAutoScheduling'
       // debugger;
       let totalWeeklyShifts=0;
-      let dailyShiftsAvailable=[];
+      let dailyShiftsAvailable=['day off'];
       let shiftsObj={};
       let newShifts=[];
       
@@ -278,19 +290,28 @@ class Calendar extends React.Component {
                     
                     // console.log('day-',i,'j-',j,'cloneDailyAssociates',cloneDailyAssociates);
                     let randSelectedAssociate = this.getRandomAssociateId(cloneDailyAssociates);
+                    // if(cloneMandotoryShift.length===0 && cloneDailyAssociates.length>0){
+                    //   // let randShift=this.getRandomShiftFromExtraShifts(cloneOfDailyShift)
+                    // }
                     // cloneDailyAssociates=this.removeSelectedAssociates(randSelectedAssociate, cloneDailyAssociates)
                     // console.log('day-',i,'j-',j,'randSelectedAssociate',randSelectedAssociate);
                     shiftCounter[randSelectedAssociate]=shiftCounter[randSelectedAssociate] + 1 || 1;
                     console.log('shiftCounter', shiftCounter);
+                    
                     if(shiftCounter[randSelectedAssociate]<=5){
                       console.log('no of shifts of currently selected associate:',shiftCounter[randSelectedAssociate]);
                       if(cloneMandotoryShift.length===0 && cloneDailyAssociates.length>0){
-                        newShifts.push({
-                          date:dateFns.format(i, 'YYYY-MM-DD'),
-                          associate_id:randSelectedAssociate,
-                          department_id:dept.id,
-                          shift_id:this.getRandomShiftFromExtraShifts(cloneOfDailyShift)
-                        })
+                        let randShift=this.getRandomShiftFromExtraShifts(cloneOfDailyShift)
+                        if(randShift!=='day off'){
+                            newShifts.push({
+                              date:dateFns.format(i, 'YYYY-MM-DD'),
+                              associate_id:randSelectedAssociate,
+                              department_id:dept.id,
+                              shift_id:randShift
+                            })
+                        }else{
+                          shiftCounter[randSelectedAssociate]=shiftCounter[randSelectedAssociate]-1
+                        }
                       }else{
 
                         newShifts.push({
@@ -302,17 +323,6 @@ class Calendar extends React.Component {
                       }
                     }
                   }
-
-                  // dept.associates.forEach(associate=>{
-                  //   shiftCounter[associate.id]=shiftCounter[associate.id] + 1 || 1;
-                  //   if(shiftCounter[associate.id]<=5){
-                  //   newShifts.push({date:dateFns.format(i, 'YYYY-MM-DD'), 
-                  //   associate_id:associate.id, department_id:dept.id, 
-                  //   shift_id:this.getRandomShift(cloneOfDailyShift)})
-                  //   }
-                  // })
-
-              
               }
               //*****Uncomment below code for autogeneration. commented just for testing other feature */
               shiftsObj.schedules=newShifts
