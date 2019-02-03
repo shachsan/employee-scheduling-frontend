@@ -2,6 +2,7 @@ const initialState={
     dept_asso_schedule:[],
     dept_shifts:[],
     schedules:[],
+    currentLogInUser:'',
 }
 
 
@@ -37,6 +38,12 @@ export default function rootReducer(state=initialState, action){
             ...state,
             schedules:action.payload
         }
+
+        case 'UPDATE_CURRENT_USER':
+            return{
+                ...state,
+                currentLogInUser:action.payload
+            }
     
         default:
             return state

@@ -14,7 +14,8 @@ class Authenticate extends Component {
 
     onSubmitHandler=(e)=>{
         e.preventDefault();
-        this.props.onAuth(this.state.username, this.state.password)
+        // console.log(this.state);
+        this.props.onAuth(this.state.form.username, this.state.form.password)
     }
 
     inputChangeHandler=(e)=>{
@@ -34,6 +35,7 @@ class Authenticate extends Component {
                      <label>Enter Password</label>
                      <input type='text' name='password' value={this.state.form.password}
                         onChange={(e)=>this.inputChangeHandler(e)}/> <br/>
+
                      <input type='submit' value="Submit"/>
 
                  </form>
