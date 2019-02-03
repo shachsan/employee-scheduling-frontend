@@ -12,6 +12,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import {Link} from 'react-router-dom';
 
 const styles = {
   root: {
@@ -64,13 +65,17 @@ class MenuAppBar extends React.Component {
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              Home
-            </Typography>
+            <Link className="nav-mods" to='/'>
+              <Typography variant="h6" color="inherit" className={classes.grow}>
+                Home
+              </Typography>
+            </Link>
 
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              Schedule
-            </Typography>
+            <Link className="nav-mods" to='/schedule'>
+                <Typography variant="h6" color="inherit" className={classes.grow}>
+                  Schedule
+                </Typography>
+            </Link>
             {auth && (
               <div>
                 <IconButton

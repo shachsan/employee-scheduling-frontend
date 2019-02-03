@@ -22,7 +22,12 @@ class App extends Component {
                 <Route exact path='/' component={HomePageMainContainer}/>
               </Switch>
               <Switch>
-                <Route exact path='/schedule' component={Calendar}/>
+                <Route exact path='/schedule' render={()=>(
+                  <React.Fragment>
+                    <Calendar/>
+                    <ScheduleRightSideContainer/>
+                  </React.Fragment>
+                )}/>
               </Switch>
           </div>
       </Router>
