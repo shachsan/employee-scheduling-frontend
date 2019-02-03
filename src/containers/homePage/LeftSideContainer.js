@@ -52,7 +52,7 @@ function LeftSideContainer(props) {
                     <ListItemIcon className={classes.icon}>
                         <Group/>
                     </ListItemIcon>
-                    <ListItemText classes={{ primary: classes.primary }} inset primary="Team" />
+                    <ListItemText classes={{ primary: classes.primary }} primary="Team" />
                 </MenuItem>
                 <MenuItem className={classes.menuItem}>
                 <ListItemIcon className={classes.icon}>

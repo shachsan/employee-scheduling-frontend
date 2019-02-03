@@ -65,7 +65,7 @@ class MenuAppBar extends React.Component {
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
               <MenuIcon />
             </IconButton>
-            <Link className="nav-mods" to='/'>
+            <Link className="nav-mods" to='/home'>
               <Typography variant="h6" color="inherit" className={classes.grow}>
                 Home
               </Typography>
