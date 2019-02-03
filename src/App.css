@@ -111,6 +111,38 @@ main {
   
 }
 
+.hp-main-container{
+  vertical-align: top;
+  flex-grow: 1;
+  flex-basis: 0;
+  max-width: 100%;
+  /* width: 100%; */
+  margin: 0 5px;
+  margin-top: 1em;
+  border: 1px solid blue;
+}
+
+.hp-left-container{
+  display: inline-block;
+  width:10%;
+  border: 1px solid red;
+  padding: 5px;
+}
+
+.hp-center-container{
+  display: inline-block;
+  width:70%;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.hp-right-container{
+  display: inline-block;
+  width:20%;
+  border: 1px solid green;
+  padding: 5px;
+}
+
 /* MENU BAR */
 .menu-bar{
   text-align: right;

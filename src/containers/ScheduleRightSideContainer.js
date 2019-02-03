@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RightSideContainer = (props) => {
+const ScheduleRightSideContainer = (props) => {
     return ( 
         <div className='side-container'> 
             <div></div>
@@ -17,4 +17,4 @@ const RightSideContainer = (props) => {
      );
 }
  
-export default RightSideContainer;
+export default ScheduleRightSideContainer;
