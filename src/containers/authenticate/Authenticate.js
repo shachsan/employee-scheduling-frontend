@@ -31,12 +31,12 @@ class Authenticate extends Component {
         // console.log(newState)
     }
 
-    componentDidMount(){
-        let token = localStorage.getItem("token");
-        if (token){
-            this.props.onCurrentUser(token)
-        }
-    }
+    // componentDidMount(){
+    //     let token = localStorage.getItem("token");
+    //     if (token){
+    //         this.props.onCurrentUser(token)
+    //     }
+    // }
 
     render() {
         
@@ -50,7 +50,7 @@ class Authenticate extends Component {
                         <input type='text' name='username' value={this.state.form.username} required
                         onChange={(e)=>this.inputChangeHandler(e)}/> <br/>
                         <label>Enter Password</label>
-                        <input type='text' name='password' value={this.state.form.password} required
+                        <input type='password' name='password' value={this.state.form.password} required
                         onChange={(e)=>this.inputChangeHandler(e)}/> <br/>
 
                         <input type='submit' value="Login"/>

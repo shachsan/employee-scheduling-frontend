@@ -22,6 +22,7 @@ class Calendar extends React.Component {
     dailyShifts:[],//populate it with shift id for randomly picking up for auto generation
     deptAssociates:[],
     mandotoryShifts:[],
+    token:'',
   }
 
 
@@ -102,9 +103,15 @@ class Calendar extends React.Component {
     }
 
     componentDidMount(){
-      this.props.fetchGetSchedules();
-      this.props.fetchGetSchedulesOnly();
-      this.props.fetchGetDeptShifts();
+      let token = localStorage.getItem("token");
+      this.setState({token:token})
+      console.log('calender component did mount token:', token);
+      if(token){
+        this.props.fetchGetSchedules(token);
+        // this.props.fetchGetSchedules();
+        this.props.fetchGetSchedulesOnly(token);
+        this.props.fetchGetDeptShifts(token);
+      }
     }
 
     deleteWholeWeekShiftsFromBackEnd=(idsToBeDeleted)=>{
@@ -120,7 +127,12 @@ class Calendar extends React.Component {
           // if(idsToBeDeleted.length!==0){
             // console.log('run component did update and idsToBeDeleted', idsToBeDeleted);
               fetch(`http://localhost:3000/api/v1/schedules/${idsToBeDeleted}`,{
-                method:'DELETE'})
+                method:'DELETE', 
+                headers:{
+                "Content-Type":"application/json",
+                'Authorization': this.state.token
+                }
+              })
           // // }
         }
         
@@ -327,7 +339,8 @@ class Calendar extends React.Component {
               }
               //*****Uncomment below code for autogeneration. commented just for testing other feature */
               shiftsObj.schedules=newShifts
-              this.props.fetchPostSchedules(shiftsObj); 
+              
+              this.props.fetchPostSchedules(this.state.token, shiftsObj); 
             }
             // console.log('newShifts',newShifts);
         });
@@ -364,15 +377,15 @@ class Calendar extends React.Component {
     render() {
     return (
       <React.Fragment>
-        {this.props.currentUser.user ?
+        {/* {this.props.currentUser.user ? */}
           <div className="calendar">
               {this.renderHeader()}
               {this.renderDays()}
               <div className="name-header">Name</div>
               <div>{this.renderShift()}</div>            
           </div>
-          :<Redirect to='/'/>
-        }
+          {/* :<Redirect to='/'/> */}
+        {/* } */}
       </React.Fragment>
     );
   }
@@ -391,10 +404,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps=(dispatch)=>{
   return {
-    fetchGetSchedules:()=>dispatch(fetchGetSchedules()),
-    fetchGetSchedulesOnly:()=>dispatch(fetchGetSchedulesOnly()),
-    fetchGetDeptShifts:()=>dispatch(fetchGetDeptShifts()),
-    fetchPostSchedules:(schedule)=>dispatch(fetchPostSchedules(schedule)),
+    fetchGetSchedules:(token)=>dispatch(fetchGetSchedules(token)),
+    fetchGetSchedulesOnly:(token)=>dispatch(fetchGetSchedulesOnly(token)),
+    fetchGetDeptShifts:(token)=>dispatch(fetchGetDeptShifts(token)),
+    fetchPostSchedules:(token, schedule)=>dispatch(fetchPostSchedules(token, schedule)),
     deleteWholeWeekShifts:(schedules)=>dispatch(deleteWholeWeekShifts(schedules)),
   }
 }

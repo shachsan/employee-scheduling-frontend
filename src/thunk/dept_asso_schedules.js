@@ -2,10 +2,18 @@ import {
   getSchedules, getDeptShifts, postSchedules, getSchedulesOnly 
 } from '../action/actionCreater';
 
-export const fetchGetSchedules = () => {
+export const fetchGetSchedules = (token) => {
         return function (dispatch) {
 
-         fetch(`http://localhost:3000/api/v1/departments`)
+         fetch(`http://localhost:3000/api/v1/departments`
+         ,{
+           method:'GET',
+           headers:{
+            "Content-Type":"application/json",
+            'Authorization': token
+           }
+          })
+        
           .then(res => res.json())
           .then(schedules => {
             dispatch(getSchedules(schedules))
@@ -13,10 +21,16 @@ export const fetchGetSchedules = () => {
       }
 }
 
-export const fetchGetSchedulesOnly = () => {
+export const fetchGetSchedulesOnly = (token) => {
   return function (dispatch) {
 
-   fetch('http://localhost:3000/api/v1/schedules')
+   fetch('http://localhost:3000/api/v1/schedules',{
+    method:'GET',
+    headers:{
+     "Content-Type":"application/json",
+     'Authorization': token
+    }
+   })
     .then(res => res.json())
     .then(schedules => {
       dispatch(getSchedulesOnly(schedules))
@@ -24,10 +38,16 @@ export const fetchGetSchedulesOnly = () => {
 }
 }
 
-export const fetchGetDeptShifts = () => {
+export const fetchGetDeptShifts = (token) => {
   return function (dispatch) {
 
-    fetch('http://localhost:3000/api/v1/dept_shifts')
+    fetch('http://localhost:3000/api/v1/dept_shifts',{
+      method:'GET',
+      headers:{
+       "Content-Type":"application/json",
+       'Authorization': token
+      }
+     })
      .then(res => res.json())
      .then(deptShifts => {
        dispatch(getDeptShifts(deptShifts))
@@ -35,11 +55,12 @@ export const fetchGetDeptShifts = () => {
  }
 }
 
-export const fetchPostSchedules=(schedule)=>{
+export const fetchPostSchedules=(token, schedule)=>{
   return function(dispatch){
     fetch('http://localhost:3000/api/v1/schedules',{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:{"Content-Type":"application/json",
+      'Authorization': token},
       body:JSON.stringify(schedule)
     }).then(res=>res.json())
     .then(justAddedSchedule=>dispatch(postSchedules(justAddedSchedule)))
