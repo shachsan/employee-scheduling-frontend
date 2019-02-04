@@ -1,5 +1,6 @@
 import { 
-  getSchedules, getDeptShifts, postSchedules, getSchedulesOnly 
+  getSchedules, getDeptShifts, postSchedules, 
+  getSchedulesOnly, getDeptAssociates
 } from '../action/actionCreater';
 
 export const fetchGetSchedules = (token) => {
@@ -68,6 +69,25 @@ export const fetchPostSchedules=(token, schedule)=>{
       //dispatch(fetchGetSchedules()))
       // .then(res=>res.json())
   }
+}
+
+export const fetchGetDeptAssociates = (deptId,token) => {
+  return function (dispatch) {
+
+   fetch(`http://localhost:3000/api/v1/associates/${deptId}`
+   ,{
+     method:'GET',
+     headers:{
+      "Content-Type":"application/json",
+      'Authorization': token
+     }
+    })
+  
+    .then(res => res.json())
+    .then(associates => {
+      dispatch(getDeptAssociates(associates))
+    })
+}
 }
 
 

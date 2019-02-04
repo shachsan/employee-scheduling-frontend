@@ -6,7 +6,7 @@ export const getDeptShifts=(deptShifts)=>({type:'FETCH_DEPT_SHIFTS', payload:dep
 export const postSchedules=(schedule)=>({type:'POST_SCHEDULE', payload:schedule})
 export const deleteWholeWeekShifts=(schedules)=>({type:'DELETE_WHOLEWEEKSCHEDULES', payload:schedules})
 export const updateStoreWithCurrentUser=(user)=>({type:'UPDATE_CURRENT_USER', payload:user})
-
+export const getDeptAssociates=(associates)=>({type:'FETCH_DEPT_ASSOCIATES', payload:associates})
 
 //Auth Action Creator
 // export const authStart=()=>({type:actionTypes.AUTH_START})

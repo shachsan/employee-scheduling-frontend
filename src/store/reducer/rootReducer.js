@@ -2,6 +2,7 @@ const initialState={
     dept_asso_schedule:[],
     dept_shifts:[],
     schedules:[],
+    deptAssociates:[],
     currentLogInUser:'',
 }
 
@@ -44,6 +45,12 @@ export default function rootReducer(state=initialState, action){
                 ...state,
                 currentLogInUser:action.payload
             }
+        
+        case 'FETCH_DEPT_ASSOCIATES':
+        return{
+            ...state,
+            deptAssociates:action.payload
+        }
     
         default:
             return state

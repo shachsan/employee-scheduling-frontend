@@ -31,12 +31,12 @@ class Authenticate extends Component {
         // console.log(newState)
     }
 
-    // componentDidMount(){
-    //     let token = localStorage.getItem("token");
-    //     if (token){
-    //         this.props.onCurrentUser(token)
-    //     }
-    // }
+    componentDidMount(){
+        let token = localStorage.getItem("token");
+        if (token){
+            this.props.onCurrentUser(token)
+        }
+    }
 
     render() {
         

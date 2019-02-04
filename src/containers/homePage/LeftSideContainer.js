@@ -1,20 +1,6 @@
-// import React from 'react';
-
-// const LeftSideContainer = () => {
-//     return ( 
-//         <div className="hp-left-container">
 
 
-//         </div>
-            
-//      );
-// }
- 
-// export default LeftSideContainer;
-
-
-
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -41,8 +27,13 @@ const styles = theme => ({
   icon: {},
 });
 
-function LeftSideContainer(props) {
-  const { classes } = props;
+class LeftSideContainer extends Component{
+  
+  
+  render(){
+    console.log('props inside leftside container', this.props);
+    console.log('props inside leftside container', this.props);
+    const { classes } = this.props;
 
   return (
     <div className="hp-left-container">
@@ -52,7 +43,7 @@ function LeftSideContainer(props) {
                     <ListItemIcon className={classes.icon}>
                         <Group/>
                     </ListItemIcon>
-                    <ListItemText classes={{ primary: classes.primary }} primary="Team" />
+                    <ListItemText onClick={()=>this.props.menuClicked()}classes={{ primary: classes.primary }} primary="Team" />
                 </MenuItem>
                 <MenuItem className={classes.menuItem}>
                 <ListItemIcon className={classes.icon}>
@@ -72,6 +63,7 @@ function LeftSideContainer(props) {
         </Paper>
     </div>
   );
+}
 }
 
 LeftSideContainer.propTypes = {
