@@ -59,6 +59,20 @@ export default function rootReducer(state=initialState, action){
             deptAssociates:[...state.deptAssociates.filter(ass=>ass!==action.payload)]
         }
 
+        // case 'ADD_ASSOCIATE':
+        // return{
+        //     ...state,
+        //     deptAssociates:[...state.deptAssociates,action.payload]
+        // }
+
+        case 'FETCH_ADD_ASSOCIATE':
+        return{
+            ...state,
+            deptAssociates:[...state.deptAssociates,action.payload]
+        }
+
+        
+
         
     
         default:

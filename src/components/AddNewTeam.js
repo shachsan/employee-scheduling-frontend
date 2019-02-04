@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+// import {updateStoreWithNewTeamMember} from '../action/actionCreater';
+import {addNewTeamMember} from '../thunk/associate';
+import {connect} from 'react-redux';
 
-export default class AddNewTeam extends Component {
+class AddNewTeam extends Component {
     state={
         name:'',
         bday:'',
@@ -25,13 +28,30 @@ export default class AddNewTeam extends Component {
             availability:newAvailability
         })
     }
+
+    onSubmitHandler=(e)=>{
+        e.preventDefault();
+        let token=localStorage.getItem('token');
+        let newAssociate={
+            name:this.state.name,
+            date_of_birth:this.state.bday,
+            position:this.state.position,
+            gender:this.state.gender,
+            department_id:this.props.deptId,
+        }
+        //add new associate to the redux store
+        // this.props.updateStoreWithNewTeamMember(newAssociate)
+        this.props.addNewTeamMember(token,newAssociate)
+
+
+    }
      
 
 
     render() {
         console.log(this.state);
         return (
-             <form>
+             <form onSubmit={(e)=>this.onSubmitHandler(e)}>
                  <label>Name:</label>
                  <input type='text' name='name' value={this.state.name}
                  onChange={this.inputChangeHandler}/> <br/>
@@ -80,3 +100,12 @@ export default class AddNewTeam extends Component {
         );
     }
 };
+
+const mapDispatchToProps=(dispatch)=>{
+    return {
+    //   updateStoreWithNewTeamMember:(newAssociate)=>dispatch(updateStoreWithNewTeamMember(newAssociate)),
+      addNewTeamMember:(token,newAssociate)=>dispatch(addNewTeamMember(token, newAssociate)),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(AddNewTeam)

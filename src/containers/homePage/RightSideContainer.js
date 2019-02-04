@@ -17,7 +17,7 @@ class RightSideContainer extends Component{
                     :null
                 }
                 {this.state.toggleAddBtn ? 
-                    <AddNewTeam/>
+                    <AddNewTeam deptId={this.props.deptId}/>
                     :null
                 }
             </div>

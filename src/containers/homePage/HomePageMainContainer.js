@@ -34,7 +34,8 @@ class HomePageMainContainer extends Component {
                         <CenterContainer 
                             menuSelected={this.state.clickedMenuItem}
                             deptAssociates={this.props.deptAssociates}/>
-                        <RightSideContainer menuSelected={this.state.clickedMenuItem}/>
+                        <RightSideContainer menuSelected={this.state.clickedMenuItem}
+                            deptId={this.props.currentUser.user.dept_manager_id}/>
                     </div>
                     :<Redirect to='/'/> 
                 }
