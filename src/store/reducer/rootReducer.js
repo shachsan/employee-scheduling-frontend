@@ -51,6 +51,15 @@ export default function rootReducer(state=initialState, action){
             ...state,
             deptAssociates:action.payload
         }
+
+
+        case 'REMOVE_ASSOCIATE':
+        return{
+            ...state,
+            deptAssociates:[...state.deptAssociates.filter(ass=>ass!==action.payload)]
+        }
+
+        
     
         default:
             return state

@@ -1,26 +1,60 @@
-import React from 'react';
+import React, { Component } from 'react';
+import {removeAssociate} from '../../thunk/associate';
+import {removeAssFromStore} from '../../action/actionCreater';
+import {connect} from 'react-redux';
 
 
-const CenterContainer = (props) => {
+class CenterContainer extends Component{
 
-    console.log(props, "center container")
-    const getAssociates=()=>{
-        console.log(props);
-        if(props.menuSelected==='team'){
+    removeTeamHandler = (e, associate)=>{
+
+        //optimistic removal
+        this.props.removeAssFromStore(associate)
+
+        //remove from database
+        let token=localStorage.getItem('token')
+        // this.props.removeAssociate(token, associate.id)
+    }
+
+    // console.log(props, "center container")
+    getAssociates=()=>{
+        // console.log(props);
+        if(this.props.menuSelected==='team'){
             console.log('hello from center container');
-            return props.deptAssociates.map(associate=>{
-                return <div key={associate.id}>{associate.name}</div>
+            return this.props.deptAssociates.map(associate=>{
+                return (
+                <div key={associate.id} className='asso-card-wrapper'> 
+                    <div className='ass-avatar'></div>
+                    <div className='associate-card'>{associate.name}</div>
+                    <button className='btn-del' onClick={(e)=>this.removeTeamHandler(e, associate)}>Remove {associate.name}</button>
+                </div>
+                )
             })
         }
     }
 
-    
-    return ( 
-        <div className="hp-center-container">
-           {getAssociates()}
-        </div>
-                 
-     );
+    render(){
+        return ( 
+            <div className="hp-center-container">
+
+            {this.getAssociates()}
+            </div>
+                    
+        );
+    }
+}
+
+const mapStateToProps=(state)=>{
+    return {
+
+    }
+}
+
+const mapDispatchToProps=(dispatch)=>{
+    return {
+        removeAssociate:(id)=>dispatch(removeAssociate(id)),
+        removeAssFromStore:(associate)=>dispatch(removeAssFromStore(associate))
+    }
 }
  
-export default CenterContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(CenterContainer);

@@ -27,16 +27,16 @@ class HomePageMainContainer extends Component {
         console.log('home container user', this.props.deptAssociates);                  
         return (
             <React.Fragment>
-                {/* {this.props.currentUser.user ? */}
+                {this.props.currentUser.user ?
                     <div className="hp-main-container">
                         <LeftSideContainer menuClicked={this.clickHandlerForTeam}
                             />
                         <CenterContainer 
                             menuSelected={this.state.clickedMenuItem}
                             deptAssociates={this.props.deptAssociates}/>
-                        <RightSideContainer/>
+                        <RightSideContainer menuSelected={this.state.clickedMenuItem}/>
                     </div>
-                    {/* :<Redirect to='/'/> */}
+                    :<Redirect to='/'/> 
                 }
             </React.Fragment>
         );

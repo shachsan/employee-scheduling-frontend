@@ -128,6 +128,7 @@ main {
 
 .hp-left-container{
   display: inline-block;
+  vertical-align: top;
   width:10%;
   border: 1px solid red;
   padding: 5px;
@@ -140,7 +141,23 @@ main {
   padding: 5px;
 }
 
+.asso-card-wrapper{
+  /* margin-left: 15px; */
+  margin: 10px 10px;
+}
+.associate-card{
+  height: 100px;
+  width: 80px;
+  
+  background-color: blue;
+}
+
+.ass-avatar{
+  background-image: url('./img/male.png');
+}
+
 .hp-right-container{
+  vertical-align: top;
   display: inline-block;
   width:20%;
   border: 1px solid green;
@@ -169,8 +186,10 @@ main {
 
 
 
-.reserve-button{
+.add-new-team-button{
   background-color: lightgreen;
+  height: 30px;
+  width: 100%;
 }
 
 button:hover{
