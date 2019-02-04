@@ -16,3 +16,23 @@ export const auth=(username, password)=>{
           dispatch(updateStoreWithCurrentUser(user))})
     }
 }
+
+
+export const getCurrentUser=(token)=>{
+    console.log(token);
+    return function (dispatch) {
+
+        fetch("http://localhost:3000/api/v1/current_user", {
+            method: 'GET',
+            headers:{
+                "Content-Type":"application/json",
+                'Authorization': token
+                // Action: "application/json", 
+                // Authorization:`${token}`
+            }
+        })
+        .then(res=>res.json())
+          .then(current_user=>
+          dispatch(updateStoreWithCurrentUser(current_user)))
+    }
+}

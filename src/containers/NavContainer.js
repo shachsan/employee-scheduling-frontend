@@ -23,7 +23,7 @@ const styles = {
   },
   appbarDeptHeader: {
     alignCenter:'center',
-    marginLeft:'2000px',
+    marginLeft:'200px',
     marginRight:'200px',
   },
 
@@ -83,8 +83,8 @@ class MenuAppBar extends React.Component {
                 </Typography>
             </Link>
 
-                <Typography variant="h6" color="inherit" className={classes.appbarDeptHeader}>
-                  {/* {this.props.currentUser.} */}Hello
+                <Typography variant="h2" color="inherit" className={classes.appbarDeptHeader}>
+                  
                 </Typography>
 
             {auth && (

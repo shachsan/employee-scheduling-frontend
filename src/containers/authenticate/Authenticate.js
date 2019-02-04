@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {auth} from '../../thunk/auth';
+import {auth, getCurrentUser} from '../../thunk/auth';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 
@@ -29,6 +29,13 @@ class Authenticate extends Component {
         newState[e.target.name]=e.target.value;
         this.setState({form:newState})
         // console.log(newState)
+    }
+
+    componentDidMount(){
+        let token = localStorage.getItem("token");
+        if (token){
+            this.props.onCurrentUser(token)
+        }
     }
 
     render() {
@@ -64,7 +71,8 @@ const mapStateToProps=(state)=>{
 
 const mapDispatchToProps=(dispatch)=>{
     return{
-        onAuth:(username, password)=>dispatch(auth(username, password))
+        onAuth:(username, password)=>dispatch(auth(username, password)),
+        onCurrentUser:(token)=>dispatch(getCurrentUser(token))
     }
 }
 
