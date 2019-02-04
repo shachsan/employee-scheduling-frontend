@@ -21,6 +21,12 @@ const styles = {
   grow: {
     flexGrow: 1,
   },
+  appbarDeptHeader: {
+    alignCenter:'center',
+    marginLeft:'2000px',
+    marginRight:'200px',
+  },
+
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
@@ -76,6 +82,11 @@ class MenuAppBar extends React.Component {
                   Schedule
                 </Typography>
             </Link>
+
+                <Typography variant="h6" color="inherit" className={classes.appbarDeptHeader}>
+                  {/* {this.props.currentUser.} */}Hello
+                </Typography>
+
             {auth && (
               <div>
                 <IconButton

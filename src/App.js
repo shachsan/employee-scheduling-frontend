@@ -4,6 +4,7 @@ import Calendar from './components/Calendar';
 import ScheduleRightSideContainer from './containers/ScheduleRightSideContainer';
 import NavContainer from './containers/NavContainer';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+// import {connect} from 'react-redux';
 
 
 // import {getSchedules} from './action/actionCreater';
@@ -21,6 +22,7 @@ class App extends Component {
               <Switch>
                 <Route exact path='/' component={Authenticate}/>
               </Switch>
+                
               <Switch>
                 <Route exact path='/home' render={()=>(
                   <React.Fragment>
@@ -29,6 +31,7 @@ class App extends Component {
                   </React.Fragment>
                 )}/>
               </Switch>
+                
               <Switch>
                 <Route exact path='/schedule' render={()=>(
                   <React.Fragment>
@@ -43,5 +46,7 @@ class App extends Component {
     );
   }
 }
+
+
 
 export default App;

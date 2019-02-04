@@ -12,6 +12,7 @@ export const auth=(username, password)=>{
                 password:password}
             })
           }).then(res=>res.json())
-          .then(user=>dispatch(updateStoreWithCurrentUser(user)))
+          .then(user=>{localStorage.setItem("token", user.jwt);
+          dispatch(updateStoreWithCurrentUser(user))})
     }
 }

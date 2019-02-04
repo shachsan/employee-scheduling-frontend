@@ -56,7 +56,7 @@ function LeftSideContainer(props) {
                 </MenuItem>
                 <MenuItem className={classes.menuItem}>
                 <ListItemIcon className={classes.icon}>
-                <i class="material-icons">
+                <i className="material-icons">
                     schedule
                 </i>
                 </ListItemIcon>

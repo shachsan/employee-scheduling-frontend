@@ -1,5 +1,6 @@
 import React from "react";
 import dateFns from "date-fns";
+import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import { 
           fetchGetSchedules, fetchGetDeptShifts, 
@@ -362,12 +363,17 @@ class Calendar extends React.Component {
     
     render() {
     return (
-      <div className="calendar">
-            {this.renderHeader()}
-            {this.renderDays()}
+      <React.Fragment>
+        {this.props.currentUser.user ?
+          <div className="calendar">
+              {this.renderHeader()}
+              {this.renderDays()}
               <div className="name-header">Name</div>
               <div>{this.renderShift()}</div>            
-        </div>
+          </div>
+          :<Redirect to='/'/>
+        }
+      </React.Fragment>
     );
   }
 }
@@ -378,6 +384,7 @@ const mapStateToProps = (state) => {
     dept_asso_schedules:state.dept_asso_schedule,
     dept_shifts:state.dept_shifts,
     schedules:state.schedules,
+    currentUser: state.currentLogInUser
   }
 }
  
