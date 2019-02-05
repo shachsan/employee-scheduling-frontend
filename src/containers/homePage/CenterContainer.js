@@ -41,7 +41,6 @@ class CenterContainer extends Component{
 
     // console.log(props, "center container")
     renderCenterPage=()=>{
-        console.log('menu clicked', this.props.menuSelected);
         // console.log(props);
         if(typeof(this.props.menuSelected)==="object"){
             return <div className='showPage-container'>
@@ -64,6 +63,7 @@ class CenterContainer extends Component{
                     <div onClick={
                         // (e)=>this.onClickAvatarHandler(e, associate);
                     ()=>this.props.menuClicked(associate)} className='associate-card'>{associate.name}</div>
+                    <h1>{associate.name}</h1>
                     <button className='btn-del' onClick={(e)=>this.removeTeamHandler(e, associate)}>Remove {associate.name}</button>
                 </div>
                 )

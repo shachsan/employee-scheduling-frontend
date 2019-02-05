@@ -4,7 +4,7 @@ import LeftSideContainer from './LeftSideContainer';
 import CenterContainer from './CenterContainer';
 import { Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
-import {fetchGetDeptAssociates} from '../../thunk/dept_asso_schedules';
+import {fetchGetDeptAssociates,fetchGetSchedulesOnly} from '../../thunk/dept_asso_schedules';
 import {fetchGetEvents} from '../../thunk/event';
 
 class HomePageMainContainer extends Component {
@@ -22,6 +22,7 @@ class HomePageMainContainer extends Component {
         let token = localStorage.getItem("token")
         this.props.fetchGetDeptAssociates(this.props.currentUser.user.dept_manager_id,token);
         this.props.fetchGetEvents(token)
+        this.props.fetchGetSchedulesOnly(token)
     }
 
     render() {
@@ -39,7 +40,9 @@ class HomePageMainContainer extends Component {
                             menuClicked={this.clickHandlerForTeam}
                             deptAssociates={this.props.deptAssociates}/>
                         <RightSideContainer menuSelected={this.state.clickedMenuItem}
-                            deptId={this.props.currentUser.user.dept_manager_id}/>
+                            deptId={this.props.currentUser.user.dept_manager_id}
+                            schedules={this.props.schedules}
+                            />
                     </div>
                     :<Redirect to='/'/> 
                 }
@@ -51,7 +54,8 @@ class HomePageMainContainer extends Component {
 const mapDispatchToProps=(dispatch)=>{
     return {
         fetchGetDeptAssociates:(deptId,token)=>dispatch(fetchGetDeptAssociates(deptId,token)),
-        fetchGetEvents:(token)=>dispatch(fetchGetEvents(token))
+        fetchGetEvents:(token)=>dispatch(fetchGetEvents(token)),
+        fetchGetSchedulesOnly:(token)=>dispatch(fetchGetSchedulesOnly(token)),
     }
 }
 
@@ -60,6 +64,7 @@ const mapStateToProps=(state)=>{
         currentUser: state.currentLogInUser,
         deptAssociates:state.deptAssociates,
         events:state.events,
+        schedules:state.schedules
         // leftSideMenuItemSelected:state.leftSideMenuItemSelected,
     }
 }
