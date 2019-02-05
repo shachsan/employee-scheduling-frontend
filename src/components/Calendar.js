@@ -16,7 +16,7 @@ import {deleteWholeWeekShifts} from '../action/actionCreater';
 class Calendar extends React.Component {
 
   state={
-    currentDate:new Date(),
+    // currentDate:new Date(),
     dept:1,//this needs to come from Auth
     totalWeeklyShifts:0,
     dailyShifts:[],//populate it with shift id for randomly picking up for auto generation
@@ -26,16 +26,16 @@ class Calendar extends React.Component {
   }
 
 
-  nextWeek = () => {
-    this.setState({
-      currentDate: dateFns.addWeeks(dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1}), 1)
-    });
-  };
-  prevWeek = () => {
-    this.setState({
-      currentDate: dateFns.subWeeks(dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1}), 1)
-    });
-  };
+  // nextWeek = () => {
+  //   this.setState({
+  //     currentDate: dateFns.addWeeks(dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1}), 1)
+  //   });
+  // };
+  // prevWeek = () => {
+  //   this.setState({
+  //     currentDate: dateFns.subWeeks(dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1}), 1)
+  //   });
+  // };
 
  
 
@@ -45,17 +45,17 @@ class Calendar extends React.Component {
           <div>
             <div className="header row flex-middle">
               <div className="col col-start">
-                <div className="icon" onClick={this.prevWeek}>
+                <div className="icon" onClick={this.props.onClickPrevWeekHandler}>
                   chevron_left
                 </div>
               </div>
               <div>
                 <span>
-                  {dateFns.format(dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1}), dateFormat)}
-                   - {dateFns.format(dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1}), dateFormat)}
+                  {dateFns.format(dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1}), dateFormat)}
+                   - {dateFns.format(dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1}), dateFormat)}
                 </span>
               </div>
-              <div className="col col-end" onClick={this.nextWeek}>
+              <div className="col col-end" onClick={this.props.onClickNextWeekHandler}>
                 <div className="icon">chevron_right</div>
               </div>
               <button onClick={this.handleAutoGenerateShifts}>Auto Generate Schedule</button>
@@ -69,7 +69,7 @@ class Calendar extends React.Component {
       renderDays=()=>{
         const dateFormat = "ddd";
         const days = [];
-        let startDate = dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1});
+        let startDate = dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1});
         for (let i = 0; i < 7; i++) {
           days.push(
             <div className="col col-center" key={i}>
@@ -159,8 +159,8 @@ class Calendar extends React.Component {
       let shift=[];
       let row=[];
       let shiftContainerCounter=0;
-      const startOfWeek = dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1})
-      const endOfWeek = dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1})
+      const startOfWeek = dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1})
+      const endOfWeek = dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1})
       const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.state.dept)//hard code 1, 1 is department id
       if(dept){
         dept.associates.forEach(associate=>{
@@ -286,8 +286,8 @@ class Calendar extends React.Component {
         mandotoryShifts:this.calculateMandotoryShifts(),
       },()=>{
           // console.log(this.state.deptAssociates);
-            const startOfWeek = dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1})
-            const endOfWeek = dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1})
+            const startOfWeek = dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1})
+            const endOfWeek = dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1})
             let shiftCounter={};//store number of shifts of assigned for each associate
             if(dept){
              
@@ -348,8 +348,8 @@ class Calendar extends React.Component {
     
     handleDeleteAllShifts=()=>{
       let idsToBeDeleted=[]
-      const startOfWeek = dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1})
-      const endOfWeek = dateFns.endOfWeek(this.state.currentDate, {weekStartsOn:1})
+      const startOfWeek = dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1})
+      const endOfWeek = dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1})
       // console.log(this.props.schedules);
       const remainingShiftsAfterDeletion=this.props.schedules.filter(
         schedule=>{

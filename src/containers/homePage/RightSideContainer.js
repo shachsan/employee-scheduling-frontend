@@ -29,6 +29,19 @@ class RightSideContainer extends Component{
       }
 
     renderRightContainer=()=>{
+        if(this.props.menuSelected===''){
+            const todaySch=this.props.schedules.filter(sch=>
+                dateFns.parse(sch.date)===new Date())
+                console.log('right container homepage sch.date',todaySch);
+            return (
+                <React.Fragment>
+                    <h1>Today's Roaster</h1>
+                    {todaySch.map(sch=>(
+                        <div key={sch.id}>{sch.associate_id}</div>
+                    ))}
+                </React.Fragment>
+            )
+        }
         if(this.props.menuSelected==='team'){
            return <button className='add-new-team-button' 
                 onClick={this.clickHandlerAddNewTeam}>Add New Team Member</button>
@@ -55,7 +68,7 @@ class RightSideContainer extends Component{
         this.setState({toggleAddBtn:!this.state.toggleAddBtn})
     }
     render() {
-        console.log('right container props', this.props.menuSelected.name);
+        console.log('right container props', this.props.menuSelected);
 
         return (
             <div className="hp-right-container">

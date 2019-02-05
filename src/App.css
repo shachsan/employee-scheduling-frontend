@@ -452,14 +452,14 @@ form input[type='submit']:enabled:hover{
     height:500px;
 }
 
-.side-container div{
+/* .side-container div{
   height: 60px;
   width:70px;
   background-color: yellow;
   border: 2px solid orange;
   margin: 10px;
   display: inline-block;
-}
+} */
 
 .row-middle {
   align-items: center;

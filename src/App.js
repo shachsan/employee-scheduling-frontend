@@ -4,6 +4,9 @@ import Calendar from './components/Calendar';
 import ScheduleRightSideContainer from './containers/ScheduleRightSideContainer';
 import NavContainer from './containers/NavContainer';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {fetchGetEvents} from './thunk/event';
+import {connect} from 'react-redux';
+import dateFns from 'date-fns';
 // import {connect} from 'react-redux';
 
 
@@ -12,8 +15,26 @@ import HomePageMainContainer from './containers/homePage/HomePageMainContainer';
 import Authenticate from './containers/authenticate/Authenticate';
 
 class App extends Component {
+  state={
+    currentDate:new Date(),
+  }
 
+  onClickNextWeekHandler=()=>{
+    this.setState({
+      currentDate: dateFns.addWeeks(dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1}), 1)
+    });
+  }
+
+  onClickPrevWeekHandler=()=>{
+    this.setState({
+      currentDate: dateFns.subWeeks(dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1}), 1)
+    });
+  }
   
+  componentDidMount(){
+    let token=localStorage.getItem('token')
+    this.props.fetchGetEvents(token)
+  }
 
   render() {
     return (
@@ -36,8 +57,10 @@ class App extends Component {
                 <Route exact path='/schedule' render={()=>(
                   <React.Fragment>
                     <NavContainer/>
-                    <Calendar/>
-                    <ScheduleRightSideContainer/>
+                    <Calendar currentDate={this.state.currentDate}
+                            onClickNextWeekHandler={this.onClickNextWeekHandler}
+                            onClickPrevWeekHandler={this.onClickPrevWeekHandler}/>
+                    <ScheduleRightSideContainer currentDate={this.state.currentDate}/>
                   </React.Fragment>
                 )}/>
               </Switch>
@@ -47,6 +70,17 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return ( {
+      events:state.events
+  } );
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return ( {
+    fetchGetEvents:(token)=>dispatch(fetchGetEvents(token)),
+  } );
+}
 
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
