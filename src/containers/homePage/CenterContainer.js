@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {removeAssociate} from '../../thunk/associate';
 import {removeAssFromStore} from '../../action/actionCreater';
 import {connect} from 'react-redux';
+import CompanyCalendar from '../../components/CompanyCalendar';
 
 
 class CenterContainer extends Component{
@@ -12,13 +13,20 @@ class CenterContainer extends Component{
         this.props.removeAssFromStore(associate)
 
         //remove from database
+        // console.log('associate id:', associate.id);
         let token=localStorage.getItem('token')
-        // this.props.removeAssociate(token, associate.id)
+        this.props.removeAssociate(token, associate.id)
     }
 
     // console.log(props, "center container")
-    getAssociates=()=>{
+    renderCenterPage=()=>{
         // console.log(props);
+        if(this.props.menuSelected===''){
+            return <div className='heading-center-container'><h2>Company Calendar</h2>
+                        <CompanyCalendar events={this.props.events}/>
+                    </div>
+        }
+
         if(this.props.menuSelected==='team'){
             console.log('hello from center container');
             return this.props.deptAssociates.map(associate=>{
@@ -37,7 +45,7 @@ class CenterContainer extends Component{
         return ( 
             <div className="hp-center-container">
 
-            {this.getAssociates()}
+            {this.renderCenterPage()}
             </div>
                     
         );
@@ -52,7 +60,7 @@ const mapStateToProps=(state)=>{
 
 const mapDispatchToProps=(dispatch)=>{
     return {
-        removeAssociate:(id)=>dispatch(removeAssociate(id)),
+        removeAssociate:(token, id)=>dispatch(removeAssociate(token, id)),
         removeAssFromStore:(associate)=>dispatch(removeAssFromStore(associate))
     }
 }

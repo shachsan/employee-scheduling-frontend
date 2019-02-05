@@ -4,6 +4,7 @@ const initialState={
     schedules:[],
     deptAssociates:[],
     currentLogInUser:'',
+    events:[],
 }
 
 
@@ -14,6 +15,12 @@ export default function rootReducer(state=initialState, action){
                 ...state,
                 dept_asso_schedule:action.payload,
             }
+
+        case 'FETCH_EVENTS':
+        return {
+            ...state,
+            events:action.payload,
+        }
 
         case 'FETCH_SCHEDULES_ONLY':
         return {
@@ -59,11 +66,7 @@ export default function rootReducer(state=initialState, action){
             deptAssociates:[...state.deptAssociates.filter(ass=>ass!==action.payload)]
         }
 
-        // case 'ADD_ASSOCIATE':
-        // return{
-        //     ...state,
-        //     deptAssociates:[...state.deptAssociates,action.payload]
-        // }
+        
 
         case 'FETCH_ADD_ASSOCIATE':
         return{

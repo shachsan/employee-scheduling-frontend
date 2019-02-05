@@ -10,6 +10,7 @@ export const getDeptAssociates=(associates)=>({type:'FETCH_DEPT_ASSOCIATES', pay
 export const removeAssFromStore=(associate)=>({type:'REMOVE_ASSOCIATE', payload:associate})
 // export const updateStoreWithNewTeamMember=(associate)=>({type:'ADD_ASSOCIATE', payload:associate})
 export const postNewAssociate=(newAss)=>({type:'FETCH_ADD_ASSOCIATE', payload:newAss})
+export const getEvents=(events)=>({type:'FETCH_EVENTS', payload:events})
 
 
 //Auth Action Creator

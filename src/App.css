@@ -81,6 +81,14 @@ header {
   background: var(--neutral-color);
 }
 
+headers {
+  display: block;
+  width: 100%;
+  padding: 1em 0;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--neutral-color);
+}
+
 header #logo {
   font-size: 175%;
   text-align: center;
@@ -132,6 +140,7 @@ main {
   width:10%;
   border: 1px solid red;
   padding: 5px;
+  margin-top: 0;
 }
 
 .hp-center-container{
@@ -276,9 +285,9 @@ form input[type='submit']:enabled:hover{
 }
 
 
-.mod-sch-header{
+/* .mod-sch-header{
   text-align: center;
-}
+} */
 
 .borg{
   margin-left: 15px;
@@ -336,6 +345,17 @@ form input[type='submit']:enabled:hover{
   flex-direction: row;
   flex-wrap: wrap;
   width: 90%;
+  
+}
+
+.rows {
+  margin: 0;
+  /* margin-left:5px; */
+  padding: 0;
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
   
 }
 
@@ -422,6 +442,11 @@ form input[type='submit']:enabled:hover{
   flex-basis: 0;
   max-width: 100%;
 }
+.cols {
+  flex-grow: 3;
+  flex-basis: 0;
+  max-width: 100%;
+}
 
 .col-start {
   justify-content: flex-start;
@@ -439,9 +464,24 @@ form input[type='submit']:enabled:hover{
 }
 
 
+/* .col-starts {
+  justify-content: flex-start;
+  text-align: left;
+} */
+
+.col-centers {
+  justify-contennt: flex-center;
+  text-align: center;
+}
+
+.col-ends {
+  justify-content: flex-end;
+  text-align: right;
+}
+
 /* Calendar */
 
-.calendar, .show-mod{
+.calendar{
   display: inline-block;
   position: relative;
   width: 70%;
@@ -451,9 +491,19 @@ form input[type='submit']:enabled:hover{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.calendars{
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  /* max-height: 750px; */
+  background: var(--neutral-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
 
-.January{
+
+/* .January{
   background-image: url(https://getflywheel.com/wp-content/uploads/2015/01/largegiffeature.gif)
 }
 
@@ -466,7 +516,7 @@ form input[type='submit']:enabled:hover{
 
 .April{
   background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9fP_IuqaVLj658A5MRQXbkeqVszq6V9wceJyoFbRq0BmvF362GQ)
-}
+} */
 
 .calendar .header {
   text-transform: uppercase;
@@ -478,24 +528,34 @@ form input[type='submit']:enabled:hover{
   
 }
 
-.calendar .header .icon {
-  cursor: pointer;
-  transition: .15s ease-out;
+.calendars .header {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 115%;
+  color:black;
+  padding: 1.5em 0;
+  border-bottom: 1px solid var(--border-color);
+  
 }
 
-.calendar .header .icon:hover {
+/* .calendar .header .icon {
+  cursor: pointer;
+  transition: .15s ease-out;
+} */
+
+/* .calendars .header .icon:hover {
   transform: scale(1.75);
   transition: .25s ease-out;
   color: var(--main-color);
-}
+} */
 
-.calendar .header .icon:first-of-type {
+/* .calendar .header .icon:first-of-type {
   margin-left: 1em;
-}
+} */
 
-.calendar .header .icon:last-of-type {
+/* .calendar .header .icon:last-of-type {
   margin-right: 1em;
-}
+} */
 
 .calendar .days {
   text-transform: uppercase;
@@ -507,23 +567,55 @@ form input[type='submit']:enabled:hover{
   border-bottom: 1px solid var(--border-color);
 }
 
-.calendar .body .cell {
+.calendars .days {
+  text-transform: uppercase;
+  float: right;
+  font-weight: 400;
+  color: black;
+  font-size: 70%;
+  padding: .75em 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.calendars .body .cells {
   position: relative;
   height: 7.8em;
   border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
   overflow: hidden;
-  cursor: pointer;
+  /* cursor: pointer; */
+  background: var(--neutral-color);
+  /* transition: 0.25s ease-out; */
+}
+
+.calendars .body .cells {
+  position: relative;
+  height: 6em;
+  border-right: 1px solid var(--border-color);
+  overflow: hidden;
+  /* cursor: pointer; */
   background: var(--neutral-color);
   transition: 0.25s ease-out;
 }
 
-.calendar .body .cell:hover {
-  background: var(--bg-color);
-  transition: 0.5s ease-out;
+.heading-center-container{
+  padding: 0;
+  background-image: linear-gradient(-40deg, blue, yellow);
 }
 
-.calendar .body .selected {
-  border: 10px solid red;
+.heading-center-container h2{
+  /* box-shadow: 0px 0px 5px 10px grey; */
+  padding-left: 15px;
+  margin-top: 0;
+}
+
+/* .calendar .body .cell:hover {
+  background: var(--bg-color);
+  transition: 0.5s ease-out;
+} */
+
+.calendars .body .selected {
+  border: 10px solid green;
   /* border-image: linear-gradient(45deg, #1a8fff 0%,#53cbf1 40%); */
   /* border-image-slice: 1; */
 }
@@ -536,31 +628,31 @@ form input[type='submit']:enabled:hover{
   border-bottom: none;
 }
 
-.calendar .body .cell:last-child {
+/* .calendar .body .cell:last-child {
   border-right: none;
-}
+} */
 
-.calendar .body .cell .number {
+.calendars .body .cells .number {
   font-weight: 700;
   position: absolute;
   font-size: 1em;
   line-height: 1;
-  top: .75em;
-  right: .75em;
-  /* transition: .25s ease-out; */
+  top:3em;
+  right: 3.5em;
+  /* transition: .25s ease-out;  */
   letter-spacing: -.07em;
-}
+} 
 
-.calendar .body .cell:hover .number, .calendar .body .selected .number {
+.calendars .body .selected .number {
   font-weight: 900;
   position: absolute;
   font-size: 2.2em;
   line-height: 1;
   text-align: center;
-  /* vertical-align: middle; */
+  vertical-align: middle; 
   top: .50em;
-  right: 1em;
-  transition: .35s ease-out;
+  right: 1.2em;
+  /* transition: .35s ease-out; */
 }
 
 .calendar .body .disabled {
@@ -568,25 +660,31 @@ form input[type='submit']:enabled:hover{
   pointer-events: none;
 }
 
-.calendar .body .cell .bg {
+/* .calendar .body .cell .bg {
   font-weight: 700;
   line-height: 1;
   color: var(--main-color);
   opacity: 0;
-  /* font-size: 8em; */
+  /* font-size: 8em; 
   position: absolute;
   top: -.2em;
   right: -.05em;
   transition: .25s ease-out;
   letter-spacing: -.07em;
-}
+} */
 
-.calendar .body .cell:hover .bg, .calendar .body .selected .bg  {
+/* .calendar .body .cell:hover .bg, .calendar .body .selected .bg  {
   opacity: 0.05;
   transition: .10s ease-in;
-}
+} */
 
 .calendar .body .col {
+  flex-grow: 0;
+  flex-basis: calc(100%/7);
+  width: calc(100%/7);
+}
+
+.calendars .body .cols {
   flex-grow: 0;
   flex-basis: calc(100%/7);
   width: calc(100%/7);
