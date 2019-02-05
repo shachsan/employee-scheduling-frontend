@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getCurrentUser } from './thunk/auth';
 import './App.css';
 import Calendar from './components/Calendar';
 import ScheduleRightSideContainer from './containers/ScheduleRightSideContainer';
@@ -32,7 +33,11 @@ class App extends Component {
   }
   
   componentDidMount(){
+    console.log('did mount from app')
     let token=localStorage.getItem('token')
+    if (token) {
+      this.props.getCurrentUser(token);
+    }
     this.props.fetchGetEvents(token)
   }
 
@@ -48,7 +53,7 @@ class App extends Component {
                 <Route exact path='/home' render={()=>(
                   <React.Fragment>
                     <NavContainer/>
-                    <HomePageMainContainer/>
+                      <HomePageMainContainer />
                   </React.Fragment>
                 )}/>
               </Switch>
@@ -78,7 +83,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return ( {
-    fetchGetEvents:(token)=>dispatch(fetchGetEvents(token)),
+    getCurrentUser: (token) => dispatch(getCurrentUser(token)),
+    fetchGetEvents:(token)=>dispatch(fetchGetEvents(token))
   } );
 }
 

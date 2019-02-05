@@ -511,6 +511,7 @@ form input[type='submit']:enabled:hover{
 /* Calendar */
 
 .calendar{
+  
   display: inline-block;
   position: relative;
   width: 70%;

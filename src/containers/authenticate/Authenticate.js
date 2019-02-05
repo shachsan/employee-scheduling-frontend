@@ -32,14 +32,14 @@ class Authenticate extends Component {
     }
 
     componentDidMount(){
-        let token = localStorage.getItem("token");
-        if (token){
-            this.props.onCurrentUser(token)
-        }
+        // let token = localStorage.getItem("token");
+        // if (token){
+        //     this.props.onCurrentUser(token)
+        // }
     }
 
     render() {
-        
+        console.log('from auth')
         return (
             <React.Fragment>
             {this.props.currentUser.user ? <Redirect to='/home'/> :

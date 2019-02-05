@@ -1,6 +1,5 @@
 import React from "react";
 import dateFns from "date-fns";
-import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import { 
           fetchGetSchedules, fetchGetDeptShifts, 
@@ -9,6 +8,7 @@ import {
         } from '../thunk/dept_asso_schedules';
 
 import {deleteWholeWeekShifts} from '../action/actionCreater';
+import './Calendar.css';
 
 
 
@@ -174,9 +174,9 @@ class Calendar extends React.Component {
                 && associate.id===schedule.associate_id
               );
               if(associateShifts){
-                shift.push(<div className={`shift ${this.getShiftColor(associateShifts.shift_id)}`} key={i}>{this.getShiftTime(associateShifts.shift_id)}</div>)
+                shift.push(<div className={`shift col ${this.getShiftColor(associateShifts.shift_id)}`} key={i}>{this.getShiftTime(associateShifts.shift_id)}</div>)
               }else{
-                shift.push(<div className="shift day-off" key={i}>No Shift Assigned</div>)
+                shift.push(<div className="shift col day-off" key={i}>No Shift Assigned</div>)
               }
               //end
 
@@ -192,7 +192,7 @@ class Calendar extends React.Component {
                 }
                 */
             }
-            row.push(<div className="shift-container" key={shiftContainerCounter}>{shift}</div>)
+            row.push(<div className="rows" key={shiftContainerCounter}>{shift}</div>)
             shift=[];
           })
       }

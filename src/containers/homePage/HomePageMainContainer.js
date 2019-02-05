@@ -20,7 +20,9 @@ class HomePageMainContainer extends Component {
 
     componentDidMount(){
         let token = localStorage.getItem("token")
-        this.props.fetchGetDeptAssociates(this.props.currentUser.user.dept_manager_id,token);
+        if (this.props.currentUser) {
+            this.props.fetchGetDeptAssociates(this.props.currentUser.user.dept_manager_id,token);
+        }
         this.props.fetchGetEvents(token)
         this.props.fetchGetSchedulesOnly(token)
     }
