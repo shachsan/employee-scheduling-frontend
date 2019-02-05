@@ -497,7 +497,7 @@ form input[type='submit']:enabled:hover{
 } */
 
 .col-centers {
-  justify-contennt: flex-center;
+  justify-content: center;
   text-align: center;
 }
 
@@ -565,26 +565,26 @@ form input[type='submit']:enabled:hover{
   
 }
 
-/* .calendar .header .icon {
+.calendar .header .icon {
   cursor: pointer;
   transition: .15s ease-out;
-} */
+}
 
-/* .calendars .header .icon:hover {
+.calendar .header .icon:hover {
   transform: scale(1.75);
   transition: .25s ease-out;
   color: var(--main-color);
-} */
+}
 
-/* .calendar .header .icon:first-of-type {
+.calendar .header .icon:first-of-type {
   margin-left: 1em;
-} */
+}
 
-/* .calendar .header .icon:last-of-type {
+.calendar .header .icon:last-of-type {
   margin-right: 1em;
-} */
+}
 
-.calendar .days {
+.calendar .day {
   text-transform: uppercase;
   float: right;
   font-weight: 400;
@@ -615,7 +615,7 @@ form input[type='submit']:enabled:hover{
   /* transition: 0.25s ease-out; */
 }
 
-.calendars .body .cells {
+.calendar .body .cell {
   position: relative;
   height: 6em;
   border-right: 1px solid var(--border-color);
@@ -687,18 +687,18 @@ form input[type='submit']:enabled:hover{
   pointer-events: none;
 }
 
-/* .calendar .body .cell .bg {
+.calendar .body .cell .bg {
   font-weight: 700;
   line-height: 1;
   color: var(--main-color);
   opacity: 0;
-  /* font-size: 8em; 
+  font-size: 8em; 
   position: absolute;
   top: -.2em;
   right: -.05em;
   transition: .25s ease-out;
   letter-spacing: -.07em;
-} */
+}
 
 /* .calendar .body .cell:hover .bg, .calendar .body .selected .bg  {
   opacity: 0.05;
