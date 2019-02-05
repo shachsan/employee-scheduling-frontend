@@ -365,7 +365,7 @@ form input[type='submit']:enabled:hover{
 /* GRID */
 
 .row {
-  margin: 0;
+  margin-bottom: 10px;
   /* margin-left:5px; */
   padding: 0;
   display:flex;
@@ -383,6 +383,7 @@ form input[type='submit']:enabled:hover{
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
+  border:1px solid grey;
   
 }
 
@@ -473,6 +474,7 @@ form input[type='submit']:enabled:hover{
   flex-grow: 3;
   flex-basis: 0;
   max-width: 100%;
+  border-right: 1px solid grey;
 }
 
 .col-start {
@@ -584,7 +586,7 @@ form input[type='submit']:enabled:hover{
   margin-right: 1em;
 }
 
-.calendar .day {
+.calendar .days {
   text-transform: uppercase;
   float: right;
   font-weight: 400;
@@ -601,14 +603,14 @@ form input[type='submit']:enabled:hover{
   color: black;
   font-size: 70%;
   padding: .75em 0;
-  border-bottom: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
 }
 
 .calendars .body .cells {
   position: relative;
   height: 7.8em;
-  border-right: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
+  border-right: 1px solid grey;
+  /* border-bottom: 1px solid var(--border-color); */
   overflow: hidden;
   /* cursor: pointer; */
   background: var(--neutral-color);
