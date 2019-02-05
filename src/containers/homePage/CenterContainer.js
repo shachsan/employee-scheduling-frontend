@@ -3,9 +3,15 @@ import {removeAssociate} from '../../thunk/associate';
 import {removeAssFromStore} from '../../action/actionCreater';
 import {connect} from 'react-redux';
 import CompanyCalendar from '../../components/CompanyCalendar';
+import AssociateShowPage from '../../components/AssociateShowPage';
 
 
 class CenterContainer extends Component{
+
+    state={
+        associate:'',
+        // menuSelected:this.props.menuSelected,
+    }
 
     removeTeamHandler = (e, associate)=>{
 
@@ -18,9 +24,31 @@ class CenterContainer extends Component{
         this.props.removeAssociate(token, associate.id)
     }
 
+    onClickAvatarHandler =(e, associate)=>{
+        console.log(associate);
+        
+        this.setState({
+            associate:associate,
+            // menuSelected:'show',
+        })
+    }
+
+    renderAssociateShowPage=(associate)=>{
+        return <div>
+            <AssociateShowPage associate={associate}/>
+        </div>
+    }
+
     // console.log(props, "center container")
     renderCenterPage=()=>{
+        console.log('menu clicked', this.props.menuSelected);
         // console.log(props);
+        if(typeof(this.props.menuSelected)==="object"){
+            return <div className='showPage-container'>
+                        <AssociateShowPage associate={this.props.menuSelected}/>
+                    </div>
+        }
+
         if(this.props.menuSelected===''){
             return <div className='heading-center-container'><h2>Company Calendar</h2>
                         <CompanyCalendar events={this.props.events}/>
@@ -33,7 +61,9 @@ class CenterContainer extends Component{
                 return (
                 <div key={associate.id} className='asso-card-wrapper'> 
                     <div className='ass-avatar'></div>
-                    <div className='associate-card'>{associate.name}</div>
+                    <div onClick={
+                        // (e)=>this.onClickAvatarHandler(e, associate);
+                    ()=>this.props.menuClicked(associate)} className='associate-card'>{associate.name}</div>
                     <button className='btn-del' onClick={(e)=>this.removeTeamHandler(e, associate)}>Remove {associate.name}</button>
                 </div>
                 )
@@ -44,8 +74,9 @@ class CenterContainer extends Component{
     render(){
         return ( 
             <div className="hp-center-container">
-
+            {/* {this.state.associate ? this.renderAssociateShowPage(this.state.associate):this.renderCenterPage()} */}
             {this.renderCenterPage()}
+            
             </div>
                     
         );

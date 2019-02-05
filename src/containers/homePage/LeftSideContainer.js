@@ -43,7 +43,7 @@ class LeftSideContainer extends Component{
                     <ListItemIcon className={classes.icon}>
                         <Group/>
                     </ListItemIcon>
-                    <ListItemText onClick={()=>this.props.menuClicked()}classes={{ primary: classes.primary }} primary="Team" />
+                    <ListItemText onClick={()=>this.props.menuClicked('team')}classes={{ primary: classes.primary }} primary="Team" />
                 </MenuItem>
                 <MenuItem className={classes.menuItem}>
                 <ListItemIcon className={classes.icon}>

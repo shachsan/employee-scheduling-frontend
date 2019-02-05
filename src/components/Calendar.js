@@ -377,7 +377,7 @@ class Calendar extends React.Component {
     render() {
     return (
       <React.Fragment>
-      {this.props.currentUser.user ?
+      {/* {this.props.currentUser.user ? */}
           <div className="calendar">
               {this.renderHeader()}
               {this.renderDays()}
@@ -385,7 +385,7 @@ class Calendar extends React.Component {
               <div>{this.renderShift()}</div>            
           </div>
           
-          :<Redirect to='/'/>}
+          {/* :<Redirect to='/'/>} */}
         </React.Fragment>
     );
   }

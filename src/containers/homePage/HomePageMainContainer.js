@@ -12,8 +12,8 @@ class HomePageMainContainer extends Component {
         clickedMenuItem:'',
       }
     
-    clickHandlerForTeam=()=>{
-      this.setState({clickedMenuItem:'team'},()=>{
+    clickHandlerForTeam=(itemSelected)=>{
+      this.setState({clickedMenuItem:itemSelected},()=>{
         // console.log(this.state.clickedMenuItem);
       })
     }
@@ -36,6 +36,7 @@ class HomePageMainContainer extends Component {
                         <CenterContainer 
                             menuSelected={this.state.clickedMenuItem}
                             events={this.props.events}
+                            menuClicked={this.clickHandlerForTeam}
                             deptAssociates={this.props.deptAssociates}/>
                         <RightSideContainer menuSelected={this.state.clickedMenuItem}
                             deptId={this.props.currentUser.user.dept_manager_id}/>
