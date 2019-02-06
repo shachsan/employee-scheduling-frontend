@@ -40,6 +40,9 @@ class MenuAppBar extends React.Component {
   };
 
   handleChange = event => {
+    // console.log(localStorage.getItem('token'));
+    localStorage.removeItem('token');
+    this.props.logoutHandler();
     this.setState({ auth: event.target.checked });
   };
 
@@ -51,21 +54,24 @@ class MenuAppBar extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  getDeptName =(deptId)=>{
+    if(deptId===1){
+      return 'Grocery Department'
+    }else if(deptId===2){
+      return 'Espresso Department'
+    }else if (deptId===3){
+      return 'Cheese'
+    }
+  }
+
   render() {
+    console.log('nav render',this.props.currentUser);
     const { classes } = this.props;
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
     return (
       <div className={classes.root}>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />
-            }
-            label={auth ? 'Logout' : 'Login'}
-          />
-        </FormGroup>
         <AppBar position="static">
           <Toolbar>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
@@ -83,12 +89,14 @@ class MenuAppBar extends React.Component {
                 </Typography>
             </Link>
 
-                <Typography variant="h2" color="inherit" className={classes.appbarDeptHeader}>
-                  
+                <Typography variant="h3" color="inherit" className={classes.appbarDeptHeader}>
+                {this.getDeptName(this.props.currentUser.user.dept_manager_id)}
+                    
                 </Typography>
 
             {auth && (
               <div>
+              {this.props.currentUser.user.username}
                 <IconButton
                   aria-owns={open ? 'menu-appbar' : undefined}
                   aria-haspopup="true"
@@ -116,6 +124,14 @@ class MenuAppBar extends React.Component {
                 </Menu>
               </div>
             )}
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />
+                      }
+                      label={auth ? 'Logout' : 'Login'}
+                      />
+                  </FormGroup>
           </Toolbar>
         </AppBar>
       </div>

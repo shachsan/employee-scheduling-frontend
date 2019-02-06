@@ -11,6 +11,7 @@ export const removeAssFromStore=(associate)=>({type:'REMOVE_ASSOCIATE', payload:
 // export const updateStoreWithNewTeamMember=(associate)=>({type:'ADD_ASSOCIATE', payload:associate})
 export const postNewAssociate=(newAss)=>({type:'FETCH_ADD_ASSOCIATE', payload:newAss})
 export const getEvents=(events)=>({type:'FETCH_EVENTS', payload:events})
+export const logUserOut=()=>({type:'LOG_OUT'})
 
 
 //Auth Action Creator

@@ -6,6 +6,7 @@ import ScheduleRightSideContainer from './containers/ScheduleRightSideContainer'
 import NavContainer from './containers/NavContainer';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {fetchGetEvents} from './thunk/event';
+import {logUserOut} from './action/actionCreater';
 import {connect} from 'react-redux';
 import dateFns from 'date-fns';
 // import {connect} from 'react-redux';
@@ -18,6 +19,10 @@ import Authenticate from './containers/authenticate/Authenticate';
 class App extends Component {
   state={
     currentDate:new Date(),
+  }
+
+  logoutHandler=()=>{
+    this.props.logUserOut();
   }
 
   onClickNextWeekHandler=()=>{
@@ -37,11 +42,12 @@ class App extends Component {
     let token=localStorage.getItem('token')
     if (token) {
       this.props.getCurrentUser(token);
+      this.props.fetchGetEvents(token)
     }
-    this.props.fetchGetEvents(token)
   }
 
   render() {
+    // console.log('app render', this.props.currentUser);
     return (
       <Router>
           <div className="App">
@@ -52,7 +58,8 @@ class App extends Component {
               <Switch>
                 <Route exact path='/home' render={()=>(
                   <React.Fragment>
-                    <NavContainer/>
+                    <NavContainer currentUser={this.props.currentUser}
+                        logoutHandler={this.logoutHandler}/>
                       <HomePageMainContainer />
                   </React.Fragment>
                 )}/>
@@ -61,7 +68,8 @@ class App extends Component {
               <Switch>
                 <Route exact path='/schedule' render={()=>(
                   <React.Fragment>
-                    <NavContainer/>
+                    <NavContainer currentUser={this.props.currentUser}
+                        logoutHandler={this.logoutHandler}/>
                     <Calendar currentDate={this.state.currentDate}
                             onClickNextWeekHandler={this.onClickNextWeekHandler}
                             onClickPrevWeekHandler={this.onClickPrevWeekHandler}/>
@@ -77,14 +85,17 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return ( {
-      events:state.events
+      events:state.events,
+      currentUser:state.currentLogInUser
   } );
 }
 
 const mapDispatchToProps = (dispatch) => {
   return ( {
     getCurrentUser: (token) => dispatch(getCurrentUser(token)),
-    fetchGetEvents:(token)=>dispatch(fetchGetEvents(token))
+    fetchGetEvents:(token)=>dispatch(fetchGetEvents(token)),
+    logUserOut:()=>dispatch(logUserOut()),
+
   } );
 }
 

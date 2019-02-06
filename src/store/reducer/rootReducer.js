@@ -66,14 +66,17 @@ export default function rootReducer(state=initialState, action){
             deptAssociates:[...state.deptAssociates.filter(ass=>ass!==action.payload)]
         }
 
-        
-
         case 'FETCH_ADD_ASSOCIATE':
         return{
             ...state,
             deptAssociates:[...state.deptAssociates,action.payload]
         }
-
+        
+        case 'LOG_OUT':
+        return{
+            ...state,
+            currentLogInUser:''
+        }
         
 
         
