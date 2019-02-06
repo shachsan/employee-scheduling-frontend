@@ -7,6 +7,16 @@ class RightSideContainer extends Component{
         toggleAddBtn:false,
     }
 
+    getAssociateName=(id)=>{
+        // debugger;
+        if(this.props.deptAssociates.length>0){
+            
+            const empName = this.props.deptAssociates.find(as=>as.id===id)
+       console.log('emp name',empName.name);
+            return empName.name;
+        }
+    }
+
     getShiftTime=(id)=>{
         if(id===1)
           return "8AM - 4PM"
@@ -31,13 +41,14 @@ class RightSideContainer extends Component{
     renderRightContainer=()=>{
         if(this.props.menuSelected===''){
             const todaySch=this.props.schedules.filter(sch=>
-                dateFns.parse(sch.date)===new Date())
-                console.log('right container homepage sch.date',todaySch);
-            return (
-                <React.Fragment>
+                sch.date===dateFns.format(new Date(), 'YYYY-MM-DD'))
+                console.log("right container homepage today's scheduel",todaySch);
+                return (
+                    <React.Fragment>
                     <h1>Today's Roaster</h1>
+
                     {todaySch.map(sch=>(
-                        <div key={sch.id}>{sch.associate_id}</div>
+                        <div className="roaster-shift"key={sch.id}><span>{this.getAssociateName(sch.associate_id)}</span> <span className={this.getShiftColor(sch.shift_id)}>{this.getShiftTime(sch.shift_id)}</span></div>
                     ))}
                 </React.Fragment>
             )
@@ -68,7 +79,7 @@ class RightSideContainer extends Component{
         this.setState({toggleAddBtn:!this.state.toggleAddBtn})
     }
     render() {
-        console.log('right container props', this.props.menuSelected);
+        console.log('right container props render', this.props.deptAssociates);
 
         return (
             <div className="hp-right-container">

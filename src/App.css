@@ -105,6 +105,20 @@ header #logo {
   padding: 0px 5px; */
 }
 
+.clear-sch{
+  background-color: lightcoral;
+  height: 40px;
+  margin-left: 15px;
+}
+
+.autoGen{
+  background-color: greenyellow;
+  display: block;
+  height: 40px;
+  margin-right: 15px;
+  margin-left: 20px;
+}
+
 .nav-mods{
   text-decoration: none;
   border-radius: 5px;
@@ -178,6 +192,24 @@ main {
   background-image: url('./img/male.png');
 }
 
+.show-emp{
+  height:150px;
+  width:120px;
+  background-color:green;
+  font-weight: bolder;
+  font-size: 1.4em;
+
+}
+
+.showPage-container{
+  padding-left: 20px;
+}
+
+.showPage-container ul{
+  font-size: 1.3em;
+  font-weight: bolder;
+}
+
 .hp-right-container{
   vertical-align: top;
   display: inline-block;
@@ -208,6 +240,7 @@ main {
   margin:20px 10px;
 
 }
+
 
 /* MENU BAR */
 .menu-bar{
@@ -428,18 +461,26 @@ form input[type='submit']:enabled:hover{
 
 .open{
   background-color: lightgreen;
+  color:black;
+  font-weight: bolder;
 }
 
 .mid{
   background-color: yellow;
+  color: black;
+  font-weight: bolder;
 }
 
 .close{
-  background-color:lightgrey;
+  background-color:black;
+  color: white;
+  font-weight: bolder;
 }
 
 .day-off{
- background-color:lightcoral;
+ background-color:red;
+ color:white;
+ font-weight: bolder;
 }
 
 .name-header{
@@ -455,10 +496,33 @@ form input[type='submit']:enabled:hover{
 .side-container{
   width:28%;
   max-height:600px;
-    border:2px solid red; 
+    border:2px solid blue; 
     display:inline-block;
     vertical-align:top;
     height:500px;
+    font-weight: bolder;
+    padding: 10px;
+}
+
+.roaster-shift{
+  margin-bottom: 20px;
+}
+
+.rsc-date-shift span:first-child{
+  display: inline-block;
+  width: 150px;
+}
+
+.roaster-shift span{
+  width:120px;
+  margin: 10px;
+  font-weight: bolder;
+  font-size: 1.3em;
+  display: inline-block;
+}
+
+.side-container span{
+  font-weight: 2em;
 }
 
 /* .side-container div{

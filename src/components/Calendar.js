@@ -58,8 +58,8 @@ class Calendar extends React.Component {
               <div className="col col-end" onClick={this.props.onClickNextWeekHandler}>
                 <div className="icon">chevron_right</div>
               </div>
-              <button onClick={this.handleAutoGenerateShifts}>Auto Generate Schedule</button>
-              <button onClick={this.handleDeleteAllShifts}>Clear All Shifts</button>
+              <button className="autoGen" onClick={this.handleAutoGenerateShifts}>Auto Generate Schedule</button>
+              <button className="clear-sch"onClick={this.handleDeleteAllShifts}>Clear All Shifts</button>
             </div>
           </div>
         );

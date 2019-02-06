@@ -29,7 +29,7 @@ class HomePageMainContainer extends Component {
 
     render() {
         // const dept=this.props.dept_asso_schedule.filter(dept=>dept.id===this.props.currentUser.dept_manager_id)
-        console.log('home container render user', this.props.deptAssociates);                  
+        console.log('home container render deptAssociates', this.props.deptAssociates);                  
         return (
             <React.Fragment>
                 {this.props.currentUser.user ?
@@ -44,7 +44,9 @@ class HomePageMainContainer extends Component {
                         <RightSideContainer menuSelected={this.state.clickedMenuItem}
                             deptId={this.props.currentUser.user.dept_manager_id}
                             schedules={this.props.schedules}
-                            />
+                            deptAssociates={this.props.deptAssociates}/>
+
+                        
                     </div>
                     :<Redirect to='/'/> 
                 }

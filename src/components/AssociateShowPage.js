@@ -6,7 +6,7 @@ const AssociateShowPage = (props) => {
     return ( 
         <React.Fragment>
             <h1>{props.associate.name}</h1>
-            <div style={{height:'30px', width:'20px', backgroundColor:'green'}}>Avatar</div>
+            <div className="show-emp">Avatar</div>
             <ul>
                 <li>Date of Birth: {props.associate.date_of_birth}</li>
                 <li>Gender: {props.associate.gender}</li>
