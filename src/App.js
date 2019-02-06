@@ -4,7 +4,7 @@ import './App.css';
 import Calendar from './components/Calendar';
 import ScheduleRightSideContainer from './containers/ScheduleRightSideContainer';
 import NavContainer from './containers/NavContainer';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, withRouter} from 'react-router-dom';
 import {fetchGetEvents} from './thunk/event';
 import {logUserOut} from './action/actionCreater';
 import {connect} from 'react-redux';
@@ -23,6 +23,10 @@ class App extends Component {
 
   logoutHandler=()=>{
     this.props.logUserOut();
+
+    console.log(('app logout emloyee', this.props));
+    this.props.history.push("/")
+    
   }
 
   onClickNextWeekHandler=()=>{
@@ -49,7 +53,7 @@ class App extends Component {
   render() {
     // console.log('app render', this.props.currentUser);
     return (
-      <Router>
+      // <Router>
           <div className="App">
               <Switch>
                 <Route exact path='/' component={Authenticate}/>
@@ -61,7 +65,7 @@ class App extends Component {
                     <NavContainer currentUser={this.props.currentUser}
                         logoutHandler={this.logoutHandler}/>
                       <HomePageMainContainer />
-                  </React.Fragment>
+                      </React.Fragment>
                 )}/>
               </Switch>
                 
@@ -78,7 +82,7 @@ class App extends Component {
                 )}/>
               </Switch>
           </div>
-      </Router>
+      
     );
   }
 }
@@ -100,4 +104,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
