@@ -46,6 +46,12 @@ class MenuAppBar extends React.Component {
     this.setState({ auth: event.target.checked });
   };
 
+  // handleClickLogin=event=>{
+  //   if(!this.state.auth){
+
+  //   }
+  // }
+
   handleMenu = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -77,6 +83,8 @@ class MenuAppBar extends React.Component {
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
               <MenuIcon />
             </IconButton>
+            {this.props.currentUser.user ? 
+            <React.Fragment>
             <Link className="nav-mods" to='/home'>
               <Typography variant="h6" color="inherit" className={classes.grow}>
                 Home
@@ -93,16 +101,17 @@ class MenuAppBar extends React.Component {
                 {this.getDeptName(this.props.currentUser.user.dept_manager_id)}
                     
                 </Typography>
+                {this.props.currentUser.user.username}
 
             {auth && (
               <div>
-              {this.props.currentUser.user.username}
+              {/* {this.props.currentUser.user ? this.props.currentUser.user.username: null} */}
                 <IconButton
                   aria-owns={open ? 'menu-appbar' : undefined}
                   aria-haspopup="true"
                   onClick={this.handleMenu}
                   color="inherit"
-                >
+                  >
                   <AccountCircle />
                 </IconButton>
                 <Menu
@@ -118,7 +127,7 @@ class MenuAppBar extends React.Component {
                   }}
                   open={open}
                   onClose={this.handleClose}
-                >
+                  >
                   <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                   <MenuItem onClick={this.handleClose}>My account</MenuItem>
                 </Menu>
@@ -132,6 +141,8 @@ class MenuAppBar extends React.Component {
                       label={auth ? 'Logout' : 'Login'}
                       />
                   </FormGroup>
+                      </React.Fragment>
+                      :null}
           </Toolbar>
         </AppBar>
       </div>

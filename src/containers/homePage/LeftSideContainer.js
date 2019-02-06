@@ -10,6 +10,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import {Group, Block} from '@material-ui/icons';
+import {Link} from 'react-router-dom';
 
 
 const styles = theme => ({
@@ -45,14 +46,16 @@ class LeftSideContainer extends Component{
                     </ListItemIcon>
                     <ListItemText onClick={()=>this.props.menuClicked('team')}classes={{ primary: classes.primary }} primary="Team" />
                 </MenuItem>
-                <MenuItem className={classes.menuItem}>
-                <ListItemIcon className={classes.icon}>
-                <i className="material-icons">
-                    schedule
-                </i>
-                </ListItemIcon>
-                <ListItemText classes={{ primary: classes.primary }} inset primary="Schedule" />
-                </MenuItem>
+                <Link className="nav-left-container" to='/schedule'>
+                    <MenuItem className={classes.menuItem}>
+                    <ListItemIcon className={classes.icon}>
+                    <i className="material-icons">
+                        schedule
+                    </i>
+                    </ListItemIcon>
+                    <ListItemText classes={{ primary: classes.primary }} inset primary="Schedule" />
+                    </MenuItem>
+                  </Link>
                 <MenuItem className={classes.menuItem}>
                 <ListItemIcon className={classes.icon}>
                     <InboxIcon />

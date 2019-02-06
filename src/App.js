@@ -56,7 +56,14 @@ class App extends Component {
       // <Router>
           <div className="App">
               <Switch>
-                <Route exact path='/' component={Authenticate}/>
+                <Route exact path='/' render={()=>(
+                   <React.Fragment>
+                     <NavContainer currentUser={this.props.currentUser}
+                        logoutHandler={this.logoutHandler}/>
+                        <Authenticate />
+
+                   </React.Fragment>
+                   )}/>
               </Switch>
                 
               <Switch>

@@ -43,13 +43,13 @@ class Authenticate extends Component {
         return (
             <React.Fragment>
             {this.props.currentUser.user ? <Redirect to='/home'/> :
-                <div>
+                <div className="login">
                     <form onSubmit={this.onSubmitHandler}>
                         <span style={{backgroundColor:'red', color:'white'}}>{this.props.currentUser.message}</span><br/>
-                        <label>Enter Username</label>
+                        <label>Username</label>
                         <input type='text' name='username' value={this.state.form.username} required
                         onChange={(e)=>this.inputChangeHandler(e)}/> <br/>
-                        <label>Enter Password</label>
+                        <label>Password</label>
                         <input type='password' name='password' value={this.state.form.password} required
                         onChange={(e)=>this.inputChangeHandler(e)}/> <br/>
 
