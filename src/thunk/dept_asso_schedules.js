@@ -65,9 +65,6 @@ export const fetchPostSchedules=(token, schedule)=>{
       body:JSON.stringify(schedule)
     }).then(res=>res.json())
     .then(justAddedSchedule=>dispatch(postSchedules(justAddedSchedule)))
-      // console.log('justAddedSchedule', justAddedSchedule))
-      //dispatch(fetchGetSchedules()))
-      // .then(res=>res.json())
   }
 }
 

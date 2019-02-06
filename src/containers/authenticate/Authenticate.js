@@ -72,7 +72,6 @@ const mapStateToProps=(state)=>{
 const mapDispatchToProps=(dispatch)=>{
     return{
         onAuth:(username, password)=>dispatch(auth(username, password)),
-        // onCurrentUser:(token)=>dispatch(getCurrentUser(token))
     }
 }
 

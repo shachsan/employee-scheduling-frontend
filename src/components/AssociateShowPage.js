@@ -2,7 +2,6 @@
 import React from 'react';
 
 const AssociateShowPage = (props) => {
-    console.log(props);
     return ( 
         <React.Fragment>
             <h1>{props.associate.name}</h1>

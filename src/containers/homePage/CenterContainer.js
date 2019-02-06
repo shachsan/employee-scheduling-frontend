@@ -10,7 +10,6 @@ class CenterContainer extends Component{
 
     state={
         associate:'',
-        // menuSelected:this.props.menuSelected,
     }
 
     removeTeamHandler = (e, associate)=>{
@@ -19,7 +18,6 @@ class CenterContainer extends Component{
         this.props.removeAssFromStore(associate)
 
         //remove from database
-        // console.log('associate id:', associate.id);
         let token=localStorage.getItem('token')
         this.props.removeAssociate(token, associate.id)
     }
@@ -29,7 +27,6 @@ class CenterContainer extends Component{
         
         this.setState({
             associate:associate,
-            // menuSelected:'show',
         })
     }
 
@@ -39,9 +36,7 @@ class CenterContainer extends Component{
         </div>
     }
 
-    // console.log(props, "center container")
     renderCenterPage=()=>{
-        // console.log(props);
         if(typeof(this.props.menuSelected)==="object"){
             return <div className='showPage-container'>
                         <AssociateShowPage associate={this.props.menuSelected}/>
@@ -61,7 +56,6 @@ class CenterContainer extends Component{
                 <div key={associate.id} className='asso-card-wrapper'> 
                     <div className='ass-avatar'></div>
                     <div onClick={
-                        // (e)=>this.onClickAvatarHandler(e, associate);
                     ()=>this.props.menuClicked(associate)} className='associate-card'>{associate.name}</div>
                     <h1>{associate.name}</h1>
                     <button className='btn-del' onClick={(e)=>this.removeTeamHandler(e, associate)}>Remove {associate.name}</button>
@@ -74,7 +68,6 @@ class CenterContainer extends Component{
     render(){
         return ( 
             <div className="hp-center-container">
-            {/* {this.state.associate ? this.renderAssociateShowPage(this.state.associate):this.renderCenterPage()} */}
             {this.renderCenterPage()}
             
             </div>

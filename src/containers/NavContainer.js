@@ -71,7 +71,6 @@ class MenuAppBar extends React.Component {
   }
 
   render() {
-    console.log('nav render',this.props.currentUser);
     const { classes } = this.props;
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);

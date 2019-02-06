@@ -5,7 +5,6 @@ import dateFns from 'date-fns';
 class ScheduleRightSideContainer extends Component{
 
     renderEvents=()=>{
-        // console.log(this.props.events);
         const evnts=this.props.events.filter(event=>
             (dateFns.parse(event.event_date)>=this.props.currentDate) && (dateFns.parse(event.event_date)<=dateFns.addDays(this.props.currentDate,6)))
             
@@ -16,7 +15,6 @@ class ScheduleRightSideContainer extends Component{
                     <span>{evnt.event}</span>
                 </div>))
         
-            console.log('current week events',evnts);
     }
 
     render(){
@@ -35,12 +33,6 @@ const mapStateToProps = (state) => {
         events:state.events
     } );
 }
-
-// const mapDispatchToProps = (dispatch) => {
-//     return ( {
-
-//     } );
-// }
 
  
 export default connect(mapStateToProps, null)(ScheduleRightSideContainer);

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import {updateStoreWithNewTeamMember} from '../action/actionCreater';
 import {addNewTeamMember} from '../thunk/associate';
 import {connect} from 'react-redux';
 
@@ -39,17 +38,10 @@ class AddNewTeam extends Component {
             gender:this.state.gender,
             department_id:this.props.deptId,
         }
-        //add new associate to the redux store
-        // this.props.updateStoreWithNewTeamMember(newAssociate)
         this.props.addNewTeamMember(token,newAssociate)
-
-
     }
      
-
-
     render() {
-        console.log(this.state);
         return (
              <form onSubmit={(e)=>this.onSubmitHandler(e)}>
                  <label>Name:</label>
@@ -92,8 +84,6 @@ class AddNewTeam extends Component {
                  <input type="checkbox" name="sun" value="sun"
                  onChange={this.availabilityHandler} /> Sun<br/><br/>
 
-
-
                  <input type='submit' value='Submit'/>
 
              </form>
@@ -103,7 +93,6 @@ class AddNewTeam extends Component {
 
 const mapDispatchToProps=(dispatch)=>{
     return {
-    //   updateStoreWithNewTeamMember:(newAssociate)=>dispatch(updateStoreWithNewTeamMember(newAssociate)),
       addNewTeamMember:(token,newAssociate)=>dispatch(addNewTeamMember(token, newAssociate)),
     }
 }

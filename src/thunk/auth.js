@@ -19,7 +19,6 @@ export const auth=(username, password)=>{
 
 
 export const getCurrentUser=(token)=>{
-    console.log(token);
     return function (dispatch) {
 
         fetch("http://localhost:3000/api/v1/current_user", {
@@ -27,8 +26,6 @@ export const getCurrentUser=(token)=>{
             headers:{
                 "Content-Type":"application/json",
                 'Authorization': token
-                // Action: "application/json", 
-                // Authorization:`${token}`
             }
         })
         .then(res=>res.json())

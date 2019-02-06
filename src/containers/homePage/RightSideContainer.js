@@ -8,11 +8,8 @@ class RightSideContainer extends Component{
     }
 
     getAssociateName=(id)=>{
-        // debugger;
         if(this.props.deptAssociates.length>0){
-            
             const empName = this.props.deptAssociates.find(as=>as.id===id)
-       console.log('emp name',empName.name);
             return empName.name;
         }
     }
@@ -42,7 +39,6 @@ class RightSideContainer extends Component{
         if(this.props.menuSelected===''){
             const todaySch=this.props.schedules.filter(sch=>
                 sch.date===dateFns.format(new Date(), 'YYYY-MM-DD'))
-                console.log("right container homepage today's scheduel",todaySch);
                 return (
                     <React.Fragment>
                     <h1>Today's Roaster</h1>
@@ -62,7 +58,6 @@ class RightSideContainer extends Component{
             const associateSch=this.props.schedules.filter(sch=>
                 sch.associate_id===this.props.menuSelected.id &&
                 dateFns.parse(sch.date)>=new Date())
-            // console.log(this.props);
             if(associateSch){
                 return <div><h2>{`${this.props.menuSelected.name}'s Upcoming Schedule`}</h2>
                     {associateSch.map(as=><div className='rsc-date-shift' key={as.id}><span className='rsc-date'>
@@ -79,7 +74,6 @@ class RightSideContainer extends Component{
         this.setState({toggleAddBtn:!this.state.toggleAddBtn})
     }
     render() {
-        console.log('right container props render', this.props.deptAssociates);
 
         return (
             <div className="hp-right-container">

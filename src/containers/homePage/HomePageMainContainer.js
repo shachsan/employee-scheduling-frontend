@@ -14,7 +14,6 @@ class HomePageMainContainer extends Component {
     
     clickHandlerForTeam=(itemSelected)=>{
       this.setState({clickedMenuItem:itemSelected},()=>{
-        // console.log(this.state.clickedMenuItem);
       })
     }
 
@@ -28,8 +27,6 @@ class HomePageMainContainer extends Component {
     }
 
     render() {
-        // const dept=this.props.dept_asso_schedule.filter(dept=>dept.id===this.props.currentUser.dept_manager_id)
-        console.log('home container render deptAssociates', this.props.deptAssociates);                  
         return (
             <React.Fragment>
                 {this.props.currentUser.user ?
@@ -69,7 +66,6 @@ const mapStateToProps=(state)=>{
         deptAssociates:state.deptAssociates,
         events:state.events,
         schedules:state.schedules
-        // leftSideMenuItemSelected:state.leftSideMenuItemSelected,
     }
 }
 

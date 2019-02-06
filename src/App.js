@@ -9,10 +9,6 @@ import {fetchGetEvents} from './thunk/event';
 import {logUserOut} from './action/actionCreater';
 import {connect} from 'react-redux';
 import dateFns from 'date-fns';
-// import {connect} from 'react-redux';
-
-
-// import {getSchedules} from './action/actionCreater';
 import HomePageMainContainer from './containers/homePage/HomePageMainContainer';
 import Authenticate from './containers/authenticate/Authenticate';
 
@@ -23,10 +19,7 @@ class App extends Component {
 
   logoutHandler=()=>{
     this.props.logUserOut();
-
-    console.log(('app logout emloyee', this.props));
     this.props.history.push("/")
-    
   }
 
   onClickNextWeekHandler=()=>{
@@ -42,7 +35,6 @@ class App extends Component {
   }
   
   componentDidMount(){
-    console.log('did mount from app')
     let token=localStorage.getItem('token')
     if (token) {
       this.props.getCurrentUser(token);
@@ -51,9 +43,7 @@ class App extends Component {
   }
 
   render() {
-    // console.log('app render', this.props.currentUser);
     return (
-      // <Router>
           <div className="App">
               <Switch>
                 <Route exact path='/' render={()=>(
@@ -89,7 +79,6 @@ class App extends Component {
                 )}/>
               </Switch>
           </div>
-      
     );
   }
 }
