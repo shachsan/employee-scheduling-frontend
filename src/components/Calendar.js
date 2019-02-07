@@ -1,6 +1,7 @@
 import React from "react";
 import dateFns from "date-fns";
 import {connect} from 'react-redux';
+import Alert from '../components/Alert';
 import { 
           fetchGetSchedules, fetchGetDeptShifts, 
           fetchPostSchedules, fetchGetSchedulesOnly, 
@@ -19,37 +20,33 @@ class Calendar extends React.Component {
     deptAssociates:[],
     mandotoryShifts:[],
     token:'',
-    // draggedShift:{},
+    edittedShifts:[],
+    draggable:false,
   }
 
   //my handlers
   onDragHandler=(e, shift)=>{
     e.preventDefault();
+    //store currently dragged shift in redux store
     this.props.setDraggedShift(shift);
-    console.log(this.props.draggedShift);
   }
 
   onDropHandler=(e, i)=>{
     e.preventDefault();
-    console.log('date', i);
-    const draggedSch=this.props.schedules.find(sch=>sch===this.props.draggedShift)
-    // const newSch=Object.assign({}, ...draggedSch, draggedSch.date=i)
+    const draggedSch=this.props.schedules.find(sch=>sch===this.props.draggedShift)//
+    // i is the target date
     draggedSch.date=i
-    console.log(draggedSch);
+    this.setState({edittedShifts:[...this.state.edittedShifts, draggedSch]})
+    //optimistic update
     this.props.updateDraggedShift(draggedSch);
-
-    // const newSch:
-      // const { , draggedTask, shift } = this.state;
-      // this.setState({
-      //   completedTasks: [...completedTasks, draggedTask],
-      //   todos: todos.filter(task => task.taskID !== draggedTask.taskID),
-      //   draggedTask: {},
-      // });
-    
   }
 
   onDragOverHandler=(e)=>{
     e.preventDefault();
+  }
+
+  onEditClickHandler=()=>{
+    this.setState({draggable:true})
   }
 
   renderHeader() {
@@ -159,7 +156,7 @@ class Calendar extends React.Component {
                 shift.push(
                   <div key={i} className={`shift col ${this.getShiftColor(associateShifts.shift_id)}`}
                        onClick={()=>console.log(associateShifts)} 
-                       draggable onDrag={(e)=>this.onDragHandler(e, associateShifts)}
+                       draggable={this.state.draggable} onDrag={(e)=>this.onDragHandler(e, associateShifts)}
                        >
                        {this.getShiftTime(associateShifts.shift_id)} 
                   </div>)
@@ -324,7 +321,9 @@ class Calendar extends React.Component {
               {this.renderHeader()}
               {this.renderDays()}
               <div className="name-header">Name</div>
-              <div>{this.renderShift()}</div>            
+              <div>{this.renderShift()}</div>
+              {this.state.draggable ? <Alert/><button>Update Shifts</button> : null} 
+              <button className="edit-schedule" onClick={this.onEditClickHandler}>Edit Shifts</button>           
           </div>
           
         </React.Fragment>

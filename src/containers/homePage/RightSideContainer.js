@@ -41,7 +41,7 @@ class RightSideContainer extends Component{
                 sch.date===dateFns.format(new Date(), 'YYYY-MM-DD'))
                 return (
                     <React.Fragment>
-                    <h1>Today's Roaster</h1>
+                    <h1>Today's Roster</h1>
 
                     {todaySch.map(sch=>(
                         <div className="roaster-shift"key={sch.id}><span>{this.getAssociateName(sch.associate_id)}</span> <span className={this.getShiftColor(sch.shift_id)}>{this.getShiftTime(sch.shift_id)}</span></div>

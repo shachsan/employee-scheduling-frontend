@@ -6,6 +6,7 @@ const initialState={
     currentLogInUser:'',
     events:[],
     draggedShift:{},
+    edittedShifts:[],
 }
 
 
@@ -51,14 +52,13 @@ export default function rootReducer(state=initialState, action){
             return{
                 ...state,
                 currentLogInUser:action.payload
-            }
+        }
         
         case 'FETCH_DEPT_ASSOCIATES':
         return{
             ...state,
             deptAssociates:action.payload
         }
-
 
         case 'REMOVE_ASSOCIATE':
         return{
@@ -83,12 +83,12 @@ export default function rootReducer(state=initialState, action){
             ...state,
             draggedShift:action.payload,
         }
-
+        
         case 'UPDATE_DRAGGED_SHIFT':
         return {
             ...state,
-            schedules:[...state.schedules.filter(sch=>sch!==state.draggedShift), action.payload]
-        
+            schedules:[...state.schedules.filter(sch=>sch!==state.draggedShift), action.payload],
+            // edittedShifts:[...state.edittedShifts, action.payload]
         }
         
         default:
