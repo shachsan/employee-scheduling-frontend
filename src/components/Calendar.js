@@ -21,6 +21,9 @@ class Calendar extends React.Component {
     mandotoryShifts:[],
     token:'',
     edittedShifts:[],
+    switchAutoGen:true,
+    switchEditShifts:false,
+    switchUpdateShifts:false,
     draggable:false,
   }
 
@@ -46,7 +49,21 @@ class Calendar extends React.Component {
   }
 
   onEditClickHandler=()=>{
-    this.setState({draggable:true})
+    
+    this.setState({
+      draggable:true,
+      switchEditShifts:false,
+      switchUpdateShifts:true
+    })
+  }
+
+  updateShiftsHandler=()=>{
+    this.setState({
+      switchUpdateShifts:false,
+      //do pessimistic update here
+
+
+    })
   }
 
   renderHeader() {
@@ -221,6 +238,9 @@ class Calendar extends React.Component {
 
 
     handleAutoGenerateShifts=()=>{  //right name for this function would be 'setupDataForAutoScheduling'
+      
+      this.setState({switchEditShifts:true})
+
       let totalWeeklyShifts=0;
       let dailyShiftsAvailable=['day off'];
       let shiftsObj={};
@@ -322,8 +342,15 @@ class Calendar extends React.Component {
               {this.renderDays()}
               <div className="name-header">Name</div>
               <div>{this.renderShift()}</div>
-              {this.state.draggable ? <Alert/><button>Update Shifts</button> : null} 
-              <button className="edit-schedule" onClick={this.onEditClickHandler}>Edit Shifts</button>           
+              {this.state.switchEditShifts ?
+                <React.Fragment> 
+                  <Alert/>
+                  <button className="edit-schedule" onClick={this.onEditClickHandler}>Edit Shifts</button>           
+                </React.Fragment>
+                :null}
+                {this.state.switchUpdateShifts ? 
+                  <button onClick={this.updateShiftsHandler}>Update Shifts</button>
+                :null} 
           </div>
           
         </React.Fragment>
