@@ -17,8 +17,7 @@ class Authenticate extends Component {
 
     onSubmitHandler=(e)=>{
         e.preventDefault();
-        // console.log(this.state);
-        
+        console.log('login button clicked');
         this.props.onAuth(this.state.form.username, this.state.form.password)
     }
 

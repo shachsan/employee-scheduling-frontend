@@ -2,6 +2,7 @@ import {updateStoreWithCurrentUser} from '../action/actionCreater';
 
 
 export const auth=(username, password)=>{
+    console.log('inside thunk');
     return function (dispatch) {
 
         fetch('http://localhost:3000/api/v1/login',{

@@ -7,7 +7,7 @@ import {
            
         } from '../thunk/dept_asso_schedules';
 
-import {deleteWholeWeekShifts} from '../action/actionCreater';
+import {deleteWholeWeekShifts, setDraggedShift} from '../action/actionCreater';
 import './Calendar.css';
 
 
@@ -19,6 +19,29 @@ class Calendar extends React.Component {
     deptAssociates:[],
     mandotoryShifts:[],
     token:'',
+    // draggedShift:{},
+  }
+
+  //my handlers
+  onDragHandler=(e, shift)=>{
+    e.preventDefault();
+    this.props.setDraggedShift(shift);
+    console.log(this.props.draggedShift);
+  }
+
+  onDropHandler=(e)=>{
+    e.preventDefault();
+      // const { , draggedTask, shift } = this.state;
+      // this.setState({
+      //   completedTasks: [...completedTasks, draggedTask],
+      //   todos: todos.filter(task => task.taskID !== draggedTask.taskID),
+      //   draggedTask: {},
+      // });
+    
+  }
+
+  onDragOverHandler=(e)=>{
+    e.preventDefault();
   }
 
   renderHeader() {
@@ -125,9 +148,20 @@ class Calendar extends React.Component {
                 && associate.id===schedule.associate_id
               );
               if(associateShifts){
-                shift.push(<div className={`shift col ${this.getShiftColor(associateShifts.shift_id)}`} key={i}>{this.getShiftTime(associateShifts.shift_id)}</div>)
+                shift.push(
+                  <div key={i} className={`shift col ${this.getShiftColor(associateShifts.shift_id)}`}
+                       onClick={()=>console.log(associateShifts)} 
+                       draggable onDrag={(e)=>this.onDragHandler(e, associateShifts)}
+                       >
+                       {this.getShiftTime(associateShifts.shift_id)} 
+                  </div>)
               }else{
-                shift.push(<div className="shift col day-off" key={i}>No Shift Assigned</div>)
+                shift.push(<div className="shift col day-off" key={i}
+                onDrop={(e)=>this.onDropHandler(e)}
+                onDragOver={(e)=>this.onDragOverHandler(e)}
+                >
+                
+                No Shift Assigned</div>)
               }
               
             }
@@ -295,7 +329,8 @@ const mapStateToProps = (state) => {
     dept_asso_schedules:state.dept_asso_schedule,
     dept_shifts:state.dept_shifts,
     schedules:state.schedules,
-    currentUser: state.currentLogInUser
+    currentUser: state.currentLogInUser,
+    draggedShift:state.draggedShift,
   }
 }
  
@@ -307,6 +342,7 @@ const mapDispatchToProps=(dispatch)=>{
     fetchGetDeptShifts:(token)=>dispatch(fetchGetDeptShifts(token)),
     fetchPostSchedules:(token, schedule)=>dispatch(fetchPostSchedules(token, schedule)),
     deleteWholeWeekShifts:(schedules)=>dispatch(deleteWholeWeekShifts(schedules)),
+    setDraggedShift:(shift)=>dispatch(setDraggedShift(shift))
   }
 }
 

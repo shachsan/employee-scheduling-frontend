@@ -5,6 +5,7 @@ const initialState={
     deptAssociates:[],
     currentLogInUser:'',
     events:[],
+    draggedShift:{},
 }
 
 
@@ -75,6 +76,12 @@ export default function rootReducer(state=initialState, action){
         return{
             ...state,
             currentLogInUser:''
+        }
+
+        case 'SET_DRAGGED_SHIFT':
+        return {
+            ...state,
+            draggedShift:action.payload,
         }
         
         default:

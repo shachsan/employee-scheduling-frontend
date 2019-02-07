@@ -457,6 +457,11 @@ form input[type='submit']:enabled:hover{
   text-align: center;
   margin-right: 5px;
   border: 2px solid blue;
+  /* cursor: pointer; */
+}
+
+.shift:not(.day-off){
+  cursor: pointer;
 }
 
 .open{

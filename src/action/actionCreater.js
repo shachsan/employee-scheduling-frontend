@@ -9,5 +9,6 @@ export const removeAssFromStore=(associate)=>({type:'REMOVE_ASSOCIATE', payload:
 export const postNewAssociate=(newAss)=>({type:'FETCH_ADD_ASSOCIATE', payload:newAss})
 export const getEvents=(events)=>({type:'FETCH_EVENTS', payload:events})
 export const logUserOut=()=>({type:'LOG_OUT'})
+export const setDraggedShift=(shift)=>({type:'SET_DRAGGED_SHIFT', payload:shift})
 
 
