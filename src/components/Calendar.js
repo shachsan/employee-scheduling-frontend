@@ -59,13 +59,17 @@ class Calendar extends React.Component {
   }
 
   updateShiftsHandler=()=>{
+    const edittedShiftsObj={};
+    let token=localStorage.getItem('token')
+    edittedShiftsObj.schedules=this.state.edittedShifts;
     this.setState({
       switchUpdateShifts:false,
-      //do pessimistic update here
-      
+      edittedShifts:[],
     })
-    this.props.fetchUpdateEdittedShifts();
-    console.log('edittedshifts', this.state.edittedShifts);
+    
+    //do pessimistic update here
+    this.props.fetchUpdateEdittedShifts(token, edittedShiftsObj);
+    console.log('edittedshifts', edittedShiftsObj);
   }
 
   renderHeader() {
