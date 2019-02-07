@@ -4,7 +4,8 @@ import {connect} from 'react-redux';
 import Alert from '../components/Alert';
 import { 
           fetchGetSchedules, fetchGetDeptShifts, 
-          fetchPostSchedules, fetchGetSchedulesOnly, 
+          fetchPostSchedules, fetchGetSchedulesOnly,
+          fetchUpdateEdittedShifts, 
            
         } from '../thunk/dept_asso_schedules';
 
@@ -61,9 +62,10 @@ class Calendar extends React.Component {
     this.setState({
       switchUpdateShifts:false,
       //do pessimistic update here
-
-
+      
     })
+    this.props.fetchUpdateEdittedShifts();
+    console.log('edittedshifts', this.state.edittedShifts);
   }
 
   renderHeader() {
@@ -378,6 +380,7 @@ const mapDispatchToProps=(dispatch)=>{
     deleteWholeWeekShifts:(schedules)=>dispatch(deleteWholeWeekShifts(schedules)),
     setDraggedShift:(shift)=>dispatch(setDraggedShift(shift)),
     updateDraggedShift:(newShift)=>dispatch(updateDraggedShift(newShift)),
+    fetchUpdateEdittedShifts:(token, edittedShifts)=>dispatch(fetchUpdateEdittedShifts(token, edittedShifts))
   }
 }
 

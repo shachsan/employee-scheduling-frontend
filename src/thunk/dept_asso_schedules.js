@@ -87,5 +87,19 @@ export const fetchGetDeptAssociates = (deptId,token) => {
 }
 }
 
+export const fetchUpdateEdittedShifts=(token, edittedShifts)=>{
+  return function (dispatch) {
+
+    fetch(`http://localhost:3000/api/v1/schedules/updateBatchSchs`,{
+      method:'GET',
+      headers:{
+       "Content-Type":"application/json",
+       'Authorization': token
+      },
+      body:JSON.stringify(edittedShifts)
+     })
+}
+}
+
 
  
