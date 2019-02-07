@@ -83,6 +83,13 @@ export default function rootReducer(state=initialState, action){
             ...state,
             draggedShift:action.payload,
         }
+
+        case 'UPDATE_DRAGGED_SHIFT':
+        return {
+            ...state,
+            schedules:[...state.schedules.filter(sch=>sch!==state.draggedShift), action.payload]
+        
+        }
         
         default:
             return state

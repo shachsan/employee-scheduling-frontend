@@ -7,7 +7,7 @@ import {
            
         } from '../thunk/dept_asso_schedules';
 
-import {deleteWholeWeekShifts, setDraggedShift} from '../action/actionCreater';
+import {deleteWholeWeekShifts, setDraggedShift, updateDraggedShift} from '../action/actionCreater';
 import './Calendar.css';
 
 
@@ -29,8 +29,16 @@ class Calendar extends React.Component {
     console.log(this.props.draggedShift);
   }
 
-  onDropHandler=(e)=>{
+  onDropHandler=(e, i)=>{
     e.preventDefault();
+    console.log('date', i);
+    const draggedSch=this.props.schedules.find(sch=>sch===this.props.draggedShift)
+    // const newSch=Object.assign({}, ...draggedSch, draggedSch.date=i)
+    draggedSch.date=i
+    console.log(draggedSch);
+    this.props.updateDraggedShift(draggedSch);
+
+    // const newSch:
       // const { , draggedTask, shift } = this.state;
       // this.setState({
       //   completedTasks: [...completedTasks, draggedTask],
@@ -157,7 +165,7 @@ class Calendar extends React.Component {
                   </div>)
               }else{
                 shift.push(<div className="shift col day-off" key={i}
-                onDrop={(e)=>this.onDropHandler(e)}
+                onDrop={(e)=>this.onDropHandler(e, dateFns.format(i, 'YYYY-MM-DD'))}
                 onDragOver={(e)=>this.onDragOverHandler(e)}
                 >
                 
@@ -342,7 +350,8 @@ const mapDispatchToProps=(dispatch)=>{
     fetchGetDeptShifts:(token)=>dispatch(fetchGetDeptShifts(token)),
     fetchPostSchedules:(token, schedule)=>dispatch(fetchPostSchedules(token, schedule)),
     deleteWholeWeekShifts:(schedules)=>dispatch(deleteWholeWeekShifts(schedules)),
-    setDraggedShift:(shift)=>dispatch(setDraggedShift(shift))
+    setDraggedShift:(shift)=>dispatch(setDraggedShift(shift)),
+    updateDraggedShift:(newShift)=>dispatch(updateDraggedShift(newShift)),
   }
 }
 
