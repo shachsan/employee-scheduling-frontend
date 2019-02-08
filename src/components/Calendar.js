@@ -108,13 +108,14 @@ class Calendar extends React.Component {
     let weeklyDate=[];
     let dateStart=allSchedules[0]
     let dateEnd=allSchedules[allSchedules.length-1]
-    console.log(dateEnd);
     if(dateStart && dateEnd){
-      for(let i=dateFns.parse(dateStart.date, {weekStartsOn:1});i<=dateFns.parse(dateEnd.date, {weekStartsOn:1});dateFns.addDays(i,7)){
+      for(let i=dateFns.parse(dateStart.date, {weekStartsOn:1});i<=dateFns.parse(dateEnd.date, {weekStartsOn:1});i=dateFns.addDays(i,7)){
+        console.log(i);
 
-        weeklyDate.push(<option>{i}-{i+7}</option>)
+        weeklyDate.push(<option key={i}>{dateFns.format(i,'MM-DD-YYYY')}</option>)
       }
     }
+    return weeklyDate;
     // console.log(date.date);
     // .map(schedule=>schedule.date)
     // let uniqueDate=[...new Set(date)]
