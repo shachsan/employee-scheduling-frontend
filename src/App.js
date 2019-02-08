@@ -22,6 +22,10 @@ class App extends Component {
     this.props.history.push("/")
   }
 
+  selectDateChangeHandler=(e)=>{
+    this.setState({currentDate:e.target.value})
+  }
+
   onClickNextWeekHandler=()=>{
     this.setState({
       currentDate: dateFns.addWeeks(dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1}), 1)
@@ -43,6 +47,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('currentDate in App render',this.state.currentDate);
     return (
           <div className="App">
               <Switch>
@@ -73,7 +78,8 @@ class App extends Component {
                         logoutHandler={this.logoutHandler}/>
                     <Calendar currentDate={this.state.currentDate}
                             onClickNextWeekHandler={this.onClickNextWeekHandler}
-                            onClickPrevWeekHandler={this.onClickPrevWeekHandler}/>
+                            onClickPrevWeekHandler={this.onClickPrevWeekHandler}
+                            selectDateChangeHandler={this.selectDateChangeHandler}/>
                     <ScheduleRightSideContainer currentDate={this.state.currentDate}/>
                   </React.Fragment>
                 )}/>

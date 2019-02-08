@@ -8,6 +8,7 @@ class ScheduleRightSideContainer extends Component{
         const evnts=this.props.events.filter(event=>
             (dateFns.parse(event.event_date)>=this.props.currentDate) && (dateFns.parse(event.event_date)<=dateFns.addDays(this.props.currentDate,6)))
             
+            console.log('rendered right container', this.props.events);
         return evnts.map(evnt=>(
             <div key={evnt.id}>
                     <span>{evnt.event_date} | {dateFns.format(evnt.event_date, 'ddd')}</span>

@@ -110,32 +110,30 @@ class Calendar extends React.Component {
     let dateEnd=allSchedules[allSchedules.length-1]
     if(dateStart && dateEnd){
       for(let i=dateFns.parse(dateStart.date, {weekStartsOn:1});i<=dateFns.parse(dateEnd.date, {weekStartsOn:1});i=dateFns.addDays(i,7)){
-        console.log(i);
-
-        weeklyDate.push(<option key={i}>{dateFns.format(i,'MM-DD-YYYY')}</option>)
+        weeklyDate.push(<option key={i} value={i}>{dateFns.format(i,'MM-DD-YYYY')}</option>)
       }
     }
     return weeklyDate;
-    // console.log(date.date);
-    // .map(schedule=>schedule.date)
-    // let uniqueDate=[...new Set(date)]
-    // return uniqueDate.map(uniDate=><option>{uniDate}</option>)
   }
+
+  
 
   renderHeader() {
       const dateFormat = "MM/DD/YY";
         return (
           <div>
-            <div className="header row flex-middle">
-              <select className="week-selection">
+            <div className="header row flex-middle schedule-page">
+              <div className="col col-start">
+              <span id="select-label">Jump to Schedules</span>
+              <select className="week-selection" onChange={this.props.selectDateChangeHandler}>
+                <option>Select Week</option>
                 {this.populateWeeks()}
               </select>
-              <div className="col col-start">
                 <div id="prev-week" className="icon" onClick={(e)=>this.checkIfUpdatedEdit(e)}>
                   chevron_left
                 </div>
               </div>
-              <div>
+              <div className="center-week">
                 <span>
                   {dateFns.format(dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1}), dateFormat)}
                    - {dateFns.format(dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1}), dateFormat)}
