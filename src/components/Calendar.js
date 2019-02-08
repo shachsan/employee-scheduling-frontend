@@ -12,6 +12,7 @@ import {
 
 import {deleteWholeWeekShifts, setDraggedShift, updateDraggedShift, cancelEdit} from '../action/actionCreater';
 import './Calendar.css';
+import { Button, ButtonToolbar } from 'react-bootstrap';
 
 
 class Calendar extends React.Component {
@@ -24,7 +25,7 @@ class Calendar extends React.Component {
     mandotoryShifts:[],
     token:'',
     edittedShifts:[],
-    // originalSchedules:[],
+    originalSchedules:[],
     switchAutoGen:true,
     switchEditShifts:false,
     switchUpdateShifts:false,
@@ -35,7 +36,11 @@ class Calendar extends React.Component {
   //my handlers
   resetEdittedShiftHandler=()=>{
     this.setState({edittedShifts:[]});
-    // this.state.originalSchedules.forEach(sch=>this.props.cancelEdit(sch))
+    this.state.originalSchedules.forEach(sch=>this.props.cancelEdit(sch))
+  }
+
+  cancelEditHandler=()=>{
+    this.setState({switchUpdateShifts:false})
   }
 
   onDragHandler=(e, shift)=>{
@@ -48,15 +53,15 @@ class Calendar extends React.Component {
   onDropHandler=(e, newDate)=>{
     e.preventDefault();
     const draggedSch=this.props.schedules.find(sch=>sch===this.props.draggedShift)//
-    // console.log('draggedSch', draggedSch)
-    // this.setState({originalSchedules:[...this.state.originalSchedules, draggedSch]},
-    //   ()=>{
+    const newSch = Object.assign({}, draggedSch)
+    this.setState({originalSchedules:[...this.state.originalSchedules, newSch]})
+
       // newDate is the target date where the shift was dropped
       draggedSch.date=newDate
       this.setState({edittedShifts:[...this.state.edittedShifts, draggedSch]})
+
       //optimistic update
       this.props.updateDraggedShift(draggedSch);
-    // })
   }
 
   onDragOverHandler=(e)=>{
@@ -79,6 +84,7 @@ class Calendar extends React.Component {
     this.setState({
       switchUpdateShifts:false,
       edittedShifts:[],
+      originalSchedules:[],
     })
     
     //do pessimistic update here
@@ -104,7 +110,6 @@ class Calendar extends React.Component {
             <div className="header row flex-middle">
               <div className="col col-start">
                 <div id="prev-week" className="icon" onClick={(e)=>this.checkIfUpdatedEdit(e)}>
-                {/* this.props.onClickPrevWeekHandler}> */}
                   chevron_left
                 </div>
               </div>
@@ -204,7 +209,6 @@ class Calendar extends React.Component {
               if(associateShifts){
                 shift.push(
                   <div key={i} className={`shift col ${this.getShiftColor(associateShifts.shift_id)}`}
-                       onClick={()=>console.log(associateShifts)} 
                        draggable={this.state.draggable} onDrag={(e)=>this.onDragHandler(e, associateShifts)}
                        >
                        {this.getShiftTime(associateShifts.shift_id)} 
@@ -271,8 +275,16 @@ class Calendar extends React.Component {
 
     handleAutoGenerateShifts=()=>{  //right name for this function would be 'setupDataForAutoScheduling'
       
-      this.setState({switchEditShifts:true})
+      const shiftsExist=this.props.schedules.filter(s=>dateFns.parse(s.date)>=dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1}) && 
+        dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1}))
+      
+      if(shiftsExist.length>0){
+        console.log(shiftsExist);
+        return alert("Shifts already exist for this week. Please clear the schedules before proceeding.")
+      }
+        
 
+      this.setState({switchEditShifts:true})
       let totalWeeklyShifts=0;
       let dailyShiftsAvailable=['day off'];
       let shiftsObj={};
@@ -367,24 +379,26 @@ class Calendar extends React.Component {
     }
     
     render() {
-      console.log('editted shifts',this.state.edittedShifts);
-      console.log('original shifts',this.state.originalSchedules);
     return (
       <React.Fragment>
           <div className="calendar">
               {this.renderHeader()}
-              {this.state.needUpdate ? <UpdateAlert resetEdittedShiftHandler={this.resetEdittedShiftHandler}/>:null}
+              {this.state.needUpdate ? <UpdateAlert resetEdittedShiftHandler={this.resetEdittedShiftHandler}
+                  updateShiftsHandler={this.updateShiftsHandler}/>:null}
               {this.renderDays()}
               <div className="name-header">Name</div>
               <div>{this.renderShift()}</div>
               {this.state.switchEditShifts ?
                 <React.Fragment> 
                   <Alert/>
-                  <button className="edit-schedule" onClick={this.onEditClickHandler}>Edit Shifts</button>           
+                  <Button className="edit-update-cancel-btn"variant="primary" onClick={this.onEditClickHandler}>Edit Shifts</Button>           
                 </React.Fragment>
                 :null}
                 {this.state.switchUpdateShifts ? 
-                  <button onClick={this.updateShiftsHandler}>Update Shifts</button>
+                <ButtonToolbar className='update-cancel-toolbar'>
+                  <Button className="edit-update-cancel-btn" variant="success"onClick={this.updateShiftsHandler}>Update Shifts</Button>
+                  <Button className="edit-update-cancel-btn" variant="danger" onClick={this.cancelEditHandler}>Cancel</Button>
+                </ButtonToolbar>
                 :null} 
           </div>
           
@@ -414,7 +428,7 @@ const mapDispatchToProps=(dispatch)=>{
     setDraggedShift:(shift)=>dispatch(setDraggedShift(shift)),
     updateDraggedShift:(newShift)=>dispatch(updateDraggedShift(newShift)),
     fetchUpdateEdittedShifts:(token, edittedShifts)=>dispatch(fetchUpdateEdittedShifts(token, edittedShifts)),
-    // cancelEdit:(sch)=>dispatch(cancelEdit(sch)),
+    cancelEdit:(sch)=>dispatch(cancelEdit(sch)),
   }
 }
 

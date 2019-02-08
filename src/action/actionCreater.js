@@ -11,6 +11,6 @@ export const getEvents=(events)=>({type:'FETCH_EVENTS', payload:events})
 export const logUserOut=()=>({type:'LOG_OUT'})
 export const setDraggedShift=(shift)=>({type:'SET_DRAGGED_SHIFT', payload:shift})
 export const updateDraggedShift=(newShift)=>({type:'UPDATE_DRAGGED_SHIFT', payload:newShift})
-// export const cancelEdit=(sch)=>({type:'CANCEL_EDIT_SCHEDULE', payload:sch})
+export const cancelEdit=(sch)=>({type:'CANCEL_EDIT_SCHEDULE', payload:sch})
 
 

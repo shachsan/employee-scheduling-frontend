@@ -13,7 +13,6 @@ class UpdateAlert extends Component {
     }
   
     render() {
-      // const handleShow = () => this.setState({ show: true });
       return (
         <>
           {this.state.show ?
@@ -25,7 +24,7 @@ class UpdateAlert extends Component {
               <Button onClick={()=>{this.handleDiscard();this.props.resetEdittedShiftHandler()}} variant="outline-danger">
                 Discard Changes
               </Button>
-              <Button onClick={()=>{this.handleDiscard();this.props.resetEdittedShiftHandler()}} variant="outline-success">
+              <Button onClick={()=>{this.handleDiscard();this.props.updateShiftsHandler()}} variant="outline-success">
                 Update
               </Button>
             </ButtonToolbar>

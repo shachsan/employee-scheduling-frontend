@@ -91,12 +91,11 @@ export default function rootReducer(state=initialState, action){
             // edittedShifts:[...state.edittedShifts, action.payload]
         }
 
-        // case 'CANCEL_EDIT_SCHEDULE':
-        //     return {
-        //         ...state,
-        //         schedules:[...state.schedules.filter(sch=>sch.id!==action.payload.id), action.payload],
-        //         // edittedShifts:[...state.edittedShifts, action.payload]
-        //     }
+        case 'CANCEL_EDIT_SCHEDULE':
+            return {
+                ...state,
+                schedules:[...state.schedules.filter(sch=>sch.id!==action.payload.id), action.payload],
+            }
         
         default:
             return state

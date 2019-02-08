@@ -447,6 +447,23 @@ form input[type='submit']:enabled:hover{
   border: 2px solid blue;
 }
 
+.edit-update-cancel-btn{
+  height: 35px;
+  margin: 10px;
+  font-size: 1em;
+  float: right;
+  display: inline-block;
+}
+
+.alert-div{
+  background-color: lightskyblue;
+  display: inline;
+  
+}
+.update-cancel-toolbar{
+  float: right;
+}
+
 .shift{
   height: 50px;
   width: 120px;
