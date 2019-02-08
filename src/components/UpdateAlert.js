@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
-import Alert from 'react-bootstrap/Alert';
+import {Button,ButtonToolbar, Alert} from 'react-bootstrap';
 
 class UpdateAlert extends Component {
     constructor(props) {
@@ -8,33 +7,33 @@ class UpdateAlert extends Component {
   
       this.state = { show: true };
     }
+
+    handleDiscard=()=>{
+      this.setState({ show: false });
+    }
   
     render() {
-      const handleHide = () => this.setState({ show: false });
-      const handleShow = () => this.setState({ show: true });
+      // const handleShow = () => this.setState({ show: true });
       return (
         <>
-          <Alert show={this.state.show} variant="success">
-            {/* <Alert.Heading>How's it going?!</Alert.Heading> */}
+          {this.state.show ?
+          <Alert variant="warning">
             <p>
               You have made some changes on the current schedules. What would you like to do?
             </p>
-            {/* <hr /> */}
-            <div className="d-flex justify-content-middle">
-              <Button onClick={handleHide} variant="outline-success">
+            <ButtonToolbar>
+              <Button onClick={()=>{this.handleDiscard();this.props.resetEdittedShiftHandler()}} variant="outline-danger">
                 Discard Changes
               </Button>
-            </div>
-
-            <div className="d-flex justify-content-end">
-              <Button onClick={handleHide} variant="outline-success">
+              <Button onClick={()=>{this.handleDiscard();this.props.resetEdittedShiftHandler()}} variant="outline-success">
                 Update
               </Button>
-            </div>
+            </ButtonToolbar>
 
           </Alert>
+          :null}
   
-          {!this.state.show && <Button onClick={handleShow}>Show Alert</Button>}
+          {/* {!this.state.show && <Button onClick={handleShow}>Show Alert</Button>} */}
         </>
       );
     }
