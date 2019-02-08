@@ -103,11 +103,32 @@ class Calendar extends React.Component {
     }
   }
 
+  populateWeeks=()=>{
+    let allSchedules=this.props.schedules;
+    let weeklyDate=[];
+    let dateStart=allSchedules[0]
+    let dateEnd=allSchedules[allSchedules.length-1]
+    console.log(dateEnd);
+    if(dateStart && dateEnd){
+      for(let i=dateFns.parse(dateStart.date, {weekStartsOn:1});i<=dateFns.parse(dateEnd.date, {weekStartsOn:1});dateFns.addDays(i,7)){
+
+        weeklyDate.push(<option>{i}-{i+7}</option>)
+      }
+    }
+    // console.log(date.date);
+    // .map(schedule=>schedule.date)
+    // let uniqueDate=[...new Set(date)]
+    // return uniqueDate.map(uniDate=><option>{uniDate}</option>)
+  }
+
   renderHeader() {
       const dateFormat = "MM/DD/YY";
         return (
           <div>
             <div className="header row flex-middle">
+              <select className="week-selection">
+                {this.populateWeeks()}
+              </select>
               <div className="col col-start">
                 <div id="prev-week" className="icon" onClick={(e)=>this.checkIfUpdatedEdit(e)}>
                   chevron_left

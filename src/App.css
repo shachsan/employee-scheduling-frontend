@@ -111,6 +111,13 @@ header #logo {
   margin-left: 15px;
 }
 
+.week-selection{
+  width: 150px;
+  margin-left: 20px;
+  margin-top: 5px;
+  height: 30px;
+}
+
 .autoGen{
   background-color: greenyellow;
   display: block;
@@ -408,6 +415,7 @@ form input[type='submit']:enabled:hover{
 
 .row {
   margin-bottom: 10px;
+  
   /* margin-left:5px; */
   padding: 0;
   display:flex;
@@ -439,7 +447,8 @@ form input[type='submit']:enabled:hover{
 
 .emp-name{
   height: 50px;
-  width: 120px;
+  width: 145px;
+  padding-top: 10px;
   /* margin-top: 12px; */
   /* margin: 10px 0px; */
   text-align: center;
@@ -467,7 +476,7 @@ form input[type='submit']:enabled:hover{
 .shift{
   height: 50px;
   width: 120px;
-  padding:0;
+  padding-top: 10px;
   font-size: .9em;
   display: inline-block;
   /* vertical-align: middle; */
@@ -506,6 +515,8 @@ form input[type='submit']:enabled:hover{
 
 .name-header{
   width: 120px;
+  margin-left: 10px;
+  padding-left: 30px;
   /* margin-bottom: 20px; */
 }
 
@@ -579,6 +590,8 @@ form input[type='submit']:enabled:hover{
 .col-center {
   justify-content: center;
   text-align: center;
+  font-weight:bolder;
+
 }
 
 .col-end {
