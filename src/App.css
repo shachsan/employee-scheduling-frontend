@@ -476,7 +476,7 @@ form input[type='submit']:enabled:hover{
   font-weight: bolder;
 }
 
-.close{
+.closed{
   background-color:black;
   color: white;
   font-weight: bolder;

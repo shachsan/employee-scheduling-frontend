@@ -2,6 +2,7 @@ import React from "react";
 import dateFns from "date-fns";
 import {connect} from 'react-redux';
 import Alert from '../components/Alert';
+import UpdateAlert from '../components/UpdateAlert';
 import { 
           fetchGetSchedules, fetchGetDeptShifts, 
           fetchPostSchedules, fetchGetSchedulesOnly,
@@ -26,6 +27,7 @@ class Calendar extends React.Component {
     switchEditShifts:false,
     switchUpdateShifts:false,
     draggable:false,
+    needUpdate:false,
   }
 
   //my handlers
@@ -72,13 +74,25 @@ class Calendar extends React.Component {
     console.log('edittedshifts', edittedShiftsObj);
   }
 
+  checkIfUpdatedEdit=(e)=>{
+    if(this.state.edittedShifts.length>0){
+      this.setState({needUpdate:true})
+      // alert("Please update the changes made to the shifts")
+    }else if(e.target.id==='prev-week'){
+      this.props.onClickPrevWeekHandler();
+    }else if(e.target.id==='next-week'){
+      this.props.onClickNextWeekHandler();
+    }
+  }
+
   renderHeader() {
       const dateFormat = "MM/DD/YY";
         return (
           <div>
             <div className="header row flex-middle">
               <div className="col col-start">
-                <div className="icon" onClick={this.props.onClickPrevWeekHandler}>
+                <div id="prev-week" className="icon" onClick={(e)=>this.checkIfUpdatedEdit(e)}>
+                {/* this.props.onClickPrevWeekHandler}> */}
                   chevron_left
                 </div>
               </div>
@@ -88,8 +102,8 @@ class Calendar extends React.Component {
                    - {dateFns.format(dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1}), dateFormat)}
                 </span>
               </div>
-              <div className="col col-end" onClick={this.props.onClickNextWeekHandler}>
-                <div className="icon">chevron_right</div>
+              <div className="col col-end">
+                <div id="next-week" className="icon" onClick={(e)=>this.checkIfUpdatedEdit(e)}>chevron_right</div>
               </div>
               <button className="autoGen" onClick={this.handleAutoGenerateShifts}>Auto Generate Schedule</button>
               <button className="clear-sch"onClick={this.handleDeleteAllShifts}>Clear All Shifts</button>
@@ -129,7 +143,7 @@ class Calendar extends React.Component {
       }else if(shiftId===2){
         return 'mid'
       }else if(shiftId===3){
-        return 'close'
+        return 'closed'
       }else{
         return 'day-off'
       }
@@ -345,6 +359,7 @@ class Calendar extends React.Component {
       <React.Fragment>
           <div className="calendar">
               {this.renderHeader()}
+              {this.state.needUpdate ? <UpdateAlert/>:null}
               {this.renderDays()}
               <div className="name-header">Name</div>
               <div>{this.renderShift()}</div>

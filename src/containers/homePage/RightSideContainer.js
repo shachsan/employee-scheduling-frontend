@@ -29,7 +29,7 @@ class RightSideContainer extends Component{
         }else if(shiftId===2){
           return 'mid'
         }else if(shiftId===3){
-          return 'close'
+          return 'closed'
         }else{
           return 'day-off'
         }
