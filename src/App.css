@@ -284,11 +284,6 @@ main {
 
 /* SCHEDULE SIDE BAR */
 
-.lecture-room{
-  border-bottom: 2px solid gray;
-}
-
-
 
 .add-new-team-button{
   background-color: lightgreen;
@@ -368,12 +363,16 @@ form input[type='submit']:enabled:hover{
   
 }
 
+.header-wrap{
+  width: flex;
+  /* vertical-align: top; */
+}
+
 .schedule-page{
   background-color: midnightblue;
   padding: 0 10px 10px 10px;
   margin-left: 15px;
   height: 100px;
-
 }
 
 #select-label{
@@ -696,20 +695,20 @@ form input[type='submit']:enabled:hover{
   margin-top: 10px;
 }
 
-/* .January{
-  background-image: url(https://getflywheel.com/wp-content/uploads/2015/01/largegiffeature.gif)
+.copy-paste{
+  vertical-align: top;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.copy, .paste{
+  display: inline-block;
+  /* float: right; */
+  background-color: midnightblue;
+  margin:5px;
 }
 
-.February{
-  background-image: url(http://cur.glitter-graphics.net/pub/2926/2926044swemslxwu6.gif)
-}
-.March{
-  background-image: url(https://www.google.com/logos/doodles/2017/grandfathers-day-2017-poland-5673656096129024-hp.gif)
-}
 
-.April{
-  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9fP_IuqaVLj658A5MRQXbkeqVszq6V9wceJyoFbRq0BmvF362GQ)
-} */
 
 .calendar .header {
   text-transform: uppercase;
@@ -743,11 +742,11 @@ form input[type='submit']:enabled:hover{
 }
 
 .calendar .header .icon:first-of-type {
-  margin-left: 1em;
+  margin-left: 2em;
 }
 
 .calendar .header .icon:last-of-type {
-  margin-right: 1em;
+  margin-right: 2em;
 }
 
 .calendar .days {

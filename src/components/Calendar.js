@@ -24,6 +24,7 @@ class Calendar extends React.Component {
     deptAssociates:[],
     mandotoryShifts:[],
     token:'',
+    selectedWeekShifts:[],
     edittedShifts:[],
     originalSchedules:[],
     switchAutoGen:true,
@@ -33,7 +34,47 @@ class Calendar extends React.Component {
     needUpdate:false,
   }
 
+
+  getSelectedWeekSchedules=()=>{
+    const selectedWeekSchedules = this.props.schedules.filter(s=>dateFns.parse(s.date)>=dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1}) && 
+    dateFns.parse(s.date)<=dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1}))
+    return selectedWeekSchedules;
+  }
+
   //my handlers
+
+
+  copyHandler=()=>{
+    this.setState({
+      selectedWeekShifts:this.getSelectedWeekSchedules(),
+    })
+  }
+
+  pasteHandler=()=>{
+    let newShifts=[]
+    const selectedWeekSchedules=this.getSelectedWeekSchedules();
+    //check if the selectedWeekSchedules in state is not empty
+    if(this.state.selectedWeekShifts.length<1)
+      return alert("No schedules have been copied, please copy the source schedules.")
+    
+    //check if shifts already exist on the selected week
+    if(selectedWeekSchedules.length>0)
+      return alert("Shifts already exist for this week. Please choose empty schedules")
+    
+    //if not update redux store schedules with the selectedWeekSchedules from the local state
+    this.state.selectedWeekShifts.forEach(schedule=>{
+        const parseSch=dateFns.parse(schedule.date)
+        const updatedSch=dateFns.addDays(parseSch,7)
+        newShifts.push(updatedSch)
+    })
+    console.log('selected original schedules', this.state.selectedWeekShifts);
+    console.log('updated schedules', newShifts);
+
+    // const newSchedules=[...this.state.selectedWeekShifts,]
+
+
+  }
+
   resetEdittedShiftHandler=()=>{
     this.setState({edittedShifts:[]});
     this.state.originalSchedules.forEach(sch=>this.props.cancelEdit(sch))
@@ -121,7 +162,7 @@ class Calendar extends React.Component {
   renderHeader() {
       const dateFormat = "MM/DD/YY";
         return (
-          <div>
+          <div className="header-wrap">
             <div className="header row flex-middle schedule-page">
               <div className="col col-start">
               <span id="select-label">Jump to Schedules</span>
@@ -144,12 +185,13 @@ class Calendar extends React.Component {
               </div>
               <button className="autoGen" onClick={this.handleAutoGenerateShifts}>Auto Generate Schedule</button>
               <button className="clear-sch"onClick={this.handleDeleteAllShifts}>Clear All Shifts</button>
+              {/* <div><button>Copy</button></div> */}
             </div>
           </div>
         );
-        }
-    
-
+      }
+      
+      
       renderDays=()=>{
         const dateFormat = "ddd";
         const days = [];
@@ -163,74 +205,74 @@ class Calendar extends React.Component {
         }
         return <div className="days row">{days}</div>;
       }
-
-    
-    getShiftTime=(id)=>{
-      if(id===1)
+      
+      
+      getShiftTime=(id)=>{
+        if(id===1)
         return "8AM - 4PM"
-      if(id===2)
+        if(id===2)
         return "11AM - 7PM"
-      if(id===3)
+        if(id===3)
         return "2PM - 10PM"
-    }
-
-    getShiftColor=(shiftId)=>{
-      if(shiftId===1){
-        return 'open'
-      }else if(shiftId===2){
-        return 'mid'
-      }else if(shiftId===3){
-        return 'closed'
-      }else{
-        return 'day-off'
       }
-    }
-
-    componentDidMount(){
-      let token = localStorage.getItem("token");
-      this.setState({token:token})
-      console.log('calender component did mount token:', token);
-      if(token){
-        this.props.fetchGetSchedules(token);
-        this.props.fetchGetSchedulesOnly(token);
-        this.props.fetchGetDeptShifts(token);
-      }
-    }
-
-    deleteWholeWeekShiftsFromBackEnd=(idsToBeDeleted)=>{
-              fetch(`http://localhost:3000/api/v1/schedules/${idsToBeDeleted}`,{
-                method:'DELETE', 
-                headers:{
-                "Content-Type":"application/json",
-                'Authorization': this.state.token
-                }
-              })
+      
+      getShiftColor=(shiftId)=>{
+        if(shiftId===1){
+          return 'open'
+        }else if(shiftId===2){
+          return 'mid'
+        }else if(shiftId===3){
+          return 'closed'
+        }else{
+          return 'day-off'
         }
-        
-     
-    renderShift=()=>{
-      let shift=[];
-      let row=[];
-      let shiftContainerCounter=0;
-      const startOfWeek = dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1})
-      const endOfWeek = dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1})
-      const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.props.currentUser.user.dept_manager_id)//hard code 1, 1 is department id
-      if(dept){
-        dept.associates.forEach(associate=>{
-          
+      }
+      
+      componentDidMount(){
+        let token = localStorage.getItem("token");
+        this.setState({token:token})
+        console.log('calender component did mount token:', token);
+        if(token){
+          this.props.fetchGetSchedules(token);
+          this.props.fetchGetSchedulesOnly(token);
+          this.props.fetchGetDeptShifts(token);
+        }
+      }
+      
+      deleteWholeWeekShiftsFromBackEnd=(idsToBeDeleted)=>{
+        fetch(`http://localhost:3000/api/v1/schedules/${idsToBeDeleted}`,{
+          method:'DELETE', 
+          headers:{
+            "Content-Type":"application/json",
+            'Authorization': this.state.token
+          }
+        })
+      }
+      
+      
+      renderShift=()=>{
+        let shift=[];
+        let row=[];
+        let shiftContainerCounter=0;
+        const startOfWeek = dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1})
+        const endOfWeek = dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1})
+        const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.props.currentUser.user.dept_manager_id)//hard code 1, 1 is department id
+        if(dept){
+          dept.associates.forEach(associate=>{
+            
             shift.push(<div className="emp-name" key={associate.id}>{associate.name}</div>);
             for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
               shiftContainerCounter++;
-
+              
               //delete these lines if needs to back
               let associateShifts=this.props.schedules.find(schedule=>schedule.date===dateFns.format(i, 'YYYY-MM-DD')
-                && associate.id===schedule.associate_id
+              && associate.id===schedule.associate_id
               );
               if(associateShifts){
                 shift.push(
                   <div key={i} className={`shift col ${this.getShiftColor(associateShifts.shift_id)}`}
-                       draggable={this.state.draggable} onDrag={(e)=>this.onDragHandler(e, associateShifts)}
-                       >
+                  draggable={this.state.draggable} onDrag={(e)=>this.onDragHandler(e, associateShifts)}
+                  >
                        {this.getShiftTime(associateShifts.shift_id)} 
                   </div>)
               }else{
@@ -246,64 +288,62 @@ class Calendar extends React.Component {
             row.push(<div className="rows" key={shiftContainerCounter}>{shift}</div>)
             shift=[];
           })
+        }
+        return row;
       }
-      return row;
-    }
-
-    getRandomAssociateId=(associatesIds)=>{
       
-      if(associatesIds.length===1){
-        return associatesIds[0]
-      }else{
-      const pickedAssociateId=associatesIds.splice(Math.floor(Math.random()*associatesIds.length), 1);
-      return pickedAssociateId[0];
-      }
-    }
-
-
-    getRandomShiftFromExtraShifts=(availableShifts)=>{
-      if(availableShifts.length===1){
-        return availableShifts[0]
-      }else{
-      const pickedShift=availableShifts.splice(Math.floor(Math.random()*availableShifts.length), 1);
-      return pickedShift[0]
-      }
-    }
-
-    getRandomShift=(mandotoryShift, cloneDailyShift )=>{
-      const newArr= mandotoryShift;
-      const pickedShift=newArr.splice(Math.floor(Math.random()*newArr.length), 1);
-
-
-      for( let i = 0; i < cloneDailyShift.length-1; i++){ 
-        if ( cloneDailyShift[i] === pickedShift[0]) {
-          cloneDailyShift.splice(i, 1); 
+      getRandomAssociateId=(associatesIds)=>{
+        
+        if(associatesIds.length===1){
+          return associatesIds[0]
+        }else{
+          const pickedAssociateId=associatesIds.splice(Math.floor(Math.random()*associatesIds.length), 1);
+          return pickedAssociateId[0];
         }
       }
-        return pickedShift[0]
-     
-    }
-
-    calculateMandotoryShifts=()=>{
-      if(this.state.deptAssociates.length>3){
-        return [1,2,3]
-      }else if(this.state.deptAssociates.length<=3){
-        return [1,3]
+      
+      
+      getRandomShiftFromExtraShifts=(availableShifts)=>{
+        if(availableShifts.length===1){
+          return availableShifts[0]
+        }else{
+          const pickedShift=availableShifts.splice(Math.floor(Math.random()*availableShifts.length), 1);
+          return pickedShift[0]
+        }
       }
-    }
-
-
-    handleAutoGenerateShifts=()=>{  //right name for this function would be 'setupDataForAutoScheduling'
       
-      const shiftsExist=this.props.schedules.filter(s=>dateFns.parse(s.date)>=dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1}) && 
-        dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1}))
+      getRandomShift=(mandotoryShift, cloneDailyShift )=>{
+        const newArr= mandotoryShift;
+        const pickedShift=newArr.splice(Math.floor(Math.random()*newArr.length), 1);
+        
+        
+        for( let i = 0; i < cloneDailyShift.length-1; i++){ 
+          if ( cloneDailyShift[i] === pickedShift[0]) {
+            cloneDailyShift.splice(i, 1); 
+          }
+        }
+        return pickedShift[0]
+        
+      }
       
+      calculateMandotoryShifts=()=>{
+        if(this.state.deptAssociates.length>3){
+          return [1,2,3]
+        }else if(this.state.deptAssociates.length<=3){
+          return [1,3]
+        }
+      }
+      
+      
+      handleAutoGenerateShifts=()=>{  //right name for this function would be 'setupDataForAutoScheduling'
+      
+      const shiftsExist=this.getSelectedWeekSchedules();
       if(shiftsExist.length>0){
         console.log(shiftsExist);
         return alert("Shifts already exist for this week. Please clear the schedules before proceeding.")
       }
-        
-
+      
+      
       this.setState({switchEditShifts:true})
       let totalWeeklyShifts=0;
       let dailyShiftsAvailable=['day off'];
@@ -315,7 +355,7 @@ class Calendar extends React.Component {
       const deptAssociatesId=dept.associates.map(associate=>associate.id)
       const all_dept_shifts=this.props.dept_shifts;
       const deptShifts=all_dept_shifts.filter(ds=>ds.department_id===this.props.currentUser.user.dept_manager_id)
-
+      
       
       deptShifts.forEach(shift=>{
         for(let i=1;i<=shift.no_of_shift;i++){
@@ -325,56 +365,56 @@ class Calendar extends React.Component {
         totalWeeklyShifts=totalWeeklyShifts+shift.no_of_shift;// total weekly shifts 
       })
       totalWeeklyShifts=totalWeeklyShifts*7//total shifts for a week
-
+      
       this.setState({
         dailyShifts:dailyShiftsAvailable,
         totalWeeklyShifts:totalWeeklyShifts,
         deptAssociates:deptAssociatesId,
         mandotoryShifts:this.calculateMandotoryShifts(),
       },()=>{
-            const startOfWeek = dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1})
-            const endOfWeek = dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1})
-            let shiftCounter={};//store number of shifts of assigned for each associate
-            if(dept){
-             
-              for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
-                  let cloneMandotoryShift=[...this.state.mandotoryShifts];
-                  let cloneOfDailyShift = [...this.state.dailyShifts];
-                  let cloneDailyAssociates = [...this.state.deptAssociates];
-
-                  for (let j=1; j<=this.state.deptAssociates.length; j++){
-                    let randSelectedAssociate = this.getRandomAssociateId(cloneDailyAssociates);
-                    shiftCounter[randSelectedAssociate]=shiftCounter[randSelectedAssociate] + 1 || 1;
-                    
-                    if(shiftCounter[randSelectedAssociate]<=5){
-                      if(cloneMandotoryShift.length===0 && cloneDailyAssociates.length>0){
-                        let randShift=this.getRandomShiftFromExtraShifts(cloneOfDailyShift)
-                        if(randShift!=='day off'){
-                            newShifts.push({
-                              date:dateFns.format(i, 'YYYY-MM-DD'),
-                              associate_id:randSelectedAssociate,
-                              department_id:dept.id,
-                              shift_id:randShift
-                            })
-                        }else{
-                          shiftCounter[randSelectedAssociate]=shiftCounter[randSelectedAssociate]-1
-                        }
-                      }else{
-
-                        newShifts.push({
-                            date:dateFns.format(i, 'YYYY-MM-DD'),
-                            associate_id:randSelectedAssociate,
-                            department_id:dept.id,
-                            shift_id:this.getRandomShift(cloneMandotoryShift, cloneOfDailyShift)
-                        })
-                      }
-                    }
+        const startOfWeek = dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1})
+        const endOfWeek = dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1})
+        let shiftCounter={};//store number of shifts of assigned for each associate
+        if(dept){
+          
+          for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
+            let cloneMandotoryShift=[...this.state.mandotoryShifts];
+            let cloneOfDailyShift = [...this.state.dailyShifts];
+            let cloneDailyAssociates = [...this.state.deptAssociates];
+            
+            for (let j=1; j<=this.state.deptAssociates.length; j++){
+              let randSelectedAssociate = this.getRandomAssociateId(cloneDailyAssociates);
+              shiftCounter[randSelectedAssociate]=shiftCounter[randSelectedAssociate] + 1 || 1;
+              
+              if(shiftCounter[randSelectedAssociate]<=5){
+                if(cloneMandotoryShift.length===0 && cloneDailyAssociates.length>0){
+                  let randShift=this.getRandomShiftFromExtraShifts(cloneOfDailyShift)
+                  if(randShift!=='day off'){
+                    newShifts.push({
+                      date:dateFns.format(i, 'YYYY-MM-DD'),
+                      associate_id:randSelectedAssociate,
+                      department_id:dept.id,
+                      shift_id:randShift
+                    })
+                  }else{
+                    shiftCounter[randSelectedAssociate]=shiftCounter[randSelectedAssociate]-1
                   }
+                }else{
+                  
+                  newShifts.push({
+                    date:dateFns.format(i, 'YYYY-MM-DD'),
+                    associate_id:randSelectedAssociate,
+                    department_id:dept.id,
+                    shift_id:this.getRandomShift(cloneMandotoryShift, cloneOfDailyShift)
+                  })
+                }
               }
-              shiftsObj.schedules=newShifts
-              this.props.fetchPostSchedules(this.state.token, shiftsObj); 
             }
-        });
+          }
+          shiftsObj.schedules=newShifts
+          this.props.fetchPostSchedules(this.state.token, shiftsObj); 
+        }
+      });
     }
     
     handleDeleteAllShifts=()=>{
@@ -386,21 +426,21 @@ class Calendar extends React.Component {
           if((dateFns.parse(schedule.date) >= startOfWeek && 
           dateFns.parse(schedule.date) <= endOfWeek) && 
           schedule.department_id===this.props.currentUser.user.dept_manager_id){
-
+            
             idsToBeDeleted.push(schedule.id)
           }
           return (!(dateFns.parse(schedule.date) >= startOfWeek && 
-                dateFns.parse(schedule.date) <= endOfWeek) && 
-                schedule.department_id===this.props.currentUser.user.dept_manager_id)
-              })
-      this.deleteWholeWeekShiftsFromBackEnd(idsToBeDeleted);//for pessimistic operation
-      this.props.deleteWholeWeekShifts(remainingShiftsAfterDeletion)//for optimistic rendering, this will update redux store
-
-    }
-    
-    render() {
-    return (
-      <React.Fragment>
+          dateFns.parse(schedule.date) <= endOfWeek) && 
+          schedule.department_id===this.props.currentUser.user.dept_manager_id)
+        })
+        this.deleteWholeWeekShiftsFromBackEnd(idsToBeDeleted);//for pessimistic operation
+        this.props.deleteWholeWeekShifts(remainingShiftsAfterDeletion)//for optimistic rendering, this will update redux store
+        
+      }
+      
+      render() {
+        return (
+          <React.Fragment>
           <div className="calendar">
               {this.renderHeader()}
               {this.state.needUpdate ? <UpdateAlert resetEdittedShiftHandler={this.resetEdittedShiftHandler}
@@ -408,6 +448,11 @@ class Calendar extends React.Component {
               {this.renderDays()}
               <div className="name-header">Name</div>
               <div>{this.renderShift()}</div>
+              <div className="copy-paste">
+                  <div className="copy"><Button variant='info' onClick={this.copyHandler}>Copy Schedules</Button></div>
+                  <div className="paste"><Button variant='info' onClick={this.pasteHandler}>Paste Schedules</Button></div>
+              </div>
+              
               {this.state.switchEditShifts ?
                 <React.Fragment> 
                   <Alert/>

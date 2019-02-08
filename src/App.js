@@ -23,7 +23,7 @@ class App extends Component {
   }
 
   selectDateChangeHandler=(e)=>{
-    this.setState({currentDate:e.target.value})
+    this.setState({currentDate:dateFns.parse(e.target.value)})
   }
 
   onClickNextWeekHandler=()=>{
