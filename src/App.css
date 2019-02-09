@@ -23,6 +23,11 @@
   100% { transform: rotate(-4deg); }
 }
 
+@keyframes rush{
+  0%{left:0px; top:0px;}
+  100%{left:400px; top:400px;}
+}
+
 .icon {
   font-family: 'Material Icons', serif;
   font-style: normal;
@@ -517,11 +522,25 @@ form input[type='submit']:enabled:hover{
   text-align: center;
   margin-right: 5px;
   border: 2px solid blue;
+  transition: transform .2s ease-out;
 }
 
-.shift:not(.day-off){
+/* .shift:not(.day-off){
+  cursor: pointer;
+} */
+
+div[draggable='true']{
   cursor: pointer;
 }
+
+div[draggable='true']:hover{
+  z-index: 2;
+  transform: scale(1.08);
+  /* transform: scale(1.1); */
+  box-shadow:5px 5px 10px rgba(0,0,0,0.5);
+  /* box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+}
+
 
 .open{
   background-color: lightgreen;
@@ -568,6 +587,16 @@ form input[type='submit']:enabled:hover{
     height:500px;
     font-weight: bolder;
     padding: 10px;
+}
+
+.animate-div{
+  height: 50px;
+  width: 120px;
+  z-index: 4;
+  animation-name: rush;
+  animation-duration: 5s;
+  position: relative;
+  background-color: yellow;
 }
 
 .roaster-shift{

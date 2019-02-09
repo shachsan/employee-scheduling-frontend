@@ -13,6 +13,7 @@ import {
 import {deleteWholeWeekShifts, setDraggedShift, updateDraggedShift, cancelEdit} from '../action/actionCreater';
 import './Calendar.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
+// import AnimationDiv from '../components/AnimationDiv';
 
 
 class Calendar extends React.Component {
@@ -68,7 +69,7 @@ class Calendar extends React.Component {
     
     //if not update redux store schedules with the selectedWeekSchedules from the local state
     const daysDiff=dateFns.differenceInCalendarDays(dateFns.startOfWeek(this.props.currentDate), this.state.copiedWeek)
-    const cloneCopiedWeek=JSON.parse(JSON.stringify(this.state.selectedWeekShifts))
+    const cloneCopiedWeek=JSON.parse(JSON.stringify(this.state.selectedWeekShifts))//this makes a copy of an object without referencing same object
     console.log("clone", cloneCopiedWeek);
     cloneCopiedWeek.forEach(schedule=>{
       const parseDate=dateFns.parse(schedule.date)//parse schedule date to add days in next step
@@ -96,7 +97,10 @@ class Calendar extends React.Component {
   }
 
   cancelEditHandler=()=>{
-    this.setState({switchUpdateShifts:false})
+    this.setState({
+      switchUpdateShifts:false,
+      draggable:false, 
+      switchEditShifts:true})
   }
 
   onDragHandler=(e, shift)=>{
@@ -358,6 +362,7 @@ class Calendar extends React.Component {
         return alert("Shifts already exist for this week. Please clear the schedules before proceeding.")
       }
       
+      // <AnimationDiv/>
       
       this.setState({switchEditShifts:true})
       let totalWeeklyShifts=0;

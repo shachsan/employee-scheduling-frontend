@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import dateFns from 'date-fns';
+import AnimationDiv from '../components/AnimationDiv';
 
 class ScheduleRightSideContainer extends Component{
 
@@ -23,7 +24,7 @@ class ScheduleRightSideContainer extends Component{
             <div className='side-container'> 
                 <h2>Plan your schedules based on the events</h2>
                 {this.renderEvents()}
-
+                <AnimationDiv/>
             </div>
         );
     }
