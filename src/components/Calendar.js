@@ -25,6 +25,7 @@ class Calendar extends React.Component {
     mandotoryShifts:[],
     token:'',
     selectedWeekShifts:[],
+    copiedWeek:'',
     edittedShifts:[],
     originalSchedules:[],
     switchAutoGen:true,
@@ -47,11 +48,15 @@ class Calendar extends React.Component {
   copyHandler=()=>{
     this.setState({
       selectedWeekShifts:this.getSelectedWeekSchedules(),
+      copiedWeek:dateFns.startOfWeek(this.props.currentDate),
     })
+
+    console.log('copied',this.state.selectedWeekShifts)
   }
 
   pasteHandler=()=>{
     let newShifts=[]
+    let shiftsObj={}
     const selectedWeekSchedules=this.getSelectedWeekSchedules();
     //check if the selectedWeekSchedules in state is not empty
     if(this.state.selectedWeekShifts.length<1)
@@ -59,18 +64,26 @@ class Calendar extends React.Component {
     
     //check if shifts already exist on the selected week
     if(selectedWeekSchedules.length>0)
-      return alert("Shifts already exist for this week. Please choose empty schedules")
+      return alert("Shifts already exist for this week. Please choose empty schedules or clear these shifts")
     
     //if not update redux store schedules with the selectedWeekSchedules from the local state
-    this.state.selectedWeekShifts.forEach(schedule=>{
-        // schedule.date=dateFns.parse(schedule.date).addDays()
-        const parseSch=dateFns.parse(schedule.date)
-        const updatedSch=dateFns.addDays(parseSch,7)
-        schedule.date=updatedSch
-        newShifts.push(schedule)
+    const daysDiff=dateFns.differenceInCalendarDays(dateFns.startOfWeek(this.props.currentDate), this.state.copiedWeek)
+    const cloneCopiedWeek=JSON.parse(JSON.stringify(this.state.selectedWeekShifts))
+    console.log("clone", cloneCopiedWeek);
+    cloneCopiedWeek.forEach(schedule=>{
+      const parseDate=dateFns.parse(schedule.date)//parse schedule date to add days in next step
+      const addDays=dateFns.addDays(parseDate,daysDiff)
+      // console.log('updatedSch', updatedSch);
+      delete schedule.id;//remove id for post method
+      schedule.date=dateFns.format(addDays, 'YYYY-MM-DD')//convert to string to match database type
+      newShifts.push(schedule)
     })
-    console.log('selected original schedules', this.state.selectedWeekShifts);
-    console.log('updated schedules', newShifts);
+    console.log("state",this.state.selectedWeekShifts);
+    // console.log('selected original schedules', this.state.selectedWeekShifts);
+    // console.log('updated schedules', newShifts);
+    shiftsObj.schedules=newShifts
+    this.props.fetchPostSchedules(this.state.token, shiftsObj); 
+    
 
     // const newSchedules=[...this.state.selectedWeekShifts,]
 
