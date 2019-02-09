@@ -63,9 +63,11 @@ class Calendar extends React.Component {
     
     //if not update redux store schedules with the selectedWeekSchedules from the local state
     this.state.selectedWeekShifts.forEach(schedule=>{
+        // schedule.date=dateFns.parse(schedule.date).addDays()
         const parseSch=dateFns.parse(schedule.date)
         const updatedSch=dateFns.addDays(parseSch,7)
-        newShifts.push(updatedSch)
+        schedule.date=updatedSch
+        newShifts.push(schedule)
     })
     console.log('selected original schedules', this.state.selectedWeekShifts);
     console.log('updated schedules', newShifts);
