@@ -27,6 +27,7 @@ class HomePageMainContainer extends Component {
     }
 
     render() {
+        // console.log('homepage render',this.props.location.state);
         return (
             <React.Fragment>
                 {this.props.currentUser.user ?

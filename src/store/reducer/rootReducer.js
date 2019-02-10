@@ -96,6 +96,12 @@ export default function rootReducer(state=initialState, action){
                 ...state,
                 schedules:[...state.schedules.filter(sch=>sch.id!==action.payload.id), action.payload],
             }
+
+        case 'UPDATE_AVAILABLITY':
+        return {
+            ...state,
+            deptAssociates:[...state.deptAssociates.filter(ass=>ass.id!==action.payload.id), action.payload],
+        }
         
         default:
             return state
