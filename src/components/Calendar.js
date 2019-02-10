@@ -13,7 +13,7 @@ import {
 import {deleteWholeWeekShifts, setDraggedShift, updateDraggedShift, cancelEdit} from '../action/actionCreater';
 import './Calendar.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
-// import AnimationDiv from '../components/AnimationDiv';
+import AnimationDiv from '../components/AnimationDiv';
 
 
 class Calendar extends React.Component {
@@ -34,6 +34,7 @@ class Calendar extends React.Component {
     switchUpdateShifts:false,
     draggable:false,
     needUpdate:false,
+    startAnimation:false,
   }
 
 
@@ -289,13 +290,13 @@ class Calendar extends React.Component {
               );
               if(associateShifts){
                 shift.push(
-                  <div key={i} className={`shift col ${this.getShiftColor(associateShifts.shift_id)}`}
+                  <div key={i} className={`shift ${dateFns.format(i, 'ddd')+ associate.id} col ${this.getShiftColor(associateShifts.shift_id)}`}
                   draggable={this.state.draggable} onDrag={(e)=>this.onDragHandler(e, associateShifts)}
                   >
                        {this.getShiftTime(associateShifts.shift_id)} 
                   </div>)
               }else{
-                shift.push(<div className="shift col day-off" key={i}
+                shift.push(<div className={`shift col day-off day-off-${associate.id}`} key={i}
                 onDrop={(e)=>this.onDropHandler(e, dateFns.format(i, 'YYYY-MM-DD'))}
                 onDragOver={(e)=>this.onDragOverHandler(e)}
                 >
@@ -361,6 +362,8 @@ class Calendar extends React.Component {
         console.log(shiftsExist);
         return alert("Shifts already exist for this week. Please clear the schedules before proceeding.")
       }
+
+      this.setState({startAnimation:true})
       
       // <AnimationDiv/>
       
@@ -409,7 +412,9 @@ class Calendar extends React.Component {
               if(shiftCounter[randSelectedAssociate]<=5){
                 if(cloneMandotoryShift.length===0 && cloneDailyAssociates.length>0){
                   let randShift=this.getRandomShiftFromExtraShifts(cloneOfDailyShift)
+                
                   if(randShift!=='day off'){
+                    // const ani=()=><AnimationDiv/>
                     newShifts.push({
                       date:dateFns.format(i, 'YYYY-MM-DD'),
                       associate_id:randSelectedAssociate,
@@ -467,6 +472,7 @@ class Calendar extends React.Component {
                   updateShiftsHandler={this.updateShiftsHandler}/>:null}
               {this.renderDays()}
               <div className="name-header">Name</div>
+              {/* {this.state.startAnimation ? <AnimationDiv/>:null} */}
               <div>{this.renderShift()}</div>
               <div className="copy-paste">
                   <div className="copy"><Button variant='info' onClick={this.copyHandler}>Copy Schedules</Button></div>

@@ -23,9 +23,189 @@
   100% { transform: rotate(-4deg); }
 }
 
-@keyframes rush{
-  0%{left:0px; top:0px;}
-  100%{left:400px; top:400px;}
+/* .rush-ani(rush;@left;@top;){ */
+@keyframes rush-mon{
+  0%{left:-400px; top:-200px;}
+  100%{left:0px; top:0px;}
+}
+/* } */
+
+@keyframes rush-tue{
+  0%{left:-200px; top:-100px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-wed{
+  0%{left:100px; top:-400px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-thurs{
+  0%{left:-400px; top:600px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-fri{
+  0%{left:300px; top:700px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-sat{
+  0%{left:100px; top:700px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-sun{
+  0%{left:135px; top:90px;}
+  100%{left:0px; top:0px;}
+}
+
+
+@keyframes rush-mon7{
+  0%{left:150px; top:60px;}
+  100%{left:0px; top:0px;}
+}
+/* } */
+
+@keyframes rush-tue7{
+  0%{left:140px; top:400px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-wed7{
+  0%{left:700px; top:450px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-thurs7{
+  0%{left:700px; top:300px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-fri7{
+  0%{left:700px; top:200px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-sat7{
+  0%{left:700px; top:100px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-sun7{
+  0%{left:-400px; top:400px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-mon13{
+  0%{left:-400px; top:250px;}
+  100%{left:0px; top:0px;}
+}
+/* } */
+
+@keyframes rush-tue13{
+  0%{left:120px; top:350px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-wed13{
+  0%{left:30px; top:100px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-thurs13{
+  0%{left:40px; top:600px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-fri13{
+  0%{left:50px; top:700px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-sat13{
+  0%{left:60px; top:700px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-sun13{
+  0%{left:70px; top:700px;}
+  100%{left:0px; top:0px;}
+}
+
+
+
+@keyframes rush-mon19{
+  0%{left:80px; top:700px;}
+  100%{left:0px; top:0px;}
+}
+/* } */
+
+@keyframes rush-tue19{
+  0%{left:500px; top:-500px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-wed19{
+  0%{left:-100px; top:500px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-thurs19{
+  0%{left:-400px; top:300px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-fri19{
+  0%{left:700px; top:200px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-sat19{
+  0%{left:600px; top:100px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-sun19{
+  0%{left:500px; top:500px;}
+  100%{left:0px; top:0px;}
+}
+
+
+@keyframes rush-mon23{
+  0%{left:400px; top:300px;}
+  100%{left:0px; top:0px;}
+}
+/* } */
+
+@keyframes rush-tue23{
+  0%{left:-300px; top:300px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-wed23{
+  0%{left:300px; top:-400px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-thurs23{
+  0%{left:300px; top:600px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-fri23{
+  0%{left:100px; top:300px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-sat23{
+  0%{left:0px; top:300px;}
+  100%{left:0px; top:0px;}
+}
+
+@keyframes rush-sun23{
+  0%{left:-400px; top:600px;}
+  100%{left:0px; top:0px;}
 }
 
 .icon {
@@ -524,6 +704,218 @@ form input[type='submit']:enabled:hover{
   border: 2px solid blue;
   transition: transform .2s ease-out;
 }
+
+.Mon1, .day-off-1{
+  position: absolute;
+  animation-name: rush-mon;
+  animation-duration: 1s;
+}
+
+.Tue1, .day-off-1{
+  position: absolute;
+  animation-name: rush-tue;
+  animation-duration: 2s;
+}
+
+.Wed1, .day-off-1{
+  position: absolute;
+  animation-name: rush-wed;
+  animation-duration: 1s;
+}
+
+.Thu1, .day-off-1{
+  position: absolute;
+  animation-name: rush-thurs;
+  animation-duration: 1s;
+}
+
+.Fri1, .day-off-1{
+  position: absolute;
+  animation-name: rush-fri;
+  animation-duration: 1s;
+}
+
+.Sat1, .day-off-1{
+  position: absolute;
+  animation-name: rush-sat;
+  animation-duration: 1s;
+}
+
+.Sun1, .day-off-1{
+  position: absolute;
+  animation-name: rush-sun;
+  animation-duration: 1s;
+}
+
+.Mon7, .day-off-7{
+  position: absolute;
+  animation-name: rush-mon7;
+  animation-duration: 1s;
+}
+
+.Tue7, .day-off-7{
+  position: absolute;
+  animation-name: rush-tue7;
+  animation-duration: 2s;
+}
+
+.Wed7, .day-off-7{
+  position: absolute;
+  animation-name: rush-wed7;
+  animation-duration: 1s;
+}
+
+.Thu7, .day-off-7{
+  position: absolute;
+  animation-name: rush-thurs7;
+  animation-duration: 1s;
+}
+
+.Fri7, .day-off-7{
+  position: absolute;
+  animation-name: rush-fri7;
+  animation-duration: 1s;
+}
+
+.Sat7, .day-off-7{
+  position: absolute;
+  animation-name: rush-sat7;
+  animation-duration: 1s;
+}
+
+.Sun7, .day-off-7{
+  position: absolute;
+  animation-name: rush-sun7;
+  animation-duration: 1s;
+}
+
+.Mon13, .day-off-13{
+  position: absolute;
+  animation-name: rush-mon13;
+  animation-duration: 1s;
+}
+
+.Tue13, .day-off-13{
+  position: absolute;
+  animation-name: rush-tue13;
+  animation-duration: 2s;
+}
+
+.Wed13, .day-off-13{
+  position: absolute;
+  animation-name: rush-wed13;
+  animation-duration: 1s;
+}
+
+.Thu13, .day-off-13{
+  position: absolute;
+  animation-name: rush-thurs13;
+  animation-duration: 1s;
+}
+
+.Fri13, .day-off-13{
+  position: absolute;
+  animation-name: rush-fri13;
+  animation-duration: 1s;
+}
+
+.Sat13, .day-off-13{
+  position: absolute;
+  animation-name: rush-sat13;
+  animation-duration: 1s;
+}
+
+.Sun13, .day-off-13{
+  position: absolute;
+  animation-name: rush-sun13;
+  animation-duration: 1s;
+}
+
+.Mon19, .day-off-19{
+  position: absolute;
+  animation-name: rush-mon19;
+  animation-duration: 1s;
+}
+
+.Tue19, .day-off-19{
+  position: absolute;
+  animation-name: rush-tue19;
+  animation-duration: 2s;
+}
+
+.Wed19, .day-off-19{
+  position: absolute;
+  animation-name: rush-wed19;
+  animation-duration: 1s;
+}
+
+.Thu19, .day-off-19{
+  position: absolute;
+  animation-name: rush-thurs19;
+  animation-duration: 1s;
+}
+
+.Fri19, .day-off-19{
+  position: absolute;
+  animation-name: rush-fri19;
+  animation-duration: 1s;
+}
+
+.Sat19, .day-off-19{
+  position: absolute;
+  animation-name: rush-sat19;
+  animation-duration: 1s;
+}
+
+.Sun19, .day-off-19{
+  position: absolute;
+  animation-name: rush-sun19;
+  animation-duration: 1s;
+}
+
+
+.Mon23, .day-off-23{
+  position: absolute;
+  animation-name: rush-mon23;
+  animation-duration: 1s;
+}
+
+.Tue23, .day-off-23{
+  position: absolute;
+  animation-name: rush-tue23;
+  animation-duration: 2s;
+}
+
+.Wed23, .day-off-23{
+  position: absolute;
+  animation-name: rush-wed23;
+  animation-duration: 1s;
+}
+
+.Thu23, .day-off-23{
+  position: absolute;
+  animation-name: rush-thurs23;
+  animation-duration: 1s;
+}
+
+.Fri23, .day-off-23{
+  position: absolute;
+  animation-name: rush-fri23;
+  animation-duration: 1s;
+}
+
+.Sat23, .day-off-23{
+  position: absolute;
+  animation-name: rush-sat23;
+  animation-duration: 1s;
+}
+
+.Sun23, .day-off-23{
+  position: absolute;
+  animation-name: rush-sun23;
+  animation-duration: 1s;
+}
+
 
 /* .shift:not(.day-off){
   cursor: pointer;

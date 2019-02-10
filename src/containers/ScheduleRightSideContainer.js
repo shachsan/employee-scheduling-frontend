@@ -24,7 +24,7 @@ class ScheduleRightSideContainer extends Component{
             <div className='side-container'> 
                 <h2>Plan your schedules based on the events</h2>
                 {this.renderEvents()}
-                <AnimationDiv/>
+                {/* <AnimationDiv/> */}
             </div>
         );
     }
