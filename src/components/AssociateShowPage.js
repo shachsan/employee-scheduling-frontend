@@ -20,11 +20,12 @@ class AssociateShowPage extends Component{
     }
 
     onChangeHandler=(e)=>{
-
+        const newAvail={...this.state.availability}
+        newAvail[e.target.name]=e.target.checked
         // console.log('checkbox target',e.target.value);
         this.setState({
             updateBtn:true,
-            [e.target.name]:e.target.checked
+            availability:newAvail
         })
     }
 
@@ -46,13 +47,13 @@ class AssociateShowPage extends Component{
                 </ul>
                 <h3>Availability</h3>
                 <ul>
-                    <li>Monday:<input type="checkbox" name="monday" checked={this.state.monday} onChange={this.onChangeHandler}/></li>
-                    <li>Tuesday:<input type="checkbox" name="tuesday" checked={this.state.tuesday} onChange={this.onChangeHandler}/></li>
-                    <li>Wednesday:<input type="checkbox" name="wednesday" checked={this.state.wednesday} onChange={this.onChangeHandler}/></li>
-                    <li>Thursday:<input type="checkbox" name="thursday" checked={this.state.thursday} onChange={this.onChangeHandler}/></li>
-                    <li>Friday:<input type="checkbox" name="friday" checked={this.state.friday} onChange={this.onChangeHandler}/></li>
-                    <li>Saturday:<input type="checkbox" name="saturday" checked={this.state.saturday} onChange={this.onChangeHandler}/></li>
-                    <li>Sunday:<input type="checkbox" name="sunday" checked={this.state.sunday} onChange={this.onChangeHandler}/></li>
+                    <li>Monday:<input type="checkbox" name="monday" checked={this.state.availability.monday} onChange={this.onChangeHandler}/></li>
+                    <li>Tuesday:<input type="checkbox" name="tuesday" checked={this.state.availability.tuesday} onChange={this.onChangeHandler}/></li>
+                    <li>Wednesday:<input type="checkbox" name="wednesday" checked={this.state.availability.wednesday} onChange={this.onChangeHandler}/></li>
+                    <li>Thursday:<input type="checkbox" name="thursday" checked={this.state.availability.thursday} onChange={this.onChangeHandler}/></li>
+                    <li>Friday:<input type="checkbox" name="friday" checked={this.state.availability.friday} onChange={this.onChangeHandler}/></li>
+                    <li>Saturday:<input type="checkbox" name="saturday" checked={this.state.availability.saturday} onChange={this.onChangeHandler}/></li>
+                    <li>Sunday:<input type="checkbox" name="sunday" checked={this.state.availability.sunday} onChange={this.onChangeHandler}/></li>
                 </ul>
                 {this.state.updateBtn ? 
                 <ButtonToolbar>

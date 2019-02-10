@@ -100,7 +100,7 @@ export default function rootReducer(state=initialState, action){
         case 'UPDATE_AVAILABLITY':
         return {
             ...state,
-            deptAssociates:[...state.deptAssociates.filter(ass=>ass!==action.payload), action.payload],
+            deptAssociates:[...state.deptAssociates.filter(ass=>ass.id!==action.payload.id), action.payload],
         }
         
         default:

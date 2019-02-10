@@ -1,6 +1,7 @@
 import React from "react";
 import dateFns from "date-fns";
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import Alert from '../components/Alert';
 import UpdateAlert from '../components/UpdateAlert';
 import { 
@@ -268,6 +269,13 @@ class Calendar extends React.Component {
           }
         })
       }
+
+      handleOnClickName=(associate)=>{
+        // console.log(this.props.location);
+        this.props.history.push("/home", {
+          associate:associate
+        })
+      }
       
       
       renderShift=()=>{
@@ -280,7 +288,7 @@ class Calendar extends React.Component {
         if(dept){
           dept.associates.forEach(associate=>{
             
-            shift.push(<div className="emp-name" key={associate.id}>{associate.name}</div>);
+            shift.push(<div className="emp-name" key={associate.id} onClick={()=>this.handleOnClickName(associate)}>{associate.name}</div>);
             for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
               shiftContainerCounter++;
               
@@ -420,8 +428,11 @@ class Calendar extends React.Component {
               shiftCounter[randSelectedAssociate]=shiftCounter[randSelectedAssociate] + 1 || 1;
               
               if(shiftCounter[randSelectedAssociate]<=5 && available){
-                if(available)
-                  shiftCounter[randSelectedAssociate]=shiftCounter[randSelectedAssociate]-1
+                // if(available){
+
+                //   shiftCounter[randSelectedAssociate]=shiftCounter[randSelectedAssociate]-1
+                // }
+                console.log('shift counter', shiftCounter);
                 if(cloneMandotoryShift.length===0 && cloneDailyAssociates.length>0){
                   let randShift=this.getRandomShiftFromExtraShifts(cloneOfDailyShift)
                 
@@ -445,7 +456,7 @@ class Calendar extends React.Component {
                     shift_id:this.getRandomShift(cloneMandotoryShift, cloneOfDailyShift)
                   })
                 }
-              }
+              }else{shiftCounter[randSelectedAssociate]=shiftCounter[randSelectedAssociate]-1}
             }
           }
           shiftsObj.schedules=newShifts
@@ -535,4 +546,4 @@ const mapDispatchToProps=(dispatch)=>{
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Calendar));

@@ -30,7 +30,7 @@ export const addNewTeamMember=(token, newAss)=>{
         'Authorization': token},
         body:JSON.stringify(availability)
       }).then(res=>res.json())
-      .then(updatedAvail=>dispatch(updateAvailability(updatedAvail)))
+      .then(associateUpdateAvail=>dispatch(updateAvailability(associateUpdateAvail)))
     }
   }
 

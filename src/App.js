@@ -47,7 +47,7 @@ class App extends Component {
   }
 
   render() {
-    console.log('currentDate in App render',this.state.currentDate);
+    // console.log('currentDate in App render',this.state.currentDate);
     return (
           <div className="App">
               <Switch>
