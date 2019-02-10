@@ -1286,6 +1286,9 @@ div[draggable='true']:hover{
   letter-spacing: -.07em;
 }
 
+.availability{
+  margin: 5px 5px;
+}
 /* .calendar .body .cell:hover .bg, .calendar .body .selected .bg  {
   opacity: 0.05;
   transition: .10s ease-in;
