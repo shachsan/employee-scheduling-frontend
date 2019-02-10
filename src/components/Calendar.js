@@ -353,6 +353,15 @@ class Calendar extends React.Component {
           return [1,3]
         }
       }
+
+      checkAvailability=(dept, associateId, day)=>{
+        const associate=dept.associates.find(ass=>ass.id===associateId)
+        console.log(associate, day);
+        const availability=associate[day];
+        // console.log('availability:',availability);
+        return availability;
+        // this.props.fetchCheckAvailability(associateId, day.toLowerCase())
+      }
       
       
       handleAutoGenerateShifts=()=>{  //right name for this function would be 'setupDataForAutoScheduling'
@@ -374,7 +383,7 @@ class Calendar extends React.Component {
       let newShifts=[];
       
       
-      const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.props.currentUser.user.dept_manager_id)//hard code 1, 1 is department id
+      const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.props.currentUser.user.dept_manager_id)
       const deptAssociatesId=dept.associates.map(associate=>associate.id)
       const all_dept_shifts=this.props.dept_shifts;
       const deptShifts=all_dept_shifts.filter(ds=>ds.department_id===this.props.currentUser.user.dept_manager_id)
@@ -407,9 +416,12 @@ class Calendar extends React.Component {
             
             for (let j=1; j<=this.state.deptAssociates.length; j++){
               let randSelectedAssociate = this.getRandomAssociateId(cloneDailyAssociates);
+              let available=this.checkAvailability(dept,randSelectedAssociate, dateFns.format(i, 'dddd').toLowerCase())
               shiftCounter[randSelectedAssociate]=shiftCounter[randSelectedAssociate] + 1 || 1;
               
-              if(shiftCounter[randSelectedAssociate]<=5){
+              if(shiftCounter[randSelectedAssociate]<=5 && available){
+                if(available)
+                  shiftCounter[randSelectedAssociate]=shiftCounter[randSelectedAssociate]-1
                 if(cloneMandotoryShift.length===0 && cloneDailyAssociates.length>0){
                   let randShift=this.getRandomShiftFromExtraShifts(cloneOfDailyShift)
                 
