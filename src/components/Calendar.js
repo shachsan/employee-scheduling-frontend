@@ -35,6 +35,7 @@ class Calendar extends React.Component {
     draggable:false,
     needUpdate:false,
     startAnimation:false,
+    // shiftsAnimate:'animate',
   }
 
 
@@ -290,7 +291,8 @@ class Calendar extends React.Component {
               );
               if(associateShifts){
                 shift.push(
-                  <div key={i} className={`shift ${dateFns.format(i, 'ddd')+ associate.id} col ${this.getShiftColor(associateShifts.shift_id)}`}
+                  <div key={i} className={`shift ${dateFns.format(i, 'ddd')+ associate.id} 
+                  col ${this.getShiftColor(associateShifts.shift_id)}`}
                   draggable={this.state.draggable} onDrag={(e)=>this.onDragHandler(e, associateShifts)}
                   >
                        {this.getShiftTime(associateShifts.shift_id)} 
@@ -363,7 +365,7 @@ class Calendar extends React.Component {
         return alert("Shifts already exist for this week. Please clear the schedules before proceeding.")
       }
 
-      this.setState({startAnimation:true})
+      // this.setState({shiftsAnimate:''})
       
       // <AnimationDiv/>
       
@@ -464,6 +466,7 @@ class Calendar extends React.Component {
       }
       
       render() {
+        console.log(this.state.shiftsAnimate);
         return (
           <React.Fragment>
           <div className="calendar">

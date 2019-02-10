@@ -1286,10 +1286,6 @@ div[draggable='true']:hover{
   letter-spacing: -.07em;
 }
 
-/* .calendar .body .cell:hover .bg, .calendar .body .selected .bg  {
-  opacity: 0.05;
-  transition: .10s ease-in;
-} */
 
 .calendar .body .col {
   flex-grow: 0;
