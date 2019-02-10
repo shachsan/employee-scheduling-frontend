@@ -1,17 +1,21 @@
 
 import React, { Component } from 'react';
 import { Button, ButtonToolbar } from 'react-bootstrap';
+import {fetchUpdateAvailability} from '../thunk/associate';
+import {connect} from 'react-redux';
 
 class AssociateShowPage extends Component{
 
     state={
-        monday:this.props.associate.monday,
-        tuesday:this.props.associate.tuesday,
-        wednesday:this.props.associate.wednesday,
-        thursday:this.props.associate.thursday,
-        friday:this.props.associate.friday,
-        saturday:this.props.associate.saturday,
-        sunday:this.props.associate.sunday,
+        availability:{
+            monday:this.props.associate.monday,
+            tuesday:this.props.associate.tuesday,
+            wednesday:this.props.associate.wednesday,
+            thursday:this.props.associate.thursday,
+            friday:this.props.associate.friday,
+            saturday:this.props.associate.saturday,
+            sunday:this.props.associate.sunday,
+        },
         updateBtn:false
     }
 
@@ -22,6 +26,11 @@ class AssociateShowPage extends Component{
             updateBtn:true,
             [e.target.name]:e.target.checked
         })
+    }
+
+    handleUpdateAvailability=()=>{
+        let token=localStorage.getItem('token')
+        this.props.fetchUpdateAvailability(token, this.props.associate.id, this.state.availability)
     }
 
     render(){
@@ -56,4 +65,11 @@ class AssociateShowPage extends Component{
     }
 }
  
-export default AssociateShowPage;
+
+const mapDispatchToProps=(dispatch)=>{
+   return {
+       fetchUpdateAvailability:(token, associateId, availability)=>dispatch(fetchUpdateAvailability(token, associateId, availability))
+        }
+    }
+
+export default connect(null, mapDispatchToProps)(AssociateShowPage);

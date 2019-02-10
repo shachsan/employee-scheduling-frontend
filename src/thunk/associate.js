@@ -1,4 +1,4 @@
-import {postNewAssociate} from '../action/actionCreater';
+import {postNewAssociate, updateAvailability} from '../action/actionCreater';
 
 export const removeAssociate=(token, id)=>{
     return function(dispatch){
@@ -19,6 +19,18 @@ export const addNewTeamMember=(token, newAss)=>{
         body:JSON.stringify(newAss)
       }).then(res=>res.json())
       .then(justAddedAss=>dispatch(postNewAssociate(justAddedAss)))
+    }
+  }
+
+  export const fetchUpdateAvailability=(token, assoId, availability)=>{
+    return function(dispatch){
+      fetch(`http://localhost:3000/api/v1/associates/${assoId}`,{
+        method:'PATCH',
+        headers:{"Content-Type":"application/json",
+        'Authorization': token},
+        body:JSON.stringify(availability)
+      }).then(res=>res.json())
+      .then(updatedAvail=>dispatch(updateAvailability(updatedAvail)))
     }
   }
 
