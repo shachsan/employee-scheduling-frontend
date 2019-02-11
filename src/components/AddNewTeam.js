@@ -8,7 +8,14 @@ class AddNewTeam extends Component {
         bday:'',
         gender:'',
         position:'',
-        availability:[],
+        monday:false,
+        tuesday:false,
+        wednesday:false,
+        thursday:false,
+        friday:false,
+        saturday:false,
+        sunday:false,
+    
     }
 
     inputChangeHandler=(e)=>{
@@ -18,14 +25,22 @@ class AddNewTeam extends Component {
     }
 
     availabilityHandler = (e) => {
-        let newAvailability=[...this.state.availability]
-        if(e.target.checked)
-            newAvailability.push(e.target.value)
-        else
-            newAvailability.splice(newAvailability.indexOf(e.target.value),1)
-        this.setState({
-            availability:newAvailability
-        })
+        if(e.target.checked){
+            this.setState({
+                [e.target.name]:true
+            })
+        }else{
+            this.setState({
+                [e.target.name]:false
+            })
+        }
+    }
+
+    cancelAddTeamHandler=(e)=>{
+        console.log(e.target.parentNode);
+        e.target.parentNode.reset();
+        this.setState({name:''})
+        this.props.clickHandlerAddNewTeam();
     }
 
     onSubmitHandler=(e)=>{
@@ -37,8 +52,19 @@ class AddNewTeam extends Component {
             position:this.state.position,
             gender:this.state.gender,
             department_id:this.props.deptId,
+            monday:this.state.monday,
+            tuesday:this.state.tuesday,
+            wednesday:this.state.wednesday,
+            thursday:this.state.thursday,
+            fridaysaturday:this.state.fridaysaturday,
+            saturday:this.state.saturday,
+            sunday:this.state.sunday,
         }
+        // console.log('new associate',newAssociate);
+        // console.log('availability',this.state.availability);
         this.props.addNewTeamMember(token,newAssociate)
+        this.props.clickHandlerAddNewTeam();
+
     }
      
     render() {
@@ -69,22 +95,23 @@ class AddNewTeam extends Component {
                  onChange={this.inputChangeHandler}/> Part Time<br/><br/>
 
                  <label>Availability</label><br/>
-                 <input type="checkbox" name="mon" value="mon"
+                 <input type="checkbox" name="monday" value="monday"
                  onChange={this.availabilityHandler}/> Mon
-                 <input type="checkbox" name="tues" value="tues" 
+                 <input type="checkbox" name="tuesday" value="tuesday" 
                  onChange={this.availabilityHandler}/> Tues
-                 <input type="checkbox" name="wed" value="wed"
+                 <input type="checkbox" name="wednesday" value="wednesday"
                  onChange={this.availabilityHandler}/> Wed
-                 <input type="checkbox" name="thurs" value="thurs" 
+                 <input type="checkbox" name="thursday" value="thursday" 
                  onChange={this.availabilityHandler}/> Thurs
-                 <input type="checkbox" name="fri" value="fri"
+                 <input type="checkbox" name="friday" value="friday"
                  onChange={this.availabilityHandler}/> Fri
-                 <input type="checkbox" name="sat" value="sat" 
+                 <input type="checkbox" name="saturday" value="saturday" 
                  onChange={this.availabilityHandler}/> Sat
-                 <input type="checkbox" name="sun" value="sun"
+                 <input type="checkbox" name="sunday" value="sunday"
                  onChange={this.availabilityHandler} /> Sun<br/><br/>
 
                  <input type='submit' value='Submit'/>
+                 <a href='#' onClick={(e)=>this.cancelAddTeamHandler(e)}>Cancel</a> 
 
              </form>
         );

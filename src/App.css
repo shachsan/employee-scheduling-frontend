@@ -429,15 +429,8 @@ main {
   border: 2px solid grey;
   /* align-items: center; */
 }
-.associate-card{
-  height: 150px;
-  width: 110px;
-  background-color: blue;
-}
 
-.ass-avatar{
-  background-image: url('./img/male.png');
-}
+
 
 .show-emp{
   height:150px;
@@ -709,6 +702,9 @@ form input[type='submit']:enabled:hover{
   text-align: center;
   display: inline-block;
   border: 2px solid blue;
+  background-color: midnightblue;
+  color: white;
+  font-weight: 1.2em;
 }
 
 .edit-update-cancel-btn{
@@ -1007,7 +1003,7 @@ div[draggable='true']:hover{
 }
 
 .side-container{
-  width:28%;
+  width:29%;
   max-height:600px;
     border:2px solid blue; 
     display:inline-block;
@@ -1015,6 +1011,7 @@ div[draggable='true']:hover{
     height:500px;
     font-weight: bolder;
     padding: 10px;
+    margin-left: 5px;
 }
 
 .animate-div{
@@ -1325,6 +1322,33 @@ div[draggable='true']:hover{
 .availability{
   margin: 5px 5px;
 }
+
+
+.showpage-header{
+  text-align: center;
+}
+
+.showpage-details{
+  margin-top: 10px;
+  vertical-align: top;
+  background-color: lightyellow;
+  padding:10px;
+}
+.showpage-availability{
+  display: inline-block;
+}
+
+.showpage-details h3{
+  border: 1px solid yellowgreen;
+  text-align: center;
+
+}
+
+.wages-benefits{
+  display: inline-block;
+  float: right;
+}
+
 /* .calendar .body .cell:hover .bg, .calendar .body .selected .bg  {
   opacity: 0.05;
   transition: .10s ease-in;

@@ -11,6 +11,9 @@ import {connect} from 'react-redux';
 import dateFns from 'date-fns';
 import HomePageMainContainer from './containers/homePage/HomePageMainContainer';
 import Authenticate from './containers/authenticate/Authenticate';
+import LeftSideContainer from './containers/homePage/LeftSideContainer';
+import CenterContainer from './containers/homePage/CenterContainer';
+import RightSideContainer from './containers/homePage/RightSideContainer';
 
 class App extends Component {
   state={
@@ -70,6 +73,18 @@ class App extends Component {
                       </React.Fragment>
                 )}/>
               </Switch>
+
+              {/* <Switch>
+                <Route exact path='/home/show/:associate' render={()=>(
+                  <React.Fragment>
+                    <NavContainer currentUser={this.props.currentUser}
+                        logoutHandler={this.logoutHandler}/>
+                      <LeftSideContainer menuClicked={this.props.clickHandlerForTeam}/>
+                      <CenterContainer/>
+                      <RightSideContainer/>
+                      </React.Fragment>
+                )}/>
+              </Switch> */}
                 
               <Switch>
                 <Route exact path='/schedule' render={()=>(

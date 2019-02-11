@@ -4,6 +4,7 @@ import {removeAssFromStore} from '../../action/actionCreater';
 import {connect} from 'react-redux';
 import CompanyCalendar from '../../components/CompanyCalendar';
 import AssociateShowPage from '../../components/AssociateShowPage';
+import {getImage} from '../../helper_functions/Helper';
 
 
 class CenterContainer extends Component{
@@ -30,6 +31,8 @@ class CenterContainer extends Component{
         })
     }
 
+  
+
     renderAssociateShowPage=(associate)=>{
         return <div>
             <AssociateShowPage associate={associate}/>
@@ -54,9 +57,8 @@ class CenterContainer extends Component{
             return this.props.deptAssociates.map(associate=>{
                 return (
                 <div key={associate.id} className='asso-card-wrapper'> 
-                    <div className='ass-avatar'></div>
                     <div onClick={
-                    ()=>this.props.menuClicked(associate)} className='associate-card'>{associate.name}</div>
+                    ()=>this.props.menuClicked(associate)}><img src={getImage(associate)} width='200px' height='200px'alt='avatar'/></div>
                     <h1>{associate.name}</h1>
                     <button className='btn-del' onClick={(e)=>this.removeTeamHandler(e, associate)}>Remove {associate.name}</button>
                 </div>
@@ -64,6 +66,8 @@ class CenterContainer extends Component{
             })
         }
     }
+
+   
 
     render(){
         return ( 

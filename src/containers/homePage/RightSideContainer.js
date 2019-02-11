@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import AddNewTeam from '../../components/AddNewTeam';
 import dateFns from 'date-fns';
+import { getShiftColor, getShiftTime } from '../../helper_functions/Helper';
 
 class RightSideContainer extends Component{
     state={
@@ -14,27 +15,6 @@ class RightSideContainer extends Component{
         }
     }
 
-    getShiftTime=(id)=>{
-        if(id===1)
-          return "8AM - 4PM"
-        if(id===2)
-          return "11AM - 7PM"
-        if(id===3)
-          return "2PM - 10PM"
-      }
-
-      getShiftColor=(shiftId)=>{
-        if(shiftId===1){
-          return 'open'
-        }else if(shiftId===2){
-          return 'mid'
-        }else if(shiftId===3){
-          return 'closed'
-        }else{
-          return 'day-off'
-        }
-      }
-
     renderRightContainer=()=>{
         if(this.props.menuSelected===''){
             const todaySch=this.props.schedules.filter(sch=>
@@ -44,7 +24,7 @@ class RightSideContainer extends Component{
                     <h1>Today's Roster</h1>
 
                     {todaySch.map(sch=>(
-                        <div className="roaster-shift"key={sch.id}><span>{this.getAssociateName(sch.associate_id)}</span> <span className={this.getShiftColor(sch.shift_id)}>{this.getShiftTime(sch.shift_id)}</span></div>
+                        <div className="roaster-shift"key={sch.id}><span>{this.getAssociateName(sch.associate_id)}</span> <span className={getShiftColor(sch.shift_id)}>{getShiftTime(sch.shift_id)}</span></div>
                     ))}
                 </React.Fragment>
             )
@@ -61,7 +41,7 @@ class RightSideContainer extends Component{
             if(associateSch){
                 return <div><h2>{`${this.props.menuSelected.name}'s Upcoming Schedule`}</h2>
                     {associateSch.map(as=><div className='rsc-date-shift' key={as.id}><span className='rsc-date'>
-                    {as.date} | {dateFns.format(as.date, 'ddd')}</span><h4 style={{display:'inline'}}>=></h4><span className={`rsc-shift ${this.getShiftColor(as.shift_id)}`}>{this.getShiftTime(as.shift_id)}</span></div>)}
+                    {as.date} | {dateFns.format(as.date, 'ddd')}</span><h4 style={{display:'inline'}}>=></h4><span className={`rsc-shift ${getShiftColor(as.shift_id)}`}>{getShiftTime(as.shift_id)}</span></div>)}
                     </div>
             }else{
                 return <h2>No Schedule Found</h2>
@@ -80,7 +60,7 @@ class RightSideContainer extends Component{
                 {this.renderRightContainer()}
                
                 {this.state.toggleAddBtn ? 
-                    <AddNewTeam deptId={this.props.deptId}/>
+                    <AddNewTeam deptId={this.props.deptId} clickHandlerAddNewTeam={this.clickHandlerAddNewTeam}/>
                     :null
                 }
                 
