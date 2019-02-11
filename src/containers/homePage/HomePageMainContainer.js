@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import RightSideContainer from './RightSideContainer';
 import LeftSideContainer from './LeftSideContainer';
 import CenterContainer from './CenterContainer';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {fetchGetDeptAssociates,fetchGetSchedulesOnly} from '../../thunk/dept_asso_schedules';
 import {fetchGetEvents} from '../../thunk/event';
@@ -10,12 +10,11 @@ import {fetchGetEvents} from '../../thunk/event';
 class HomePageMainContainer extends Component {
    
     state={
-        clickedMenuItem:'',
+        clickedMenuItem:''
       }
     
     clickHandlerForTeam=(itemSelected)=>{
-      this.setState({clickedMenuItem:itemSelected},()=>{
-      })
+      this.setState({clickedMenuItem:itemSelected})
     }
 
     componentDidMount(){
@@ -25,10 +24,13 @@ class HomePageMainContainer extends Component {
         }
         this.props.fetchGetEvents(token)
         this.props.fetchGetSchedulesOnly(token)
-        // console.log('homepage render',this.props.location.state);
+        console.log('homepage location props',this.props.location.state);
+        if(this.props.location.state!==undefined)
+            this.setState({clickedMenuItem:this.props.location.state.emp})
     }
-
+    
     render() {
+        console.log('homepage state',this.state);
         return (
             <React.Fragment>
                 {this.props.currentUser.user ?
@@ -71,4 +73,4 @@ const mapStateToProps=(state)=>{
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePageMainContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomePageMainContainer));

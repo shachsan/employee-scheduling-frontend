@@ -253,12 +253,12 @@ class Calendar extends React.Component {
 
       handleOnClickName=(associate)=>{
         // console.log(this.props.location);
-        this.props.history.push(`/home`, {
-          associate:associate
-        })
-
-
+        this.props.history.push('/home',
+          {emp:associate}
+        )
       }
+
+
       
       
       renderShift=()=>{

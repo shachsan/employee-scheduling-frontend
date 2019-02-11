@@ -9,9 +9,9 @@ import {getImage} from '../../helper_functions/Helper';
 
 class CenterContainer extends Component{
 
-    state={
-        associate:'',
-    }
+    // state={
+    //     associate:'',
+    // }
 
     removeTeamHandler = (e, associate)=>{
 
@@ -23,13 +23,13 @@ class CenterContainer extends Component{
         this.props.removeAssociate(token, associate.id)
     }
 
-    onClickAvatarHandler =(e, associate)=>{
-        console.log(associate);
+    // onClickAvatarHandler =(e, associate)=>{
+    //     console.log(associate);
         
-        this.setState({
-            associate:associate,
-        })
-    }
+    //     this.setState({
+    //         associate:associate,
+    //     })
+    // }
 
   
 
@@ -65,6 +65,11 @@ class CenterContainer extends Component{
                 )
             })
         }
+    }
+
+    componentDidMount(){
+
+        console.log('center page', this.props.menuSelected);
     }
 
    
