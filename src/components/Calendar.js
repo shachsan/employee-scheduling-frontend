@@ -15,6 +15,7 @@ import {deleteWholeWeekShifts, setDraggedShift, updateDraggedShift, cancelEdit} 
 import './Calendar.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import AnimationDiv from '../components/AnimationDiv';
+import { getShiftColor, getShiftTime } from '../helper_functions/Helper';
 
 
 class Calendar extends React.Component {
@@ -228,27 +229,6 @@ class Calendar extends React.Component {
       }
       
       
-      getShiftTime=(id)=>{
-        if(id===1)
-        return "8AM - 4PM"
-        if(id===2)
-        return "11AM - 7PM"
-        if(id===3)
-        return "2PM - 10PM"
-      }
-      
-      getShiftColor=(shiftId)=>{
-        if(shiftId===1){
-          return 'open'
-        }else if(shiftId===2){
-          return 'mid'
-        }else if(shiftId===3){
-          return 'closed'
-        }else{
-          return 'day-off'
-        }
-      }
-      
       componentDidMount(){
         let token = localStorage.getItem("token");
         this.setState({token:token})
@@ -288,7 +268,7 @@ class Calendar extends React.Component {
         if(dept){
           dept.associates.forEach(associate=>{
             
-            shift.push(<div className="emp-name" key={associate.id} onClick={()=>this.handleOnClickName(associate)}>{associate.name}</div>);
+            shift.push(<div className="emp-name" key={associate.id} onClick={()=>this.handleOnClickName(associate)}><strong>{associate.name}</strong></div>);
             for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
               shiftContainerCounter++;
               
@@ -298,10 +278,10 @@ class Calendar extends React.Component {
               );
               if(associateShifts){
                 shift.push(
-                  <div key={i} className={`shift ${dateFns.format(i, 'ddd')+ associate.id} col ${this.getShiftColor(associateShifts.shift_id)}`}
+                  <div key={i} className={`shift ${dateFns.format(i, 'ddd')+ associate.id} col ${getShiftColor(associateShifts.shift_id)}`}
                   draggable={this.state.draggable} onDrag={(e)=>this.onDragHandler(e, associateShifts)}
                   >
-                       {this.getShiftTime(associateShifts.shift_id)} 
+                       {getShiftTime(associateShifts.shift_id)} 
                   </div>)
               }else{
                 shift.push(<div className={`shift col day-off day-off-${associate.id}`} key={i}

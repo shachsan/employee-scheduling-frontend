@@ -702,6 +702,9 @@ form input[type='submit']:enabled:hover{
   text-align: center;
   display: inline-block;
   border: 2px solid blue;
+  background-color: midnightblue;
+  color: white;
+  font-weight: 1.2em;
 }
 
 .edit-update-cancel-btn{
@@ -1000,7 +1003,7 @@ div[draggable='true']:hover{
 }
 
 .side-container{
-  width:28%;
+  width:29%;
   max-height:600px;
     border:2px solid blue; 
     display:inline-block;
@@ -1008,6 +1011,7 @@ div[draggable='true']:hover{
     height:500px;
     font-weight: bolder;
     padding: 10px;
+    margin-left: 5px;
 }
 
 .animate-div{
