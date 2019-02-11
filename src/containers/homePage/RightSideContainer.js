@@ -80,7 +80,7 @@ class RightSideContainer extends Component{
                 {this.renderRightContainer()}
                
                 {this.state.toggleAddBtn ? 
-                    <AddNewTeam deptId={this.props.deptId}/>
+                    <AddNewTeam deptId={this.props.deptId} clickHandlerAddNewTeam={this.clickHandlerAddNewTeam}/>
                     :null
                 }
                 
