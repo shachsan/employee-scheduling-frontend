@@ -1322,8 +1322,6 @@ div[draggable='true']:hover{
   letter-spacing: -.07em;
 }
 
-<<<<<<< HEAD
-=======
 .availability{
   margin: 5px 5px;
 }
@@ -1331,7 +1329,6 @@ div[draggable='true']:hover{
   opacity: 0.05;
   transition: .10s ease-in;
 } */
->>>>>>> stretch-features
 
 .calendar .body .col {
   flex-grow: 0;
