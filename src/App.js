@@ -32,8 +32,9 @@ class App extends Component {
   }
 
   ifItisNextWeek=()=>{
-    console.log('day subtract',dateFns.format(dateFns.subDays(this.state.currentDate, dateFns.format(new Date(),'DDD'))),'DDD');
-    return dateFns.subDays(this.state.currentDate, dateFns.format(new Date(),'DDD')) > 7 ? true:false
+    console.log('current date', this.state.currentDate);
+    return dateFns.format(this.state.currentDate, 'DDD')- dateFns.format(new Date(),'DDD') > -7 ? true:false
+    // return dateFns.subDays(this.state.currentDate, dateFns.format(new Date(),'DDD')) > 0 ? true:false
   }
 
   selectDateChangeHandler=(e)=>{

@@ -372,6 +372,7 @@ class Calendar extends React.Component {
       // <AnimationDiv/>
       
       // this.setState({switchEditShifts:true})
+      this.props.switchEditHandler(true)
       let totalWeeklyShifts=0;
       let dailyShiftsAvailable=['day off'];
       let shiftsObj={};
