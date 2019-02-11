@@ -8,6 +8,7 @@ import {fetchGetDeptAssociates,fetchGetSchedulesOnly} from '../../thunk/dept_ass
 import {fetchGetEvents} from '../../thunk/event';
 
 class HomePageMainContainer extends Component {
+   
     state={
         clickedMenuItem:'',
       }
@@ -24,10 +25,10 @@ class HomePageMainContainer extends Component {
         }
         this.props.fetchGetEvents(token)
         this.props.fetchGetSchedulesOnly(token)
+        // console.log('homepage render',this.props.location.state);
     }
 
     render() {
-        // console.log('homepage render',this.props.location.state);
         return (
             <React.Fragment>
                 {this.props.currentUser.user ?

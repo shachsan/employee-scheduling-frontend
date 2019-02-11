@@ -67,6 +67,8 @@ class CenterContainer extends Component{
         }
     }
 
+   
+
     render(){
         return ( 
             <div className="hp-center-container">

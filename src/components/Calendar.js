@@ -1,7 +1,7 @@
 import React from "react";
 import dateFns from "date-fns";
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import Alert from '../components/Alert';
 import UpdateAlert from '../components/UpdateAlert';
 import { 
@@ -252,9 +252,11 @@ class Calendar extends React.Component {
 
       handleOnClickName=(associate)=>{
         // console.log(this.props.location);
-        this.props.history.push("/home", {
+        this.props.history.push(`/home`, {
           associate:associate
         })
+
+
       }
       
       
