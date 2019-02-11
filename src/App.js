@@ -18,11 +18,22 @@ import RightSideContainer from './containers/homePage/RightSideContainer';
 class App extends Component {
   state={
     currentDate:new Date(),
+    
+    switchEditShifts:false,
+  }
+
+  switchEditHandler=(action)=>{
+    this.setState({switchEditShifts:action})
   }
 
   logoutHandler=()=>{
     this.props.logUserOut();
     this.props.history.push("/")
+  }
+
+  ifItisNextWeek=()=>{
+    console.log('day subtract',dateFns.format(dateFns.subDays(this.state.currentDate, dateFns.format(new Date(),'DDD'))),'DDD');
+    return dateFns.subDays(this.state.currentDate, dateFns.format(new Date(),'DDD')) > 7 ? true:false
   }
 
   selectDateChangeHandler=(e)=>{
@@ -31,13 +42,15 @@ class App extends Component {
 
   onClickNextWeekHandler=()=>{
     this.setState({
-      currentDate: dateFns.addWeeks(dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1}), 1)
+      currentDate: dateFns.addWeeks(dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1}), 1),
+      switchEditShifts:this.ifItisNextWeek(),
     });
   }
-
+  
   onClickPrevWeekHandler=()=>{
     this.setState({
-      currentDate: dateFns.subWeeks(dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1}), 1)
+      currentDate: dateFns.subWeeks(dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1}), 1),
+      switchEditShifts:this.ifItisNextWeek(),
     });
   }
   
@@ -94,7 +107,9 @@ class App extends Component {
                     <Calendar currentDate={this.state.currentDate}
                             onClickNextWeekHandler={this.onClickNextWeekHandler}
                             onClickPrevWeekHandler={this.onClickPrevWeekHandler}
-                            selectDateChangeHandler={this.selectDateChangeHandler}/>
+                            selectDateChangeHandler={this.selectDateChangeHandler}
+                            switchEditHandler={this.switchEditHandler}
+                            switchEditShifts={this.state.switchEditShifts}/>
                     <ScheduleRightSideContainer currentDate={this.state.currentDate}/>
                   </React.Fragment>
                 )}/>

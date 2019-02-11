@@ -32,11 +32,12 @@ class Calendar extends React.Component {
     edittedShifts:[],
     originalSchedules:[],
     switchAutoGen:true,
-    switchEditShifts:false,
+    renderAlert:false,
     switchUpdateShifts:false,
     draggable:false,
     needUpdate:false,
     startAnimation:false,
+    
   }
 
 
@@ -100,15 +101,18 @@ class Calendar extends React.Component {
   }
 
   cancelEditHandler=()=>{
+    this.props.switchEditHandler(true)
     this.setState({
       switchUpdateShifts:false,
       draggable:false, 
-      switchEditShifts:true})
+      renderAlert:false,
+      })
   }
 
   onDragHandler=(e, shift)=>{
     e.preventDefault();
-
+    // this.props.alertHandler(false)
+    this.setState({renderAlert:false})
     //store currently dragged shift in redux store
     this.props.setDraggedShift(shift);
   }
@@ -132,11 +136,13 @@ class Calendar extends React.Component {
   }
 
   onEditClickHandler=()=>{
-    
+    // this.props.alertHandler(true)
+    this.props.switchEditHandler(false)
     this.setState({
       draggable:true,
-      switchEditShifts:false,
-      switchUpdateShifts:true
+      // switchEditShifts:false,
+      switchUpdateShifts:true,
+      renderAlert:true,
     })
   }
 
@@ -365,7 +371,7 @@ class Calendar extends React.Component {
       
       // <AnimationDiv/>
       
-      this.setState({switchEditShifts:true})
+      // this.setState({switchEditShifts:true})
       let totalWeeklyShifts=0;
       let dailyShiftsAvailable=['day off'];
       let shiftsObj={};
@@ -482,10 +488,11 @@ class Calendar extends React.Component {
                   <div className="copy"><Button variant='info' onClick={this.copyHandler}>Copy Schedules</Button></div>
                   <div className="paste"><Button variant='info' onClick={this.pasteHandler}>Paste Schedules</Button></div>
               </div>
-              
-              {this.state.switchEditShifts ?
+              {this.state.renderAlert ?
+                <Alert message={'In order to change shifts, drag and drop the shifts.'}/>:null
+              }
+              {this.props.switchEditShifts ?
                 <React.Fragment> 
-                  <Alert/>
                   <Button className="edit-update-cancel-btn"variant="primary" onClick={this.onEditClickHandler}>Edit Shifts</Button>           
                 </React.Fragment>
                 :null}
