@@ -4,6 +4,7 @@ import { Button, ButtonToolbar } from 'react-bootstrap';
 import {fetchUpdateAvailability} from '../thunk/associate';
 import {connect} from 'react-redux';
 import { getImage } from '../helper_functions/Helper';
+import Alert from '../components/Alert';
 
 class AssociateShowPage extends Component{
 
@@ -17,22 +18,49 @@ class AssociateShowPage extends Component{
             saturday:this.props.associate.saturday,
             sunday:this.props.associate.sunday,
         },
-        updateBtn:false
+
+        originalAvailability:{},
+        updateBtn:false,
+        renderAlert:false,
+        alertMessage:'',
     }
 
     onChangeHandler=(e)=>{
+        
+        // console.log('originalAvailability',originalAvailability);
+        // if(cancelRequested){
+        //     return originalAvailability;
+        // }
         const newAvail={...this.state.availability}
         newAvail[e.target.name]=e.target.checked
         // console.log('checkbox target',e.target.value);
         this.setState({
             updateBtn:true,
+            renderAlert:false,
             availability:newAvail
         })
     }
-
+    
+    handleCancelAvailability=()=>{
+        this.setState({
+            availability:this.state.originalAvailability,
+            updateBtn:false,
+        })
+    }
+    
     handleUpdateAvailability=()=>{
         let token=localStorage.getItem('token')
         this.props.fetchUpdateAvailability(token, this.props.associate.id, this.state.availability)
+        this.setState({
+            renderAlert:true,
+            alertMessage:'Availability successfully updated',
+            updateBtn:false,
+        })
+    }
+    
+    componentDidMount(){
+        const originalAvailability=JSON.parse(JSON.stringify(this.state.availability));
+        this.setState({originalAvailability:originalAvailability})
     }
 
     render(){
@@ -73,6 +101,7 @@ class AssociateShowPage extends Component{
                     </div>
                 </div>
 
+                {this.state.renderAlert ? <Alert message={this.state.alertMessage}/>:null}
                 {this.state.updateBtn ? 
                 <div>
                     <ButtonToolbar>

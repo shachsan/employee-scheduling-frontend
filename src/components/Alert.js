@@ -1,7 +1,7 @@
 import React from 'react';
-const Alert = () => {
+const Alert = (props) => {
     return ( 
-        <div className="alert-div">Drag and Drop to change shifts around</div>
+        <div className="alert-div">{props.message}</div>
      );
 }
  
