@@ -695,14 +695,28 @@ form input[type='submit']:enabled:hover{
   height: 50px;
   width: 145px;
   padding-top: 10px;
-  /* margin-top: 12px; */
-  /* margin: 10px 0px; */
   text-align: center;
   display: inline-block;
   border: 2px solid blue;
   background-color: midnightblue;
   color: white;
-  font-weight: 1.2em;
+}
+
+.span-name{
+  font-weight: bolder;
+  font-size: 16px;
+}
+
+.emp-name:hover{
+  cursor: pointer;
+  transform: scaleX(1.04);
+  transition: .10s ease-out;
+}
+
+.span-name:hover{
+  color: lime;
+  font-size: 18px;
+  transition: .10s ease-out;
 }
 
 .edit-update-cancel-btn{

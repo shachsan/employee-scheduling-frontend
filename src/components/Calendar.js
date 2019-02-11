@@ -252,7 +252,6 @@ class Calendar extends React.Component {
       }
 
       handleOnClickName=(associate)=>{
-        // console.log(this.props.location);
         this.props.history.push('/home',
           {emp:associate}
         )
@@ -271,7 +270,7 @@ class Calendar extends React.Component {
         if(dept){
           dept.associates.forEach(associate=>{
             
-            shift.push(<div className="emp-name" key={associate.id} onClick={()=>this.handleOnClickName(associate)}><strong>{associate.name}</strong></div>);
+            shift.push(<div className="emp-name" key={associate.id} onClick={()=>this.handleOnClickName(associate)}><span className='span-name'>{associate.name}</span></div>);
             for(let i=startOfWeek; i<=endOfWeek; i=dateFns.addDays(i,1)){
               shiftContainerCounter++;
               
