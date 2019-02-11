@@ -37,6 +37,7 @@ class Calendar extends React.Component {
     draggable:false,
     needUpdate:false,
     startAnimation:false,
+    stagedShifts:[],
     
   }
 
@@ -473,6 +474,15 @@ class Calendar extends React.Component {
         this.props.deleteWholeWeekShifts(remainingShiftsAfterDeletion)//for optimistic rendering, this will update redux store
         
       }
+
+      onStageDropHandler=(e)=>{
+        e.preventDefault();
+        const draggedSch=this.props.schedules.find(sch=>sch.id===this.props.draggedShift.id)
+        draggedSch.date='stage'
+        this.setState({
+          stagedShifts:[...this.state.stagedShifts, draggedSch]
+        })
+      }
       
       render() {
         return (
@@ -488,6 +498,14 @@ class Calendar extends React.Component {
               <div className="copy-paste">
                   <div className="copy"><Button variant='info' onClick={this.copyHandler}>Copy Schedules</Button></div>
                   <div className="paste"><Button variant='info' onClick={this.pasteHandler}>Paste Schedules</Button></div>
+              </div>
+
+              <div className="stage-wrapper">
+              <div className="shifts-stage" onDrop={(e)=>this.onStageDropHandler(e)}
+                onDragOver={(e)=>this.onDragOverHandler(e)}>
+                {this.state.stagedShifts.map(shift=>(<div key={shift.id} draggable className={`shift  ${getShiftColor(shift.shift_id)}`}>{getShiftTime(shift.shift_id)}</div>))
+               }
+              </div>
               </div>
               {this.state.renderAlert ?
                 <Alert message={'In order to change shifts, drag and drop the shifts.'}/>:null

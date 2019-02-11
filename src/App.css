@@ -17,7 +17,7 @@
 }
 
 
-/*
+
 @keyframes swing {
   0% { transform: rotate(4deg); }
 
@@ -240,7 +240,7 @@
   0%{left:-400px; top:600px;}
  
   100%{left:0px; top:0px;}
-}*/
+}
 
 .icon {
   font-family: 'Material Icons', serif;
@@ -1174,7 +1174,16 @@ div[draggable='true']:hover{
   margin:5px;
 }
 
+.stage-wrapper{
+  text-align: center;
+}
 
+.shifts-stage{
+  border: 2px solid red;
+  width: 500px;
+  height: 200px;
+  display: inline-block;
+}
 
 .calendar .header {
   text-transform: uppercase;
