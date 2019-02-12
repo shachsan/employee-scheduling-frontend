@@ -41,7 +41,7 @@ class Calendar extends React.Component {
     startAnimation:false,
     stagedShifts:[],
     draggedFromStage:{},
-    
+    trash:false,
   }
 
 
@@ -113,6 +113,7 @@ class Calendar extends React.Component {
       switchUpdateShifts:false,
       draggable:false, 
       renderAlert:false,
+      trash:false,
       })
     this.resetEdittedShiftHandler()
   }
@@ -153,6 +154,7 @@ class Calendar extends React.Component {
       draggable:true,
       switchUpdateShifts:true,
       renderAlert:true,
+      trash:true,
     })
   }
 
@@ -164,6 +166,7 @@ class Calendar extends React.Component {
       switchUpdateShifts:false,
       edittedShifts:[],
       originalSchedules:[],
+      trash:false,
     })
     
     //do pessimistic update here
@@ -238,6 +241,10 @@ class Calendar extends React.Component {
               </div>
               <button className="autoGen" onClick={this.handleAutoGenerateShifts}>Auto Generate Schedule</button>
               <button className="clear-sch"onClick={this.handleDeleteAllShifts}>Clear All Shifts</button>
+              <div className="copy-paste">
+                  <div className="copy"><Button variant='info' onClick={this.copyHandler}>Copy Schedules</Button></div>
+                  <div className="paste"><Button variant='info' onClick={this.pasteHandler}>Paste Schedules</Button></div>
+              </div>
               {/* <div><button>Copy</button></div> */}
             </div>
           </div>
@@ -543,25 +550,29 @@ class Calendar extends React.Component {
               {this.state.needUpdate ? <UpdateAlert resetEdittedShiftHandler={this.resetEdittedShiftHandler}
                   updateShiftsHandler={this.updateShiftsHandler}/>:null}
               {this.renderDays()}
-              <div className="name-header">Name</div>
+              <div className="name-header">NAME</div>
               {/* {this.state.startAnimation ? <AnimationDiv/>:null} */}
               <div>{this.renderShift()}</div>
-              <div className="copy-paste">
-                  <div className="copy"><Button variant='info' onClick={this.copyHandler}>Copy Schedules</Button></div>
-                  <div className="paste"><Button variant='info' onClick={this.pasteHandler}>Paste Schedules</Button></div>
-              </div>
+             
+              {this.state.trash ?
+                  <div className="stage-wrapper">
+                    <div className="shifts-stage" onDrop={(e)=>this.onStageDropHandler(e)}
+                      onDragOver={(e)=>this.onDragOverHandler(e)}>
+                      <div style={{border:'1px dotted'}}><span>This is a stagging area. You could drag and drop shifts here 
+                        and assign back to anyone.<br/><br/>
+                        Note: Any shifts left here will be removed upon update.
 
-              <div className="stage-wrapper">
-              <div className="shifts-stage" onDrop={(e)=>this.onStageDropHandler(e)}
-                onDragOver={(e)=>this.onDragOverHandler(e)}>
-                {this.state.stagedShifts.map(shift=>
-                  (<div key={shift.id} draggable className={`shift ${getShiftColor(shift.shift_id)}`}
-                  onDrag={(e)=>this.onStagedDragHandler(e, shift)}>
-                  {getShiftTime(shift.shift_id)}
-                  </div>))
-                }
-              </div>
-              </div>
+                      </span></div>
+                      {this.state.stagedShifts.map(shift=>
+                        (<div key={shift.id} draggable className={`shift ${getShiftColor(shift.shift_id)}`}
+                        onDrag={(e)=>this.onStagedDragHandler(e, shift)}>
+                        {getShiftTime(shift.shift_id)}
+                        </div>))
+                      }
+                    </div>
+                  </div>
+                :null
+              }
               {this.state.renderAlert ?
                 <Alert message={'In order to change shifts, drag and drop the shifts.'}/>:null
               }
