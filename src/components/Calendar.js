@@ -577,7 +577,7 @@ class Calendar extends React.Component {
               {this.state.renderAlert ?
                 <Alert message={'In order to change shifts, drag and drop the shifts.'}/>:null
               }
-              {this.props.switchEditShifts ?
+              {this.props.switchEditShifts && this.getSelectedWeekSchedules().length>0 ?
                 <React.Fragment> 
                   <Button className="edit-update-cancel-btn"variant="primary" onClick={this.onEditClickHandler}>Edit Shifts</Button>           
                 </React.Fragment>
