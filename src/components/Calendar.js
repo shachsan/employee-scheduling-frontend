@@ -479,12 +479,14 @@ class Calendar extends React.Component {
         e.preventDefault();
         const draggedSch=this.props.schedules.find(sch=>sch.id===this.props.draggedShift.id)
         draggedSch.date='stage'
+        draggedSch.associate_id=''
         this.setState({
           stagedShifts:[...this.state.stagedShifts, draggedSch]
         })
       }
       
       render() {
+        console.log('stagged shifts', this.state.stagedShifts);
         return (
           <React.Fragment>
           <div className="calendar">
@@ -503,7 +505,7 @@ class Calendar extends React.Component {
               <div className="stage-wrapper">
               <div className="shifts-stage" onDrop={(e)=>this.onStageDropHandler(e)}
                 onDragOver={(e)=>this.onDragOverHandler(e)}>
-                {this.state.stagedShifts.map(shift=>(<div key={shift.id} draggable className={`shift  ${getShiftColor(shift.shift_id)}`}>{getShiftTime(shift.shift_id)}</div>))
+                {this.state.stagedShifts.map(shift=>(<div key={shift.id} draggable className={`shift ${getShiftColor(shift.shift_id)}`}>{getShiftTime(shift.shift_id)}</div>))
                }
               </div>
               </div>
