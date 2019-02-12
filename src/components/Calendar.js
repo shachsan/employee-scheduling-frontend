@@ -510,11 +510,7 @@ class Calendar extends React.Component {
       }
       
       render() {
-<<<<<<< HEAD
-        console.log(this.state.shiftsAnimate);
-=======
         console.log('stagged shifts', this.state.stagedShifts);
->>>>>>> stretch-features
         return (
           <React.Fragment>
           <div className="calendar">
