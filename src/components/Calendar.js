@@ -16,6 +16,8 @@ import './Calendar.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import AnimationDiv from '../components/AnimationDiv';
 import { getShiftColor, getShiftTime } from '../helper_functions/Helper';
+// import DropdownItem from "react-bootstrap/DropdownItem";
+import ShiftDropDown from '../components/ShiftDropDown';
 
 
 class Calendar extends React.Component {
@@ -118,7 +120,7 @@ class Calendar extends React.Component {
     this.props.setDraggedShift(shift);
   }
 
-  onDropHandler=(e, newDate)=>{
+  onDropHandler=(e, newDate, associateId)=>{
     e.preventDefault();
     const draggedSch=this.props.schedules.find(sch=>sch===this.props.draggedShift)//
     const newSch = Object.assign({}, draggedSch)
@@ -126,6 +128,7 @@ class Calendar extends React.Component {
 
       // newDate is the target date where the shift was dropped
       draggedSch.date=newDate
+      draggedSch.associate_id=associateId
       this.setState({edittedShifts:[...this.state.edittedShifts, draggedSch]})
 
       //optimistic update
@@ -159,6 +162,13 @@ class Calendar extends React.Component {
     
     //do pessimistic update here
     this.props.fetchUpdateEdittedShifts(token, edittedShiftsObj);
+
+    // for shifts deletion
+    if(this.state.stagedShifts.length>0){
+      const scheduleIds=this.state.stagedShifts.map(sch=>sch.id)
+      this.deleteWholeWeekShiftsFromBackEnd(scheduleIds);
+    }
+
     console.log('edittedshifts', edittedShiftsObj);
   }
 
@@ -263,6 +273,11 @@ class Calendar extends React.Component {
         )
       }
 
+      onClickShiftHandler=()=>{
+        //  <ShiftDropDown/>
+        console.log('hello');
+      }
+
 
       
       
@@ -284,16 +299,20 @@ class Calendar extends React.Component {
               let associateShifts=this.props.schedules.find(schedule=>schedule.date===dateFns.format(i, 'YYYY-MM-DD')
               && associate.id===schedule.associate_id
               );
+              let avail=dateFns.format(i, 'dddd').toLowerCase()
               if(associateShifts){
+                console.log('associateShifts', associateShifts);
                 shift.push(
                   <div key={i} className={`shift ${dateFns.format(i, 'ddd')+ associate.id} col ${getShiftColor(associateShifts.shift_id)}`}
                   draggable={this.state.draggable} onDrag={(e)=>this.onDragHandler(e, associateShifts)}
-                  >
+                  onClick={this.onClickShiftHandler}>
                        {getShiftTime(associateShifts.shift_id)} 
                   </div>)
+              }else if(!associate[avail]){
+                shift.push(<div key={i} className="shift not-available col na">Unavailable</div>)
               }else{
                 shift.push(<div className={`shift col day-off day-off-${associate.id}`} key={i}
-                onDrop={(e)=>this.onDropHandler(e, dateFns.format(i, 'YYYY-MM-DD'))}
+                onDrop={(e)=>this.onDropHandler(e, dateFns.format(i, 'YYYY-MM-DD'), associate.id)}
                 onDragOver={(e)=>this.onDragOverHandler(e)}
                 >
                 
@@ -483,6 +502,7 @@ class Calendar extends React.Component {
         this.setState({
           stagedShifts:[...this.state.stagedShifts, draggedSch]
         })
+
       }
       
       render() {
