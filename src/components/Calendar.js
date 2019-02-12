@@ -100,7 +100,10 @@ class Calendar extends React.Component {
   }
 
   resetEdittedShiftHandler=()=>{
-    this.setState({edittedShifts:[]});
+    this.setState({
+      edittedShifts:[],
+      stagedShifts:[]
+    });
     this.state.originalSchedules.forEach(sch=>this.props.cancelEdit(sch))
   }
 
@@ -111,6 +114,7 @@ class Calendar extends React.Component {
       draggable:false, 
       renderAlert:false,
       })
+    this.resetEdittedShiftHandler()
   }
 
   onDragHandler=(e, shift)=>{
@@ -499,12 +503,17 @@ class Calendar extends React.Component {
 
       onStageDropHandler=(e)=>{
         e.preventDefault();
-        const draggedSch=this.props.schedules.find(sch=>sch.id===this.props.draggedShift.id)
-        draggedSch.date='stage'
-        draggedSch.associate_id=''
-        this.setState({
-          stagedShifts:[...this.state.stagedShifts, draggedSch]
-        })
+        if(this.state.stagedShifts.length<6){
+            const draggedSch=this.props.schedules.find(sch=>sch.id===this.props.draggedShift.id)
+            const newSch = Object.assign({}, draggedSch)
+            this.setState({originalSchedules:[...this.state.originalSchedules, newSch]})
+
+            draggedSch.date='stage'
+            draggedSch.associate_id=''
+            this.setState({
+              stagedShifts:[...this.state.stagedShifts, draggedSch]
+            })
+        }
 
       }
 
