@@ -18,12 +18,8 @@
 
 
 
-@keyframes swing {
-  0% { transform: rotate(4deg); }
 
-  100% { transform: rotate(-4deg); }
-}
-
+/*
 @keyframes rush-mon{
   0%{left:-400px; top:-200px;}
  
@@ -241,6 +237,7 @@
  
   100%{left:0px; top:0px;}
 }
+*/
 
 .icon {
   font-family: 'Material Icons', serif;

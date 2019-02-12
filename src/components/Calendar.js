@@ -40,6 +40,7 @@ class Calendar extends React.Component {
     needUpdate:false,
     startAnimation:false,
     stagedShifts:[],
+    draggedFromStage:{},
     
   }
 
@@ -114,8 +115,8 @@ class Calendar extends React.Component {
 
   onDragHandler=(e, shift)=>{
     e.preventDefault();
-    // this.props.alertHandler(false)
     this.setState({renderAlert:false})
+
     //store currently dragged shift in redux store
     this.props.setDraggedShift(shift);
   }
@@ -129,7 +130,10 @@ class Calendar extends React.Component {
       // newDate is the target date where the shift was dropped
       draggedSch.date=newDate
       draggedSch.associate_id=associateId
-      this.setState({edittedShifts:[...this.state.edittedShifts, draggedSch]})
+      this.setState({
+        edittedShifts:[...this.state.edittedShifts, draggedSch],
+        stagedShifts:[...this.state.stagedShifts].filter(shift=>shift.id!==this.state.draggedFromStage.id)
+      })
 
       //optimistic update
       this.props.updateDraggedShift(draggedSch);
@@ -140,11 +144,9 @@ class Calendar extends React.Component {
   }
 
   onEditClickHandler=()=>{
-    // this.props.alertHandler(true)
     this.props.switchEditHandler(false)
     this.setState({
       draggable:true,
-      // switchEditShifts:false,
       switchUpdateShifts:true,
       renderAlert:true,
     })
@@ -167,6 +169,7 @@ class Calendar extends React.Component {
     if(this.state.stagedShifts.length>0){
       const scheduleIds=this.state.stagedShifts.map(sch=>sch.id)
       this.deleteWholeWeekShiftsFromBackEnd(scheduleIds);
+      this.setState({stagedShifts:[]})
     }
 
     console.log('edittedshifts', edittedShiftsObj);
@@ -301,7 +304,7 @@ class Calendar extends React.Component {
               );
               let avail=dateFns.format(i, 'dddd').toLowerCase()
               if(associateShifts){
-                console.log('associateShifts', associateShifts);
+                // console.log('associateShifts', associateShifts);
                 shift.push(
                   <div key={i} className={`shift ${dateFns.format(i, 'ddd')+ associate.id} col ${getShiftColor(associateShifts.shift_id)}`}
                   draggable={this.state.draggable} onDrag={(e)=>this.onDragHandler(e, associateShifts)}
@@ -504,9 +507,19 @@ class Calendar extends React.Component {
         })
 
       }
+
+      onStagedDragHandler=(e,draggedShift)=>{
+        e.preventDefault();
+
+        this.setState({
+          draggedFromStage:draggedShift
+          // stagedShifts:[...this.state.stagedShifts].filter(shift=>shift.id!==draggedShift.id)
+          // draggedFromStage:draggedShift
+        })
+      }
       
       render() {
-        console.log('stagged shifts', this.state.stagedShifts);
+        console.log('editted shifts', this.state.edittedShifts);
         return (
           <React.Fragment>
           <div className="calendar">
@@ -525,8 +538,12 @@ class Calendar extends React.Component {
               <div className="stage-wrapper">
               <div className="shifts-stage" onDrop={(e)=>this.onStageDropHandler(e)}
                 onDragOver={(e)=>this.onDragOverHandler(e)}>
-                {this.state.stagedShifts.map(shift=>(<div key={shift.id} draggable className={`shift ${getShiftColor(shift.shift_id)}`}>{getShiftTime(shift.shift_id)}</div>))
-               }
+                {this.state.stagedShifts.map(shift=>
+                  (<div key={shift.id} draggable className={`shift ${getShiftColor(shift.shift_id)}`}
+                  onDrag={(e)=>this.onStagedDragHandler(e, shift)}>
+                  {getShiftTime(shift.shift_id)}
+                  </div>))
+                }
               </div>
               </div>
               {this.state.renderAlert ?
