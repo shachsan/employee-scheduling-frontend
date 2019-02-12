@@ -31,7 +31,7 @@ class App extends Component {
     this.props.history.push("/")
   }
 
-  ifItisNextWeek=(passedDate)=>{
+  ifDateIsGreater=(passedDate)=>{
     console.log('current date', this.state.currentDate);
     return passedDate >= new Date() ? true:false
     // return dateFns.format(this.state.currentDate, 'DDD')- dateFns.format(new Date(),'DDD') >= 0 ? true:false
@@ -42,7 +42,7 @@ class App extends Component {
     const dateSelected=dateFns.parse(e.target.value)
     this.setState({
       currentDate:dateSelected,
-      switchEditShifts:this.ifItisNextWeek(dateSelected)
+      switchEditShifts:this.ifDateIsGreater(dateSelected)
     })
   }
 
@@ -51,7 +51,7 @@ class App extends Component {
       currentDate: dateFns.addWeeks(dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1}), 1),
       
     },()=>{
-      this.setState({switchEditShifts:this.ifItisNextWeek(this.state.currentDate)})
+      this.setState({switchEditShifts:this.ifDateIsGreater(this.state.currentDate)})
     });
   }
   
@@ -59,7 +59,7 @@ class App extends Component {
     this.setState({
       currentDate: dateFns.subWeeks(dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1}), 1),
     },()=>{
-      this.setState({switchEditShifts:this.ifItisNextWeek(this.state.currentDate)})
+      this.setState({switchEditShifts:this.ifDateIsGreater(this.state.currentDate)})
     });
   }
   
