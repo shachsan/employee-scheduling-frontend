@@ -31,27 +31,35 @@ class App extends Component {
     this.props.history.push("/")
   }
 
-  ifItisNextWeek=()=>{
+  ifItisNextWeek=(passedDate)=>{
     console.log('current date', this.state.currentDate);
-    return dateFns.format(this.state.currentDate, 'DDD')- dateFns.format(new Date(),'DDD') > -7 ? true:false
+    return passedDate >= new Date() ? true:false
+    // return dateFns.format(this.state.currentDate, 'DDD')- dateFns.format(new Date(),'DDD') >= 0 ? true:false
     // return dateFns.subDays(this.state.currentDate, dateFns.format(new Date(),'DDD')) > 0 ? true:false
   }
 
   selectDateChangeHandler=(e)=>{
-    this.setState({currentDate:dateFns.parse(e.target.value)})
+    const dateSelected=dateFns.parse(e.target.value)
+    this.setState({
+      currentDate:dateSelected,
+      switchEditShifts:this.ifItisNextWeek(dateSelected)
+    })
   }
 
   onClickNextWeekHandler=()=>{
     this.setState({
       currentDate: dateFns.addWeeks(dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1}), 1),
-      switchEditShifts:this.ifItisNextWeek(),
+      
+    },()=>{
+      this.setState({switchEditShifts:this.ifItisNextWeek(this.state.currentDate)})
     });
   }
   
   onClickPrevWeekHandler=()=>{
     this.setState({
       currentDate: dateFns.subWeeks(dateFns.startOfWeek(this.state.currentDate, {weekStartsOn:1}), 1),
-      switchEditShifts:this.ifItisNextWeek(),
+    },()=>{
+      this.setState({switchEditShifts:this.ifItisNextWeek(this.state.currentDate)})
     });
   }
   

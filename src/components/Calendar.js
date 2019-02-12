@@ -561,30 +561,31 @@ class Calendar extends React.Component {
               <div className="name-header">NAME</div>
               {/* {this.state.startAnimation ? <AnimationDiv/>:null} */}
               <div>{this.renderShift()}</div>
-             
-              {this.state.trash ?
-                  <div className="stage-wrapper">
-                    <div className="shifts-stage" onDrop={(e)=>this.onStageDropHandler(e)}
-                      onDragOver={(e)=>this.onDragOverHandler(e)}>
-                      <div style={{border:'1px dotted'}}><span>This is a stagging area. You could drag and drop shifts here 
-                        and assign back to anyone.<br/><br/>
-                        Note: Any shifts left here will be removed upon update.
+              <div className='bottom-nav'>
+                  {this.state.trash ?
+                      <div className="stage-wrapper">
+                        <div className="shifts-stage" onDrop={(e)=>this.onStageDropHandler(e)}
+                          onDragOver={(e)=>this.onDragOverHandler(e)}>
+                          <div style={{border:'1px dotted'}}><span>This is a stagging area. You could drag and drop shifts here 
+                            and assign back to anyone.<br/><br/>
+                            Note: Any shifts left here will be removed upon update.
 
-                      </span></div>
-                      {this.state.stagedShifts.map(shift=>
-                        (<div key={shift.id} draggable className={`shift ${getShiftColor(shift.shift_id)}`}
-                        onDrag={(e)=>this.onStagedDragHandler(e, shift)}>
-                        {getShiftTime(shift.shift_id)}
-                        </div>))
-                      }
-                    </div>
-                  </div>
-                :null
-              }
+                          </span></div>
+                          {this.state.stagedShifts.map(shift=>
+                            (<div key={shift.id} draggable className={`shift ${getShiftColor(shift.shift_id)}`}
+                            onDrag={(e)=>this.onStagedDragHandler(e, shift)}>
+                            {getShiftTime(shift.shift_id)}
+                            </div>))
+                          }
+                        </div>
+                      </div>
+                    :null
+                  }
+              
               {this.state.renderAlert ?
                 <Alert message={'In order to change shifts, drag and drop the shifts.'}/>:null
               }
-              {this.props.switchEditShifts ?
+              {this.props.switchEditShifts && this.getSelectedWeekSchedules().length>0 ?
                 <React.Fragment> 
                   <Button className="edit-update-cancel-btn"variant="primary" onClick={this.onEditClickHandler}>Edit Shifts</Button>           
                 </React.Fragment>
@@ -594,7 +595,8 @@ class Calendar extends React.Component {
                   <Button className="edit-update-cancel-btn" variant="success"onClick={this.updateShiftsHandler}>Update Shifts</Button>
                   <Button className="edit-update-cancel-btn" variant="danger" onClick={this.cancelEditHandler}>Cancel</Button>
                 </ButtonToolbar>
-                :null} 
+                :null}
+              </div> 
           </div>
           
         </React.Fragment>
