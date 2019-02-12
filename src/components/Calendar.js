@@ -210,24 +210,31 @@ class Calendar extends React.Component {
         return (
           <div className="header-wrap">
             <div className="header row flex-middle schedule-page">
-              <div className="col col-start">
-              <span id="select-label">Jump to Schedules</span>
-              <select className="week-selection" onChange={this.props.selectDateChangeHandler}>
-                <option>Select Week</option>
-                {this.populateWeeks()}
-              </select>
-                <div id="prev-week" className="icon" onClick={(e)=>this.checkIfUpdatedEdit(e)}>
-                  chevron_left
+                <div>
+                  <span id="select-label">Jump to Schedules</span>
+                  <select className="week-selection" onChange={this.props.selectDateChangeHandler}>
+                    <option>Select Week</option>
+                    {this.populateWeeks()}
+                  </select>
                 </div>
-              </div>
-              <div className="center-week">
-                <span>
-                  {dateFns.format(dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1}), dateFormat)}
-                   - {dateFns.format(dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1}), dateFormat)}
-                </span>
-              </div>
-              <div className="col col-end">
-                <div id="next-week" className="icon" onClick={(e)=>this.checkIfUpdatedEdit(e)}>chevron_right</div>
+
+              <div className="week-nav-wrap">
+                <div className="col-start">
+                  <div id="prev-week" className="icon" onClick={(e)=>this.checkIfUpdatedEdit(e)}>
+                    chevron_left
+                  </div>
+                </div>
+
+                <div className="center-week">
+                  <span>
+                    {dateFns.format(dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1}), dateFormat)}
+                    - {dateFns.format(dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1}), dateFormat)}
+                  </span>
+                </div>
+
+                <div className="col-end">
+                  <div id="next-week" className="icon" onClick={(e)=>this.checkIfUpdatedEdit(e)}>chevron_right</div>
+                </div>
               </div>
               <button className="autoGen" onClick={this.handleAutoGenerateShifts}>Auto Generate Schedule</button>
               <button className="clear-sch"onClick={this.handleDeleteAllShifts}>Clear All Shifts</button>
@@ -249,7 +256,7 @@ class Calendar extends React.Component {
             </div>
           );
         }
-        return <div className="days row">{days}</div>;
+        return <div className="days row-days">{days}</div>;
       }
       
       
