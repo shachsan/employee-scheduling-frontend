@@ -720,6 +720,7 @@ form input[type='submit']:enabled:hover{
 
 .bottom-nav{
   vertical-align: top;
+  
 }
 
 .alert-div{
@@ -1222,7 +1223,7 @@ div[draggable='true']:hover{
   margin-top: 15px;
   /* text-align: center; */
   display: inline-block;
-  margin-left: 5%;
+  margin-left: 2%;
 }
 
 .shifts-stage{
