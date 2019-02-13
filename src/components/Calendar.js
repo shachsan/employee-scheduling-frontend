@@ -555,14 +555,19 @@ class Calendar extends React.Component {
               <div>{this.renderShift()}</div>
               <div className='bottom-nav'>
                   {this.state.trash ?
+                      <>
+                      <div style={{border:'1px dotted', display:'inline-block', width:'20%', marginLeft:'15%'}}>
+                      <span>This is a stagging area. You could drag and drop shifts here 
+                        and assign back to anyone.<br/><br/>
+                        Note: Any shifts left here will be removed upon update.
+
+                        </span>
+                      </div>
+                      <div style={{display:'inline-block', position:'relative'}}>----></div>
                       <div className="stage-wrapper">
                         <div className="shifts-stage" onDrop={(e)=>this.onStageDropHandler(e)}
                           onDragOver={(e)=>this.onDragOverHandler(e)}>
-                          <div style={{border:'1px dotted'}}><span>This is a stagging area. You could drag and drop shifts here 
-                            and assign back to anyone.<br/><br/>
-                            Note: Any shifts left here will be removed upon update.
-
-                          </span></div>
+                          
                           {this.state.stagedShifts.map(shift=>
                             (<div key={shift.id} draggable className={`shift ${getShiftColor(shift.shift_id)}`}
                             onDrag={(e)=>this.onStagedDragHandler(e, shift)}>
@@ -571,6 +576,7 @@ class Calendar extends React.Component {
                           }
                         </div>
                       </div>
+                      </>
                     :null
                   }
               

@@ -1219,10 +1219,10 @@ div[draggable='true']:hover{
 }
 
 .stage-wrapper{
-  margin-top: 10px;
+  margin-top: 15px;
   /* text-align: center; */
   display: inline-block;
-  margin-left: 40%;
+  margin-left: 5%;
 }
 
 .shifts-stage{
