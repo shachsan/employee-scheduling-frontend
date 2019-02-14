@@ -89,6 +89,9 @@ class AssociateShowPage extends Component{
                             <li>Sunday:<input type="checkbox" name="sunday" checked={this.state.availability.sunday} onChange={this.onChangeHandler}/></li>
                         </ul>
                     </div>
+
+                    {/* <div className='update-profile'></div> */}
+
                     <div className='wages-benefits'>
                         <h3>Wages and Benefits</h3>
                         <ul style={{listStyleType:'none'}}>

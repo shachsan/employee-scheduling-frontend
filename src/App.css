@@ -18,7 +18,6 @@
 
 
 
-/*
 
 @keyframes rush-mon{
   0%{left:-400px; top:-200px;}
@@ -237,7 +236,7 @@
  
   100%{left:0px; top:0px;}
 }
-*/
+
 
 .icon {
   font-family: 'Material Icons', serif;
@@ -1563,6 +1562,10 @@ div[draggable='true']:hover{
 }
 .showpage-availability{
   display: inline-block;
+}
+
+.update-profile{
+
 }
 
 .showpage-details h3{
