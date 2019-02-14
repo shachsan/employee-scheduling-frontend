@@ -56,12 +56,12 @@ class LeftSideContainer extends Component{
                     <ListItemText classes={{ primary: classes.primary }} inset primary="Schedule" />
                     </MenuItem>
                   </Link>
-                <MenuItem className={classes.menuItem}>
+                {/* <MenuItem className={classes.menuItem}>
                 <ListItemIcon className={classes.icon}>
                     <InboxIcon />
                 </ListItemIcon>
                 <ListItemText classes={{ primary: classes.primary }} inset primary="Inbox" />
-                </MenuItem>
+                </MenuItem> */}
             </MenuList>
         </Paper>
     </div>
