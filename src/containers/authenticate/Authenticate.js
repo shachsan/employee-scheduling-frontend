@@ -42,20 +42,22 @@ class Authenticate extends Component {
         return (
             <React.Fragment>
             {this.props.currentUser.user ? <Redirect to='/home'/> :
-                <div className="login">
-                    <form onSubmit={this.onSubmitHandler}>
+                // <div>
+                    <form className="login" onSubmit={this.onSubmitHandler}>
+                        <div style={{paddingTop:'15px', height:'50px', margin:'0px', backgroundColor:'yellowgreen', outline:'none', textAlign:'center'}}>
+                        <h3 style={{color:'midnightblue'}}>Welcome</h3></div>
                         <span style={{backgroundColor:'red', color:'white'}}>{this.props.currentUser.message}</span><br/>
-                        <label>Username</label>
-                        <input type='text' name='username' value={this.state.form.username} required
+                        {/* <label>Username</label> */}
+                        <input type='text' name='username' value={this.state.form.username} placeholder="username" required
                         onChange={(e)=>this.inputChangeHandler(e)}/> <br/>
-                        <label>Password</label>
-                        <input type='password' name='password' value={this.state.form.password} required
+                        {/* <label>Password</label> */}
+                        <input type='password' name='password' value={this.state.form.password} placeholder="password" required
                         onChange={(e)=>this.inputChangeHandler(e)}/> <br/>
 
-                        <input type='submit' value="Login"/>
+                        <input className="login-submit" type='submit' value="Login"/>
 
                     </form>
-                </div>
+                // </div>
             }
             </React.Fragment> 
         );
