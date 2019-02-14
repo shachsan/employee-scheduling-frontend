@@ -74,9 +74,9 @@ class MenuAppBar extends React.Component {
       <div className={classes.root}>
         <AppBar style={{ background: '#2E3B55' }} position="static">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+            {/* <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
               <MenuIcon />
-            </IconButton>
+            </IconButton> */}
             {this.props.currentUser.user ? 
             <React.Fragment>
             <Link className="nav-mods" to='/home'>
