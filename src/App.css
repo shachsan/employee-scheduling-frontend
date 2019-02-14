@@ -19,7 +19,7 @@
 
 
 
-/*
+
 @keyframes rush-mon{
   0%{left:-400px; top:-200px;}
  
@@ -237,7 +237,7 @@
  
   100%{left:0px; top:0px;}
 }
-*/
+
 
 .icon {
   font-family: 'Material Icons', serif;
@@ -442,20 +442,25 @@ main {
 
 .rsc-date{
   background-color: deepskyblue;
-  margin:10px;
+  margin:10px 2.5px;
+  width: auto;
   color: black;
   padding:5px;
   font-weight: 1.3em;
   border: 1px solid darkblue;
+  display: inline-block;
+  vertical-align: top;
 }
 .rsc-shift{
   /* background-color: deepskyblue; */
-  margin:10px;
+  margin:10px 2.5px;
   color: black;
   padding:5px;
   font-weight: 1.3em;
   border: 1px solid darkblue;
-  width: 50px;
+  width: auto;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .rsc-date-shift{
@@ -914,97 +919,182 @@ form input[type='submit']:enabled:hover{
   animation-duration: 1s;
 }
 
-.Sun13, .day-off-13, .na, .na{
+.Sun13, .day-off-13, .na{
   position: absolute;
   animation-name: rush-sun13;
   animation-duration: 1s;
 }
 
-.Mon19, .day-off-19, .na, .na{
+.Mon19, .day-off-19, .na{
   position: absolute;
   animation-name: rush-mon19;
   animation-duration: 1s;
 }
 
-.Tue19, .day-off-19, .na, .na{
+.Tue19, .day-off-19, .na{
   position: absolute;
   animation-name: rush-tue19;
   animation-duration: 2s;
 }
 
-.Wed19, .day-off-19, .na, .na{
+.Wed19, .day-off-19, .na{
   position: absolute;
   animation-name: rush-wed19;
   animation-duration: 1s;
 }
 
-.Thu19, .day-off-19, .na, .na{
+.Thu19, .day-off-19, .na{
   position: absolute;
   animation-name: rush-thurs19;
   animation-duration: 1s;
 }
 
-.Fri19, .day-off-19, .na, .na{
+.Fri19, .day-off-19, .na{
   position: absolute;
   animation-name: rush-fri19;
   animation-duration: 1s;
 }
 
-.Sat19, .day-off-19, .na, .na{
+.Sat19, .day-off-19, .na{
   position: absolute;
   animation-name: rush-sat19;
   animation-duration: 1s;
 }
 
-.Sun19, .day-off-19, .na, .na{
+.Sun19, .day-off-19, .na{
   position: absolute;
   animation-name: rush-sun19;
   animation-duration: 1s;
 }
 
 
-.Mon23, .day-off-23, .na, .na{
+.Mon23, .day-off-23, .na{
   position: absolute;
   animation-name: rush-mon23;
   animation-duration: 1s;
 }
 
-.Tue23, .day-off-23, .na, .na{
+.Tue23, .day-off-23, .na{
   position: absolute;
   animation-name: rush-tue23;
   animation-duration: 2s;
 }
 
-.Wed23, .day-off-23, .na, .na{
+.Wed23, .day-off-23, .na{
   position: absolute;
   animation-name: rush-wed23;
   animation-duration: 1s;
 }
 
-.Thu23, .day-off-23, .na, .na{
+.Thu23, .day-off-23, .na{
   position: absolute;
   animation-name: rush-thurs23;
   animation-duration: 1s;
 }
 
-.Fri23, .day-off-23, .na, .na{
+.Fri23, .day-off-23, .na{
   position: absolute;
   animation-name: rush-fri23;
   animation-duration: 1s;
 }
 
-.Sat23, .day-off-23, .na, .na{
+.Sat23, .day-off-23, .na{
   position: absolute;
   animation-name: rush-sat23;
   animation-duration: 1s;
 }
 
-.Sun23, .day-off-23, .na, .na{
+.Sun23, .day-off-23, .na{
   position: absolute;
   animation-name: rush-sun23;
   animation-duration: 1s;
 }
 
+
+.Mon24, .day-off-24, .na{
+  position: absolute;
+  animation-name: rush-mon23;
+  animation-duration: 1s;
+}
+
+.Tue24, .day-off-24, .na{
+  position: absolute;
+  animation-name: rush-tue23;
+  animation-duration: 2s;
+}
+
+.Wed24, .day-off-24, .na{
+  position: absolute;
+  animation-name: rush-wed23;
+  animation-duration: 1s;
+}
+
+.Thu24, .day-off-24, .na{
+  position: absolute;
+  animation-name: rush-thurs23;
+  animation-duration: 1s;
+}
+
+.Fri24, .day-off-24, .na{
+  position: absolute;
+  animation-name: rush-fri23;
+  animation-duration: 1s;
+}
+
+.Sat24, .day-off-24, .na{
+  position: absolute;
+  animation-name: rush-sat23;
+  animation-duration: 1s;
+}
+
+.Sun24, .day-off-24, .na{
+  position: absolute;
+  animation-name: rush-sun23;
+  animation-duration: 1s;
+}
+
+
+.Mon26, .day-off-26, .na{
+  position: absolute;
+  animation-name: rush-mon23;
+  animation-duration: 1s;
+}
+
+.Tue26, .day-off-26, .na{
+  position: absolute;
+  animation-name: rush-tue23;
+  animation-duration: 2s;
+}
+
+.Wed26, .day-off-26, .na{
+  position: absolute;
+  animation-name: rush-wed23;
+  animation-duration: 1s;
+}
+
+.Thu26, .day-off-26, .na{
+  position: absolute;
+  animation-name: rush-thurs23;
+  animation-duration: 1s;
+}
+
+.Fri26, .day-off-26, .na{
+  position: absolute;
+  animation-name: rush-fri23;
+  animation-duration: 1s;
+}
+
+.Sat26, .day-off-26, .na{
+  position: absolute;
+  animation-name: rush-sat23;
+  animation-duration: 1s;
+}
+
+.Sun26, .day-off-26, .na{
+  position: absolute;
+  animation-name: rush-sun23;
+  animation-duration: 1s;
+}
 
 /* .shift:not(.day-off){
   cursor: pointer;
@@ -1249,6 +1339,8 @@ div[draggable='true']:hover{
   display: inline-block;
   padding: 10px;
 }
+
+
 
 .calendar .header {
   font-weight: 700;
