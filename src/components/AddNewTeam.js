@@ -95,20 +95,20 @@ class AddNewTeam extends Component {
                  onChange={this.inputChangeHandler}/> Part Time<br/><br/>
 
                  <label>Availability</label><br/>
-                 <input type="checkbox" name="monday" value="monday"
-                 onChange={this.availabilityHandler}/> Mon
-                 <input type="checkbox" name="tuesday" value="tuesday" 
-                 onChange={this.availabilityHandler}/> Tues
-                 <input type="checkbox" name="wednesday" value="wednesday"
-                 onChange={this.availabilityHandler}/> Wed
-                 <input type="checkbox" name="thursday" value="thursday" 
-                 onChange={this.availabilityHandler}/> Thurs
-                 <input type="checkbox" name="friday" value="friday"
-                 onChange={this.availabilityHandler}/> Fri
-                 <input type="checkbox" name="saturday" value="saturday" 
-                 onChange={this.availabilityHandler}/> Sat
-                 <input type="checkbox" name="sunday" value="sunday"
-                 onChange={this.availabilityHandler} /> Sun<br/><br/>
+                 Mon <input style={{marginRight:'15px'}} type="checkbox" name="monday" value="monday"
+                 onChange={this.availabilityHandler}/>
+                 Tues<input style={{marginRight:'15px'}} type="checkbox" name="tuesday" value="tuesday" 
+                 onChange={this.availabilityHandler}/>
+                 Wed<input style={{marginRight:'15px'}} type="checkbox" name="wednesday" value="wednesday"
+                 onChange={this.availabilityHandler}/>
+                 Thurs<input style={{marginRight:'15px'}} type="checkbox" name="thursday" value="thursday" 
+                 onChange={this.availabilityHandler}/> 
+                 Fri<input style={{marginRight:'15px'}} type="checkbox" name="friday" value="friday"
+                 onChange={this.availabilityHandler}/>
+                 Sat<input style={{marginRight:'15px'}} type="checkbox" name="saturday" value="saturday" 
+                 onChange={this.availabilityHandler}/>
+                 Sun<input style={{marginRight:'15px'}} type="checkbox" name="sunday" value="sunday"
+                 onChange={this.availabilityHandler} /> <br/><br/>
 
                  <input type='submit' value='Submit'/>
                  <a href='#' onClick={(e)=>this.cancelAddTeamHandler(e)}>Cancel</a> 
