@@ -18,7 +18,6 @@
 
 
 
-/*
 
 @keyframes rush-mon{
   0%{left:-400px; top:-200px;}
@@ -237,7 +236,7 @@
  
   100%{left:0px; top:0px;}
 }
-*/
+
 
 .icon {
   font-family: 'Material Icons', serif;
@@ -310,6 +309,11 @@ body {
   margin-left: 20px;
 }
 
+.clear-sch:hover{
+  background-color: indianred;
+  box-shadow: 0 4px 8px 0 rgba(232, 78, 186, 0.2), 0 6px 20px 0 rgba(216, 67, 67, 0.19);
+}
+
 .week-selection{
   display: block;
   width: 150px;
@@ -338,6 +342,11 @@ body {
   width: auto;
   margin-right: 15px;
   margin-left: 20px;
+}
+
+.autoGen:hover{
+  background-color: yellowgreen;
+  box-shadow: 0 4px 8px 0 rgba(232, 78, 186, 0.2), 0 6px 20px 0 rgba(216, 67, 67, 0.19);
 }
 
 #next-week{
@@ -1288,7 +1297,7 @@ div[draggable='true']:hover{
   position:fixed;
   top:30%;
   left: 50%;
-  height: 20em;
+  height: auto;
   width: 18em;
   margin-top: -4em;
   margin-left: -15em;
@@ -1553,6 +1562,10 @@ div[draggable='true']:hover{
 }
 .showpage-availability{
   display: inline-block;
+}
+
+.update-profile{
+
 }
 
 .showpage-details h3{

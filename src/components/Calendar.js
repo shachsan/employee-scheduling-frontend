@@ -529,6 +529,8 @@ class Calendar extends React.Component {
       onStageDropHandler=(e)=>{
         e.preventDefault();
         if(this.state.stagedShifts.length<6){
+          const duplicateShift=this.state.stagedShifts.filter(shft=>shft.id===this.props.draggedShift.id)
+            if(duplicateShift.length<1){
             const draggedSch=this.props.schedules.find(sch=>sch.id===this.props.draggedShift.id)
             const newSch = Object.assign({}, draggedSch)
             this.setState({originalSchedules:[...this.state.originalSchedules, newSch]})
@@ -538,6 +540,7 @@ class Calendar extends React.Component {
             this.setState({
               stagedShifts:[...this.state.stagedShifts, draggedSch]
             })
+          }
         }
 
       }

@@ -30,15 +30,16 @@ class Authenticate extends Component {
         // console.log(newState)
     }
 
-    componentDidMount(){
-        // let token = localStorage.getItem("token");
-        // if (token){
-        //     this.props.onCurrentUser(token)
-        // }
-    }
+    //  resetPasswordInput=()=>{
+    //      const pass={...this.state}
+    //      console.log('heelo from reset pass', pass);
+    //     pass.password=""
+    //     console.log('pass', pass);
+    //     this.setState({form:pass})
+    // }
 
     render() {
-        console.log('from auth')
+        // console.log('from auth', this.state)
         return (
             <React.Fragment>
             {this.props.currentUser.user ? <Redirect to='/home'/> :
@@ -46,11 +47,14 @@ class Authenticate extends Component {
                     <form className="login" onSubmit={this.onSubmitHandler}>
                         <div style={{paddingTop:'15px', height:'50px', margin:'0px', backgroundColor:'yellowgreen', outline:'none', textAlign:'center'}}>
                         <h3 style={{color:'midnightblue'}}>Welcome</h3></div>
-                        <span style={{backgroundColor:'red', color:'white'}}>{this.props.currentUser.message}</span><br/>
+                        {this.props.currentUser.message !==null ?
+                            <><span style={{backgroundColor:'red', color:'white'}}>{this.props.currentUser.message}</span><br/></>
+                        :null}
                         {/* <label>Username</label> */}
                         <input type='text' name='username' value={this.state.form.username} placeholder="username" required
                         onChange={(e)=>this.inputChangeHandler(e)}/> <br/>
                         {/* <label>Password</label> */}
+                        
                         <input type='password' name='password' value={this.state.form.password} placeholder="password" required
                         onChange={(e)=>this.inputChangeHandler(e)}/> <br/>
 
