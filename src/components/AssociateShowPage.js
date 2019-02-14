@@ -92,8 +92,8 @@ class AssociateShowPage extends Component{
                     <div className='wages-benefits'>
                         <h3>Wages and Benefits</h3>
                         <ul style={{listStyleType:'none'}}>
-                            <li>Pay rate <span style={{marginLeft:'5px'}}>$16/hr</span></li>
-                            <li>Overtime rate <span style={{marginLeft:'5px'}}>$24/hr</span></li>
+                            <li>Pay rate <span style={{marginLeft:'5px'}}>$56/hr</span></li>
+                            <li>Overtime rate <span style={{marginLeft:'5px'}}>$84/hr</span></li>
                             <hr/>
                             <li>PTO balance <span style={{marginLeft:'5px'}}>36.5 hours</span></li>
                             <li>Sick balance <span style={{marginLeft:'5px'}}>12 hours</span></li>

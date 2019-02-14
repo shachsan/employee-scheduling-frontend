@@ -41,7 +41,7 @@ class RightSideContainer extends Component{
             if(associateSch){
                 return <div><h2>{`${this.props.menuSelected.name}'s Upcoming Schedule`}</h2>
                     {associateSch.map(as=><div className='rsc-date-shift' key={as.id}><span className='rsc-date'>
-                    {as.date} | {dateFns.format(as.date, 'ddd')}</span><h4 style={{display:'inline'}}>=></h4><span className={`rsc-shift ${getShiftColor(as.shift_id)}`}>{getShiftTime(as.shift_id)}</span></div>)}
+                    {as.date} | {dateFns.format(as.date, 'ddd')}</span><span className={`rsc-shift ${getShiftColor(as.shift_id)}`}>{getShiftTime(as.shift_id)}</span></div>)}
                     </div>
             }else{
                 return <h2>No Schedule Found</h2>

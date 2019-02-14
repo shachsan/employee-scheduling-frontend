@@ -10,8 +10,6 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import {Link} from 'react-router-dom';
 
 const styles = {
@@ -26,7 +24,9 @@ const styles = {
     marginLeft:'200px',
     marginRight:'200px',
   },
-
+  logout:{
+    color:'white',
+  },
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
@@ -46,11 +46,6 @@ class MenuAppBar extends React.Component {
     this.setState({ auth: event.target.checked });
   };
 
-  // handleClickLogin=event=>{
-  //   if(!this.state.auth){
-
-  //   }
-  // }
 
   handleMenu = event => {
     this.setState({ anchorEl: event.currentTarget });
@@ -113,23 +108,7 @@ class MenuAppBar extends React.Component {
                   >
                   <AccountCircle />
                 </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={open}
-                  onClose={this.handleClose}
-                  >
-                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                </Menu>
+                
               </div>
             )}
                   <FormGroup>
@@ -137,7 +116,7 @@ class MenuAppBar extends React.Component {
                       control={
                         <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />
                       }
-                      label={auth ? 'Logout' : 'Login'}
+                      label={auth ? <Typography className={classes.logout}>Logout</Typography> : 'Login'}
                       />
                   </FormGroup>
                       </React.Fragment>
