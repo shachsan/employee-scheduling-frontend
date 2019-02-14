@@ -301,10 +301,13 @@ body {
 
 .clear-sch{
   background-color: lightcoral;
-  height: 40px;
-  margin-left: 15px;
-  margin-right: 10px;
-  margin-top: 25px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  display: block;
+  height: 75%;
+  width: auto;
+  margin-right: 15px;
+  margin-left: 20px;
 }
 
 .week-selection{
@@ -317,7 +320,7 @@ body {
 }
 
 .center-week{
-  margin-top: 30px;
+  margin-top: 15px;
   color:white;
   display: inline-block;
 }
@@ -328,9 +331,11 @@ body {
 
 .autoGen{
   background-color: greenyellow;
-  margin-top: 25px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   display: block;
-  height: 40px;
+  height: 75%;
+  width: auto;
   margin-right: 15px;
   margin-left: 20px;
 }
@@ -560,9 +565,11 @@ form input[type='submit']:enabled:hover{
 
 .schedule-page{
   background-color: midnightblue;
-  padding: 0 10px 10px 10px;
+  padding: 10px;
   margin-left: 15px;
-  height: 100px;
+  height: auto;
+  overflow: auto;
+  
 }
 
 #select-label{
@@ -570,6 +577,7 @@ form input[type='submit']:enabled:hover{
   text-transform: none;
   padding-left: 27px;
   color: white;
+  /* margin-top: 0; */
 }
 
 
@@ -1058,12 +1066,14 @@ div[draggable='true']:hover{
   width:29%;
   max-height:600px;
     border:2px solid blue; 
-    display:inline-block;
+    display:table-cell;
     vertical-align:top;
     height:500px;
     font-weight: bolder;
     padding: 10px;
     margin-left: 5px;
+    background-color: midnightblue;
+    color:white;
 }
 
 .animate-div{
@@ -1164,8 +1174,9 @@ div[draggable='true']:hover{
 
 .calendar{
   
-  display: inline-block;
+  display: table-cell;
   position: relative;
+  vertical-align: top;
   width: 70%;
   /* max-height: 750px; */
   background: var(--neutral-color);
@@ -1206,17 +1217,22 @@ div[draggable='true']:hover{
 }
 
 .copy-paste{
-  vertical-align: top;
+  /* vertical-align: top; */
   text-align: center;
   margin-left: 30px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 12px;
+  /* margin-bottom: 15px; */
+  width: auto;
+  height: 75%;
 }
 .copy, .paste{
-  display: inline-block;
+
   /* float: right; */
   background-color: midnightblue;
-  margin:5px;
+  margin:0 5px;
+  width:auto; 
+  height: 75%;
+  display: inline-block;
 }
 
 .stage-wrapper{
