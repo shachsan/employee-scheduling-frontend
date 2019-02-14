@@ -18,7 +18,7 @@
 
 
 
-
+/*
 
 @keyframes rush-mon{
   0%{left:-400px; top:-200px;}
@@ -237,7 +237,7 @@
  
   100%{left:0px; top:0px;}
 }
-
+*/
 
 .icon {
   font-family: 'Material Icons', serif;
@@ -320,7 +320,7 @@ body {
 }
 
 .center-week{
-  margin-top: 15px;
+  margin-top: 10px;
   color:white;
   display: inline-block;
 }
@@ -1286,17 +1286,57 @@ div[draggable='true']:hover{
 
 .login{
   position:fixed;
-  top:50%;
+  top:30%;
   left: 50%;
-  height: 50em;
-  width: 25em;
-  margin-top: -8em;
+  height: 20em;
+  width: 18em;
+  margin-top: -4em;
   margin-left: -15em;
+  box-sizing: border-box;
+  background-color: rgb(68, 0, 128);
+  /* width: 260px; */
+  /* margin: 100px auto 0; */
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  padding-bottom: 40px;
+  border-radius: 3px;
 }
 
-.login form label{
-  margin-left: 50px;
-  /* width: 20px; */
+.login input:not(.login-submit){
+  border:none;
+  border-bottom: 2px solid rgb(0, 238, 255);
+  background-color: rgb(68, 0, 128);
+  margin: 10% 20%;
+  color: white;
+  
+}
+
+.login input:focus, .login input:valid {
+  box-shadow: none;
+  outline: none;
+  background-position: 0 0;
+}
+.login input:focus::-webkit-input-placeholder, .login input:valid::-webkit-input-placeholder {
+  color: #1abc9c;
+  font-size: 11px;
+  -webkit-transform: translateY(-20px);
+          transform: translateY(-20px);
+  visibility: visible !important;
+}
+
+.login-submit{
+  margin: 10% 20%;
+  width: 60%;
+}
+
+.login-submit:hover{
+  background-color: yellowgreen;
+  color:'white';
+  border: 'none';
+  padding: 0;
+}
+
+/* .login form label{
+  
   margin-top: 10px;
 }
 
@@ -1304,7 +1344,7 @@ div[draggable='true']:hover{
 .login form input{
   margin-left: 15px;
   margin-top: 10px;
-}
+} */
 
 .copy-paste{
   /* vertical-align: top; */

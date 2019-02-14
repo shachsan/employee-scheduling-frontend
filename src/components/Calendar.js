@@ -239,9 +239,10 @@ class Calendar extends React.Component {
                 </div>
 
                 <div className="center-week">
+                  <div style={{textAlign:'center'}}> Week showing</div>
                   <span>
-                    {dateFns.format(dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1}), dateFormat)}
-                    - {dateFns.format(dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1}), dateFormat)}
+                    {dateFns.format(dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1}), dateFormat)} 
+                     - {dateFns.format(dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1}), dateFormat)}
                   </span>
                 </div>
 
