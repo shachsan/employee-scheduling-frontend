@@ -12,9 +12,10 @@ class ScheduleRightSideContainer extends Component{
             console.log('rendered right container', evnts);
         return evnts.map(evnt=>(
             <div key={evnt.id}>
-                    <div style={{display:'inline-block', marginRight:'10px'}}><span>{evnt.event_date} | {dateFns.format(evnt.event_date, 'ddd') } </span></div>
+                    <div style={{display:'inline-block', marginRight:'10px', marginBottom:'20px'}}><span>{evnt.event_date}</span></div>
+                    <div style={{display:'inline-block', marginRight:'10px', width:'40px'}}><span>{dateFns.format(evnt.event_date, 'ddd') }</span></div>
                     {/* <div style={{display:'inline-block'}}></div> */}
-                    <div style={{display:'inline-block'}}><span> - {evnt.event}</span></div>
+                    <div style={{display:'inline-block', marginRight:'10px'}}><span>{evnt.event}</span></div>
                 </div>))
         
     }
