@@ -95,18 +95,6 @@ class App extends Component {
                       </React.Fragment>
                 )}/>
               </Switch>
-
-              {/* <Switch>
-                <Route exact path='/home/show/:associate' render={()=>(
-                  <React.Fragment>
-                    <NavContainer currentUser={this.props.currentUser}
-                        logoutHandler={this.logoutHandler}/>
-                      <LeftSideContainer menuClicked={this.props.clickHandlerForTeam}/>
-                      <CenterContainer/>
-                      <RightSideContainer/>
-                      </React.Fragment>
-                )}/>
-              </Switch> */}
                 
               <Switch>
                 <Route exact path='/schedule' render={()=>(

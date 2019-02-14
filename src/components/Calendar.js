@@ -18,6 +18,7 @@ import AnimationDiv from '../components/AnimationDiv';
 import { getShiftColor, getShiftTime } from '../helper_functions/Helper';
 // import DropdownItem from "react-bootstrap/DropdownItem";
 import ShiftDropDown from '../components/ShiftDropDown';
+import pointer from '../img/pointer.jpeg';
 
 
 class Calendar extends React.Component {
@@ -68,7 +69,7 @@ class Calendar extends React.Component {
       copiedWeek:dateFns.startOfWeek(this.props.currentDate),
     })
 
-    console.log('copied',this.state.selectedWeekShifts)
+    //console.log('copied',this.state.selectedWeekShifts)
   }
 
   pasteHandler=()=>{
@@ -86,18 +87,18 @@ class Calendar extends React.Component {
     //if not update redux store schedules with the selectedWeekSchedules from the local state
     const daysDiff=dateFns.differenceInCalendarDays(dateFns.startOfWeek(this.props.currentDate), this.state.copiedWeek)
     const cloneCopiedWeek=JSON.parse(JSON.stringify(this.state.selectedWeekShifts))//this makes a copy of an object without referencing same object
-    console.log("clone", cloneCopiedWeek);
+    //console.log("clone", cloneCopiedWeek);
     cloneCopiedWeek.forEach(schedule=>{
       const parseDate=dateFns.parse(schedule.date)//parse schedule date to add days in next step
       const addDays=dateFns.addDays(parseDate,daysDiff)
-      // console.log('updatedSch', updatedSch);
+      // //console.log('updatedSch', updatedSch);
       delete schedule.id;//remove id for post method
       schedule.date=dateFns.format(addDays, 'YYYY-MM-DD')//convert to string to match database type
       newShifts.push(schedule)
     })
-    console.log("state",this.state.selectedWeekShifts);
-    // console.log('selected original schedules', this.state.selectedWeekShifts);
-    // console.log('updated schedules', newShifts);
+    //console.log("state",this.state.selectedWeekShifts);
+    // //console.log('selected original schedules', this.state.selectedWeekShifts);
+    // //console.log('updated schedules', newShifts);
     shiftsObj.schedules=newShifts
     this.props.fetchPostSchedules(this.state.token, shiftsObj); 
     
@@ -136,6 +137,7 @@ class Calendar extends React.Component {
 
   onDropHandler=(e, newDate, associateId)=>{
     e.preventDefault();
+    console.log(this.props.draggedShift);
     const draggedSch=this.props.schedules.find(sch=>sch===this.props.draggedShift)//
     const newSch = Object.assign({}, draggedSch)
     this.setState({originalSchedules:[...this.state.originalSchedules, newSch]})
@@ -145,7 +147,7 @@ class Calendar extends React.Component {
       draggedSch.associate_id=associateId
       this.setState({
         edittedShifts:[...this.state.edittedShifts, draggedSch],
-        stagedShifts:[...this.state.stagedShifts].filter(shift=>shift.id!==this.state.draggedFromStage.id)
+        stagedShifts:[...this.state.stagedShifts].filter(shift=>shift.id!==draggedSch.id)
       })
 
       //optimistic update
@@ -187,7 +189,7 @@ class Calendar extends React.Component {
       this.setState({stagedShifts:[]})
     }
 
-    console.log('edittedshifts', edittedShiftsObj);
+    //console.log('edittedshifts', edittedShiftsObj);
   }
 
   checkIfUpdatedEdit=(e)=>{
@@ -278,7 +280,7 @@ class Calendar extends React.Component {
       componentDidMount(){
         let token = localStorage.getItem("token");
         this.setState({token:token})
-        console.log('calender component did mount token:', token);
+        //console.log('calender component did mount token:', token);
         if(token){
           this.props.fetchGetSchedules(token);
           this.props.fetchGetSchedulesOnly(token);
@@ -304,7 +306,7 @@ class Calendar extends React.Component {
 
       onClickShiftHandler=()=>{
         //  <ShiftDropDown/>
-        console.log('hello');
+        //console.log('hello');
       }
 
 
@@ -330,7 +332,7 @@ class Calendar extends React.Component {
               );
               let avail=dateFns.format(i, 'dddd').toLowerCase()
               if(associateShifts){
-                // console.log('associateShifts', associateShifts);
+                // //console.log('associateShifts', associateShifts);
                 shift.push(
                   <div key={i} className={`shift ${dateFns.format(i, 'ddd')+ associate.id} col ${getShiftColor(associateShifts.shift_id)}`}
                   draggable={this.state.draggable} onDrag={(e)=>this.onDragHandler(e, associateShifts)}
@@ -400,9 +402,9 @@ class Calendar extends React.Component {
 
       checkAvailability=(dept, associateId, day)=>{
         const associate=dept.associates.find(ass=>ass.id===associateId)
-        console.log(associate, day);
+        //console.log(associate, day);
         const availability=associate[day];
-        // console.log('availability:',availability);
+        // //console.log('availability:',availability);
         return availability;
         // this.props.fetchCheckAvailability(associateId, day.toLowerCase())
       }
@@ -412,7 +414,7 @@ class Calendar extends React.Component {
       
       const shiftsExist=this.getSelectedWeekSchedules();
       if(shiftsExist.length>0){
-        console.log(shiftsExist);
+        //console.log(shiftsExist);
         return alert("Shifts already exist for this week. Please clear the schedules before proceeding.")
       }
 
@@ -469,7 +471,7 @@ class Calendar extends React.Component {
 
                 //   shiftCounter[randSelectedAssociate]=shiftCounter[randSelectedAssociate]-1
                 // }
-                console.log('shift counter', shiftCounter);
+                //console.log('shift counter', shiftCounter);
                 if(cloneMandotoryShift.length===0 && cloneDailyAssociates.length>0){
                   let randShift=this.getRandomShiftFromExtraShifts(cloneOfDailyShift)
                 
@@ -541,16 +543,15 @@ class Calendar extends React.Component {
 
       onStagedDragHandler=(e,draggedShift)=>{
         e.preventDefault();
-
-        this.setState({
-          draggedFromStage:draggedShift
-          // stagedShifts:[...this.state.stagedShifts].filter(shift=>shift.id!==draggedShift.id)
-          // draggedFromStage:draggedShift
-        })
+        console.log("dragged shift from stage", draggedShift);
+        this.props.setDraggedShift(draggedShift);
+        // this.setState({
+        //   draggedFromStage:draggedShift
+        // })
       }
       
       render() {
-        console.log('editted shifts', this.state.edittedShifts);
+        //console.log('editted shifts', this.state.edittedShifts);
         return (
           <React.Fragment>
           <div className="calendar">
@@ -563,14 +564,19 @@ class Calendar extends React.Component {
               <div>{this.renderShift()}</div>
               <div className='bottom-nav'>
                   {this.state.trash ?
+                      <>
+                      <div style={{border:'1px dotted', marginTop:'10px',display:'inline-block', width:'20%', marginLeft:'10%'}}>
+                      <span>This is a stagging area. You could drag and drop shifts here 
+                        and assign back to anyone.<br/><br/>
+                        Note: Any shifts left here will be removed upon update.
+
+                        </span>
+                      </div>
+                      <div style={{display:'inline-block', marginBottom:'50px'}}><img src={pointer} width={'100px'} height={'100px'} alt='hand'/></div>
                       <div className="stage-wrapper">
                         <div className="shifts-stage" onDrop={(e)=>this.onStageDropHandler(e)}
                           onDragOver={(e)=>this.onDragOverHandler(e)}>
-                          <div style={{border:'1px dotted'}}><span>This is a stagging area. You could drag and drop shifts here 
-                            and assign back to anyone.<br/><br/>
-                            Note: Any shifts left here will be removed upon update.
-
-                          </span></div>
+                          
                           {this.state.stagedShifts.map(shift=>
                             (<div key={shift.id} draggable className={`shift ${getShiftColor(shift.shift_id)}`}
                             onDrag={(e)=>this.onStagedDragHandler(e, shift)}>
@@ -579,6 +585,7 @@ class Calendar extends React.Component {
                           }
                         </div>
                       </div>
+                      </>
                     :null
                   }
               
