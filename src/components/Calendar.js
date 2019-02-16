@@ -16,6 +16,7 @@ import './Calendar.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import { getShiftColor, getShiftTime } from '../helper_functions/Helper';
 import pointer from '../img/pointer.jpeg';
+// import plus from '../img/plus.png';
 
 
 class Calendar extends React.Component {
@@ -116,20 +117,22 @@ class Calendar extends React.Component {
   onDragStart=(e, shift)=>{
     this.setState({renderAlert:false})
     e.dataTransfer.setData('text/plain', JSON.stringify(shift))
+    e.dataTransfer.effectAllowed='copy'
       // console.log(e.dataTransfer.get);
   }
   
   handleDragEnter=(e)=>{
-    if(e.target.className =='day-off'){
-      console.log('inside handleDragEnter');
-      e.target.style.width="200px"
-      e.target.style.height="130px"
+    if(e.target.id ==='unassigned'){
+      e.target.style.opacity='0.3'
+      // e.target.style.backgroundImage=`url(${plus})`
+      
     }
   }
   //test codes end
 
   onDropHandler=(e, newDate, associateId)=>{
     e.preventDefault();
+    e.target.style.opacity='1'
     //test start
     const draggedShift=JSON.parse(e.dataTransfer.getData('text/plain'))
     console.log('dataTransfer',draggedShift);
@@ -152,6 +155,7 @@ class Calendar extends React.Component {
 
   onDragOverHandler=(e)=>{
     e.preventDefault();
+    e.dataTransfer.dropEffect='copy'
   }
 
   onEditClickHandler=()=>{
@@ -326,7 +330,7 @@ class Calendar extends React.Component {
               }else if(!associate[avail]){
                 shift.push(<div key={i} className="shift not-available col na">Unavailable</div>)
               }else{
-                shift.push(<div className={`shift col day-off day-off-${associate.id}`} key={i}
+                shift.push(<div id='unassigned' className={`shift col day-off day-off-${associate.id}`} key={i}
                 onDrop={(e)=>this.onDropHandler(e, dateFns.format(i, 'YYYY-MM-DD'), associate.id)}
                 onDragEnter={this.handleDragEnter}
                 onDragOver={(e)=>this.onDragOverHandler(e)}
