@@ -77,17 +77,11 @@ export default function rootReducer(state=initialState, action){
             ...state,
             currentLogInUser:''
         }
-
-        case 'SET_DRAGGED_SHIFT':
-        return {
-            ...state,
-            draggedShift:action.payload,
-        }
         
         case 'UPDATE_DRAGGED_SHIFT':
         return {
             ...state,
-            schedules:[...state.schedules.filter(sch=>sch!==state.draggedShift), action.payload],
+            schedules:[...state.schedules.filter(sch=>sch.id!==action.payload.id), action.payload],
             // edittedShifts:[...state.edittedShifts, action.payload]
         }
 
