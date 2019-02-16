@@ -11,17 +11,17 @@ import {
            
         } from '../thunk/dept_asso_schedules';
 
-import {deleteWholeWeekShifts, setDraggedShift, updateDraggedShift, cancelEdit} from '../action/actionCreater';
+import {deleteWholeWeekShifts, updateDraggedShift, cancelEdit} from '../action/actionCreater';
 import './Calendar.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import { getShiftColor, getShiftTime } from '../helper_functions/Helper';
 import pointer from '../img/pointer.jpeg';
+// import plus from '../img/plus.png';
 
 
 class Calendar extends React.Component {
 
   state={
-    totalWeeklyShifts:0,
     dailyShifts:[],//populate it with shift id for randomly picking up for auto generation
     deptAssociates:[],
     mandotoryShifts:[],
@@ -35,7 +35,6 @@ class Calendar extends React.Component {
     switchUpdateShifts:false,
     draggable:false,
     needUpdate:false,
-    startAnimation:false,
     stagedShifts:[],
     trash:false,
   }
@@ -105,34 +104,58 @@ class Calendar extends React.Component {
     this.resetEdittedShiftHandler()
   }
 
-  onDragHandler=(e, shift)=>{
-    e.preventDefault();
-    this.setState({renderAlert:false})
+  // onDragHandler=(e, shift)=>{
+  //   e.preventDefault();
 
-    //store currently dragged shift in redux store
-    this.props.setDraggedShift(shift);
+  //   this.setState({renderAlert:false})
+    
+  //   //store currently dragged shift in redux store
+  //   this.props.setDraggedShift(shift);
+  // }
+
+  // test codes starts
+  onDragStart=(e, shift)=>{
+    this.setState({renderAlert:false})
+    e.dataTransfer.setData('text/plain', JSON.stringify(shift))
+    e.dataTransfer.effectAllowed='copy'
+      // console.log(e.dataTransfer.get);
   }
+  
+  handleDragEnter=(e)=>{
+    if(e.target.id ==='unassigned'){
+      e.target.style.opacity='0.3'
+      // e.target.style.backgroundImage=`url(${plus})`
+      
+    }
+  }
+  //test codes end
 
   onDropHandler=(e, newDate, associateId)=>{
     e.preventDefault();
-    const draggedSch=this.props.schedules.find(sch=>sch===this.props.draggedShift)//
-    const newSch = Object.assign({}, draggedSch) // creates new object not referrenced to draggedSch
+    e.target.style.opacity='1'
+    //test start
+    const draggedShift=JSON.parse(e.dataTransfer.getData('text/plain'))
+    console.log('dataTransfer',draggedShift);
+    //test end
+    // const draggedSch=this.props.schedules.find(sch=>sch===this.props.draggedShift)//
+    const newSch = Object.assign({}, draggedShift) // creates new object not referrenced to draggedSch
     this.setState({originalSchedules:[...this.state.originalSchedules, newSch]})
 
       // newDate is the target date where the shift was dropped
-      draggedSch.date=newDate
-      draggedSch.associate_id=associateId
+      draggedShift.date=newDate
+      draggedShift.associate_id=associateId
       this.setState({
-        edittedShifts:[...this.state.edittedShifts, draggedSch],
-        stagedShifts:[...this.state.stagedShifts].filter(shift=>shift.id!==draggedSch.id)
+        edittedShifts:[...this.state.edittedShifts, draggedShift],
+        stagedShifts:[...this.state.stagedShifts].filter(shift=>shift.id!==draggedShift.id)
       })
 
       //optimistic update
-      this.props.updateDraggedShift(draggedSch);
+      this.props.updateDraggedShift(draggedShift);
   }
 
   onDragOverHandler=(e)=>{
     e.preventDefault();
+    e.dataTransfer.dropEffect='copy'
   }
 
   onEditClickHandler=()=>{
@@ -299,15 +322,17 @@ class Calendar extends React.Component {
               if(associateShifts){
                 shift.push(
                   <div key={i} className={`shift ${dateFns.format(i, 'ddd')+ associate.id} col ${getShiftColor(associateShifts.shift_id)}`}
-                  draggable={this.state.draggable} onDrag={(e)=>this.onDragHandler(e, associateShifts)}
+                  draggable={this.state.draggable} onDragStart={(e)=>this.onDragStart(e, associateShifts)} 
                   onClick={this.onClickShiftHandler}>
+                  {/* onDrag={(e)=>this.onDragHandler(e, associateShifts)} */}
                        {getShiftTime(associateShifts.shift_id)} 
                   </div>)
               }else if(!associate[avail]){
                 shift.push(<div key={i} className="shift not-available col na">Unavailable</div>)
               }else{
-                shift.push(<div className={`shift col day-off day-off-${associate.id}`} key={i}
+                shift.push(<div id='unassigned' className={`shift col day-off day-off-${associate.id}`} key={i}
                 onDrop={(e)=>this.onDropHandler(e, dateFns.format(i, 'YYYY-MM-DD'), associate.id)}
+                onDragEnter={this.handleDragEnter}
                 onDragOver={(e)=>this.onDragOverHandler(e)}
                 >
                 
@@ -375,9 +400,7 @@ class Calendar extends React.Component {
           return alert("Shifts already exist for this week. Please clear the schedules before proceeding.")
         }
 
-        this.setState({startAnimation:true})
         this.props.switchEditHandler(true)
-        let totalWeeklyShifts=0;
         let dailyShiftsAvailable=['day off'];
         let shiftsObj={};
         let newShifts=[];
@@ -392,13 +415,10 @@ class Calendar extends React.Component {
             dailyShiftsAvailable.push(shift.shift_id) //populating dailyShifts with shift_id to be used at 
             //remaining shift left for each day.
           }
-          totalWeeklyShifts=totalWeeklyShifts+shift.no_of_shift;// total weekly shifts 
         })
-        totalWeeklyShifts=totalWeeklyShifts*7//total shifts for a week
         
         this.setState({
           dailyShifts:dailyShiftsAvailable,
-          totalWeeklyShifts:totalWeeklyShifts,
           deptAssociates:deptAssociatesId,
           mandotoryShifts:this.calculateMandotoryShifts(),
         },()=>{
@@ -469,10 +489,11 @@ class Calendar extends React.Component {
 
       onStageDropHandler=(e)=>{
         e.preventDefault();
+        const draggedShift=JSON.parse(e.dataTransfer.getData('text/plain'))
         if(this.state.stagedShifts.length<6){
-          const duplicateShift=this.state.stagedShifts.filter(shft=>shft.id===this.props.draggedShift.id)
+          const duplicateShift=this.state.stagedShifts.filter(shft=>shft.id===draggedShift.id)
             if(duplicateShift.length<1){
-            const draggedSch=this.props.schedules.find(sch=>sch.id===this.props.draggedShift.id)
+            const draggedSch=this.props.schedules.find(sch=>sch.id===draggedShift.id)
             const newSch = Object.assign({}, draggedSch)
             this.setState({originalSchedules:[...this.state.originalSchedules, newSch]})
 
@@ -487,8 +508,9 @@ class Calendar extends React.Component {
       }
 
       onStagedDragHandler=(e,draggedShift)=>{
-        e.preventDefault();
-        this.props.setDraggedShift(draggedShift);
+        // e.preventDefault();
+        e.dataTransfer.setData('text/plain', JSON.stringify(draggedShift))
+        // this.props.setDraggedShift(draggedShift);
       }
       
       render() {
@@ -518,7 +540,7 @@ class Calendar extends React.Component {
                           
                           {this.state.stagedShifts.map(shift=>
                             (<div key={shift.id} draggable className={`shift ${getShiftColor(shift.shift_id)}`}
-                            onDrag={(e)=>this.onStagedDragHandler(e, shift)}>
+                            onDragStart={(e)=>this.onStagedDragHandler(e, shift)}>
                             {getShiftTime(shift.shift_id)}
                             </div>))
                           }
@@ -556,7 +578,6 @@ const mapStateToProps = (state) => {
     dept_shifts:state.dept_shifts,
     schedules:state.schedules,
     currentUser: state.currentLogInUser,
-    draggedShift:state.draggedShift,
   }
 }
  
@@ -568,7 +589,6 @@ const mapDispatchToProps=(dispatch)=>{
     fetchGetDeptShifts:(token)=>dispatch(fetchGetDeptShifts(token)),
     fetchPostSchedules:(token, schedule)=>dispatch(fetchPostSchedules(token, schedule)),
     deleteWholeWeekShifts:(schedules)=>dispatch(deleteWholeWeekShifts(schedules)),
-    setDraggedShift:(shift)=>dispatch(setDraggedShift(shift)),
     updateDraggedShift:(newShift)=>dispatch(updateDraggedShift(newShift)),
     fetchUpdateEdittedShifts:(token, edittedShifts)=>dispatch(fetchUpdateEdittedShifts(token, edittedShifts)),
     cancelEdit:(sch)=>dispatch(cancelEdit(sch)),
