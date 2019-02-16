@@ -21,7 +21,6 @@ import pointer from '../img/pointer.jpeg';
 class Calendar extends React.Component {
 
   state={
-    totalWeeklyShifts:0,
     dailyShifts:[],//populate it with shift id for randomly picking up for auto generation
     deptAssociates:[],
     mandotoryShifts:[],
@@ -35,7 +34,6 @@ class Calendar extends React.Component {
     switchUpdateShifts:false,
     draggable:false,
     needUpdate:false,
-    startAnimation:false,
     stagedShifts:[],
     trash:false,
   }
@@ -107,14 +105,35 @@ class Calendar extends React.Component {
 
   onDragHandler=(e, shift)=>{
     e.preventDefault();
-    this.setState({renderAlert:false})
 
+    this.setState({renderAlert:false})
+    
     //store currently dragged shift in redux store
     this.props.setDraggedShift(shift);
   }
 
+  // test codes starts
+  onDragStart=(e, shift)=>{
+
+    e.dataTransfer.setData('text/plain', JSON.stringify(shift))
+      // console.log(e.dataTransfer.get);
+  }
+  
+  handleDragEnter=(e)=>{
+    if(e.target.className =='day-off'){
+      console.log('inside handleDragEnter');
+      e.target.style.width="200px"
+      e.target.style.height="130px"
+    }
+  }
+  //test codes end
+
   onDropHandler=(e, newDate, associateId)=>{
     e.preventDefault();
+    //test start
+    const data=e.dataTransfer.getData('text/plain')
+    console.log('dataTransfer',JSON.parse(data));
+    //test end
     const draggedSch=this.props.schedules.find(sch=>sch===this.props.draggedShift)//
     const newSch = Object.assign({}, draggedSch) // creates new object not referrenced to draggedSch
     this.setState({originalSchedules:[...this.state.originalSchedules, newSch]})
@@ -299,7 +318,7 @@ class Calendar extends React.Component {
               if(associateShifts){
                 shift.push(
                   <div key={i} className={`shift ${dateFns.format(i, 'ddd')+ associate.id} col ${getShiftColor(associateShifts.shift_id)}`}
-                  draggable={this.state.draggable} onDrag={(e)=>this.onDragHandler(e, associateShifts)}
+                  draggable={this.state.draggable} onDragStart={(e)=>this.onDragStart(e, associateShifts)} onDrag={(e)=>this.onDragHandler(e, associateShifts)}
                   onClick={this.onClickShiftHandler}>
                        {getShiftTime(associateShifts.shift_id)} 
                   </div>)
@@ -308,6 +327,7 @@ class Calendar extends React.Component {
               }else{
                 shift.push(<div className={`shift col day-off day-off-${associate.id}`} key={i}
                 onDrop={(e)=>this.onDropHandler(e, dateFns.format(i, 'YYYY-MM-DD'), associate.id)}
+                onDragEnter={this.handleDragEnter}
                 onDragOver={(e)=>this.onDragOverHandler(e)}
                 >
                 
@@ -375,9 +395,7 @@ class Calendar extends React.Component {
           return alert("Shifts already exist for this week. Please clear the schedules before proceeding.")
         }
 
-        this.setState({startAnimation:true})
         this.props.switchEditHandler(true)
-        let totalWeeklyShifts=0;
         let dailyShiftsAvailable=['day off'];
         let shiftsObj={};
         let newShifts=[];
@@ -392,13 +410,10 @@ class Calendar extends React.Component {
             dailyShiftsAvailable.push(shift.shift_id) //populating dailyShifts with shift_id to be used at 
             //remaining shift left for each day.
           }
-          totalWeeklyShifts=totalWeeklyShifts+shift.no_of_shift;// total weekly shifts 
         })
-        totalWeeklyShifts=totalWeeklyShifts*7//total shifts for a week
         
         this.setState({
           dailyShifts:dailyShiftsAvailable,
-          totalWeeklyShifts:totalWeeklyShifts,
           deptAssociates:deptAssociatesId,
           mandotoryShifts:this.calculateMandotoryShifts(),
         },()=>{
