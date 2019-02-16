@@ -36,20 +36,8 @@ class Calendar extends React.Component {
     draggable:false,
     needUpdate:false,
     startAnimation:false,
-<<<<<<< HEAD
-    // shiftsAnimate:'animate',
-=======
     stagedShifts:[],
-<<<<<<< HEAD
-    draggedFromStage:{},
-<<<<<<< HEAD
-    
->>>>>>> stretch-features
-=======
-=======
->>>>>>> stretch-features
     trash:false,
->>>>>>> stretch-features
   }
 
 
@@ -382,40 +370,9 @@ class Calendar extends React.Component {
       
       handleAutoGenerateShifts=()=>{  //right name for this function would be 'setupDataForAutoScheduling'
       
-<<<<<<< HEAD
-      const shiftsExist=this.getSelectedWeekSchedules();
-      if(shiftsExist.length>0){
-        //console.log(shiftsExist);
-        return alert("Shifts already exist for this week. Please clear the schedules before proceeding.")
-      }
-
-      // this.setState({shiftsAnimate:''})
-      
-      // <AnimationDiv/>
-      
-      // this.setState({switchEditShifts:true})
-      this.props.switchEditHandler(true)
-      let totalWeeklyShifts=0;
-      let dailyShiftsAvailable=['day off'];
-      let shiftsObj={};
-      let newShifts=[];
-      
-      
-      const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.props.currentUser.user.dept_manager_id)
-      const deptAssociatesId=dept.associates.map(associate=>associate.id)
-      const all_dept_shifts=this.props.dept_shifts;
-      const deptShifts=all_dept_shifts.filter(ds=>ds.department_id===this.props.currentUser.user.dept_manager_id)
-      
-      
-      deptShifts.forEach(shift=>{
-        for(let i=1;i<=shift.no_of_shift;i++){
-          dailyShiftsAvailable.push(shift.shift_id) //populating dailyShifts with shift_id to be used at 
-          //remaining shift left for each day.
-=======
         const shiftsExist=this.getSelectedWeekSchedules();
         if(shiftsExist.length>0){
           return alert("Shifts already exist for this week. Please clear the schedules before proceeding.")
->>>>>>> stretch-features
         }
 
         this.setState({startAnimation:true})
