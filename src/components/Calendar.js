@@ -128,6 +128,12 @@ class Calendar extends React.Component {
       
     }
   }
+
+  onDragLeaveHandler=(e)=>{
+    if(e.target.id==='unassigned'){
+      e.target.style.opacity='1'
+    }
+  }
   //test codes end
 
   onDropHandler=(e, newDate, associateId)=>{
@@ -333,6 +339,7 @@ class Calendar extends React.Component {
                 shift.push(<div id='unassigned' className={`shift col day-off day-off-${associate.id}`} key={i}
                 onDrop={(e)=>this.onDropHandler(e, dateFns.format(i, 'YYYY-MM-DD'), associate.id)}
                 onDragEnter={this.handleDragEnter}
+                onDragLeave={this.onDragLeaveHandler}
                 onDragOver={(e)=>this.onDragOverHandler(e)}
                 >
                 
@@ -537,6 +544,12 @@ class Calendar extends React.Component {
                       <div className="stage-wrapper">
                         <div className="shifts-stage" onDrop={(e)=>this.onStageDropHandler(e)}
                           onDragOver={(e)=>this.onDragOverHandler(e)}>
+
+                            {/* <span className='trash-instruction'>This is a stagging area. You could drag and drop shifts here 
+                                  and assign back to anyone.<br/><br/>
+                                  Note: Any shifts left here will be removed upon update.
+
+                            </span> */}
                           
                           {this.state.stagedShifts.map(shift=>
                             (<div key={shift.id} draggable className={`shift ${getShiftColor(shift.shift_id)}`}

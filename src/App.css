@@ -574,7 +574,7 @@ form input[type='submit']:enabled:hover{
 }
 
 .header-wrap{
-  width: flex;
+  display: grid;
 } 
 
 .schedule-page{
@@ -743,6 +743,11 @@ form input[type='submit']:enabled:hover{
 .bottom-nav{
   vertical-align: top;
   
+}
+
+.trash-instruction{
+  opacity: 0.5;
+
 }
 
 .alert-div{
