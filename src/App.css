@@ -299,14 +299,14 @@ body {
 }
 
 .clear-sch{
+  grid-area: clear-sch;
   background-color: lightcoral;
   margin-top: 15px;
   margin-bottom: 15px;
-  display: block;
-  height: 75%;
-  width: auto;
+  /* display: block; */
   margin-right: 15px;
   margin-left: 20px;
+  max-height: 45%;
 }
 
 .clear-sch:hover{
@@ -315,33 +315,36 @@ body {
 }
 
 .week-selection{
-  display: block;
+  grid-area: week-selection;
+  /* display: block; */
   width: 150px;
   margin-left: 20px;
   margin-top: 5px;
-  height: 30px;
+  /* height: 30px; */
   
 }
 
 .center-week{
+  /* grid-area: center-week; */
   margin-top: 10px;
   color:white;
   display: inline-block;
 }
 
 .week-nav-wrap{
-  vertical-align: top;
+  grid-area: center-week;
+  /* vertical-align: top; */
 }
 
 .autoGen{
+  grid-area: autoGen;
   background-color: greenyellow;
   margin-top: 15px;
   margin-bottom: 15px;
-  display: block;
-  height: 75%;
-  width: auto;
+  /* display: block; */
   margin-right: 15px;
   margin-left: 20px;
+  max-height: 45%;
 }
 
 .autoGen:hover{
@@ -574,7 +577,7 @@ form input[type='submit']:enabled:hover{
 }
 
 .header-wrap{
-  width: flex;
+  /* width: flex; */
 } 
 
 .schedule-page{
@@ -663,12 +666,17 @@ form input[type='submit']:enabled:hover{
   margin-bottom: 10px;
   
   /* margin-left:5px; */
-  padding: 0;
+  /* padding: 0; */
   /* display:flex; */
   /* flex-direction: row; */
   /* flex-wrap: wrap; */
   width: 100%;
   
+} 
+
+.all-shifts{
+  display: grid;
+  /* grid-template-columns: 1.2fr auto; */
 }
 
 .row-days {
@@ -676,20 +684,22 @@ form input[type='submit']:enabled:hover{
   
   /* margin-left:5px; */
   padding: 0;
-  display:flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 89%;
+  /* display:flex; */
+  /* flex-direction: row; */
+  /* flex-wrap: wrap; */
+  /* width: 89%; */
   
 }
 
 .rows {
+  display: grid;
+  grid-template-columns: 1.2fr repeat(7, 1.15fr);
   margin: 0;
   /* margin-left:5px; */
   padding: 0;
-  display:flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  /* display:flex; */
+  /* flex-direction: row; */
+  /* flex-wrap: wrap; */
   width: 100%;
   border:1px solid grey;
   
@@ -704,8 +714,9 @@ form input[type='submit']:enabled:hover{
 
 
 .emp-name{
-  height: 50px;
-  width: 145px;
+  height: auto;
+  width: 100%;
+  min-width: 115px;
   padding-top: 10px;
   text-align: center;
   display: inline-block;
@@ -717,6 +728,7 @@ form input[type='submit']:enabled:hover{
 .span-name{
   font-weight: bolder;
   font-size: 16px;
+  
 }
 
 .emp-name:hover{
@@ -760,8 +772,8 @@ form input[type='submit']:enabled:hover{
 }
 
 .shift{
-  height: 50px;
-  width: 120px;
+  height: auto;
+  width: 100%;
   padding: 5px;
   font-size: .9em;
   display: inline-block;
@@ -1189,7 +1201,7 @@ div[draggable='true']:hover{
   margin-bottom: 20px;
 }
 
-.rsc-date-shift span:first-child{
+.rsc-date-shift span:first-child{/*rsc- right side container*/
   display: inline-block;
   width: 150px;
 }
@@ -1356,21 +1368,22 @@ div[draggable='true']:hover{
 } */
 
 .copy-paste{
+  grid-area: copy-paste;
   /* vertical-align: top; */
   text-align: center;
-  margin-left: 30px;
+  margin-left: 10px;
   margin-top: 12px;
-  /* margin-bottom: 15px; */
-  width: auto;
-  height: 75%;
+  margin-bottom: 15px;
+  /* width: auto; */
+  /* height: 75%; */
 }
 .copy, .paste{
 
   /* float: right; */
   background-color: midnightblue;
-  margin:0 5px;
-  width:auto; 
-  height: 75%;
+  margin:5px 0;
+  /* width:60%; */
+  max-height: 30%;
   display: inline-block;
 }
 
@@ -1392,6 +1405,13 @@ div[draggable='true']:hover{
 
 
 .calendar .header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* grid-template-rows: 1fr 1fr; */
+  grid-template-areas:
+    "week-seletion center-week center-week" 
+    "autoGen clear-sch copy-paste";
+  margin-left: 0;
   font-weight: 700;
   font-size: 115%;
   color:black;
@@ -1400,7 +1420,28 @@ div[draggable='true']:hover{
   
 }
 
+
+@media screen and (min-width: 900px){
+  .calendar .header {
+    /* display: grid; */
+    grid-template-columns: 1fr auto 1fr 1fr 1fr;
+    /* grid-template-rows: auto auto; */
+    grid-template-areas: 
+      "week-seletion center-week autoGen clear-sch copy-paste";
+    margin-left: 0;
+    font-weight: 700;
+    font-size: 115%;
+    color:black;
+    padding: .8em 0;
+    border-bottom: 1px solid var(--border-color);
+    
+  }
+}
+
+
+
 .calendars .header {
+  
   text-transform: uppercase;
   font-weight: 700;
   font-size: 115%;
@@ -1430,12 +1471,23 @@ div[draggable='true']:hover{
 }
 
 .calendar .days {
-  text-transform: uppercase;
+  /* text-transform: uppercase;
   float: right;
   font-weight: 400;
   color: gray;
   font-size: 70%;
   padding: .75em 0;
+  border-bottom: 1px solid var(--border-color); */
+
+
+  grid-template-columns: 1.2fr repeat(7, 1.15fr);
+  display: grid;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: gray;
+  font-size: 70%;
+  padding: .75em 0;
+  border-bottom: 1px solid #eee;
   border-bottom: 1px solid var(--border-color);
 }
 

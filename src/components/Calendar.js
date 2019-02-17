@@ -262,7 +262,7 @@ class Calendar extends React.Component {
       
       renderDays=()=>{
         const dateFormat = "ddd";
-        const days = [];
+        const days = [<div className="name-header">NAME</div>];
         let startDate = dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1});
         for (let i = 0; i < 7; i++) {
           days.push(
@@ -328,7 +328,7 @@ class Calendar extends React.Component {
                        {getShiftTime(associateShifts.shift_id)} 
                   </div>)
               }else if(!associate[avail]){
-                shift.push(<div key={i} className="shift not-available col na">Unavailable</div>)
+                shift.push(<div key={i} className="shift not-available col na">Not available</div>)
               }else{
                 shift.push(<div id='unassigned' className={`shift col day-off day-off-${associate.id}`} key={i}
                 onDrop={(e)=>this.onDropHandler(e, dateFns.format(i, 'YYYY-MM-DD'), associate.id)}
@@ -521,8 +521,8 @@ class Calendar extends React.Component {
               {this.state.needUpdate ? <UpdateAlert resetEdittedShiftHandler={this.resetEdittedShiftHandler}
                   updateShiftsHandler={this.updateShiftsHandler}/>:null}
               {this.renderDays()}
-              <div className="name-header">NAME</div>
-              <div>{this.renderShift()}</div>
+              {/* <div className="name-header">NAME</div> */}
+              <div className='all-shifts'>{this.renderShift()}</div>
               <div className='bottom-nav'>
                   {this.state.trash ?
                       <>
