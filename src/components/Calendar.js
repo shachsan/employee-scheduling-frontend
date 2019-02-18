@@ -12,7 +12,6 @@ import {
         } from '../thunk/dept_asso_schedules';
 
 import {deleteWholeWeekShifts, updateDraggedShift, cancelEdit} from '../action/actionCreater';
-import './Calendar.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import { getShiftColor, getShiftTime } from '../helper_functions/Helper';
 import pointer from '../img/pointer.jpeg';
