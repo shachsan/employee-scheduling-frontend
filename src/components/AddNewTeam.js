@@ -60,8 +60,6 @@ class AddNewTeam extends Component {
             saturday:this.state.saturday,
             sunday:this.state.sunday,
         }
-        // console.log('new associate',newAssociate);
-        // console.log('availability',this.state.availability);
         this.props.addNewTeamMember(token,newAssociate)
         this.props.clickHandlerAddNewTeam();
 

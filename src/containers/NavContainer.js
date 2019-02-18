@@ -5,7 +5,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -40,7 +39,6 @@ class MenuAppBar extends React.Component {
   };
 
   handleChange = event => {
-    // console.log(localStorage.getItem('token'));
     localStorage.removeItem('token');
     this.props.logoutHandler();
     this.setState({ auth: event.target.checked });
@@ -74,9 +72,6 @@ class MenuAppBar extends React.Component {
       <div className={classes.root}>
         <AppBar style={{ background: '#2E3B55' }} position="static">
           <Toolbar>
-            {/* <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon />
-            </IconButton> */}
             {this.props.currentUser.user ? 
             <React.Fragment>
             <Link className="nav-mods" to='/home'>
@@ -99,7 +94,6 @@ class MenuAppBar extends React.Component {
 
             {auth && (
               <div>
-              {/* {this.props.currentUser.user ? this.props.currentUser.user.username: null} */}
                 <IconButton
                   aria-owns={open ? 'menu-appbar' : undefined}
                   aria-haspopup="true"

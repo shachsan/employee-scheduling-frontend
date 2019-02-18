@@ -27,13 +27,13 @@ class AssociateShowPage extends Component{
 
     onChangeHandler=(e)=>{
         
-        // console.log('originalAvailability',originalAvailability);
+        // ('originalAvailability',originalAvailability);
         // if(cancelRequested){
         //     return originalAvailability;
         // }
         const newAvail={...this.state.availability}
         newAvail[e.target.name]=e.target.checked
-        // console.log('checkbox target',e.target.value);
+        // ('checkbox target',e.target.value);
         this.setState({
             updateBtn:true,
             renderAlert:false,
@@ -64,7 +64,7 @@ class AssociateShowPage extends Component{
     }
 
     render(){
-        console.log(this.state);
+        // (this.state);
         return ( 
             <React.Fragment>
                 <div className="showpage-header">
@@ -79,7 +79,7 @@ class AssociateShowPage extends Component{
                 <div className='showpage-details'>
                     <div className='showpage-availability'>
                         <h3>Availability</h3>
-                        <ul>
+                        <ul style={{fontSize:'1.2em', fontWeight:'bolder'}}>
                             <li>Monday:<input type="checkbox" name="monday" checked={this.state.availability.monday} onChange={this.onChangeHandler}/></li>
                             <li>Tuesday:<input type="checkbox" name="tuesday" checked={this.state.availability.tuesday} onChange={this.onChangeHandler}/></li>
                             <li>Wednesday:<input type="checkbox" name="wednesday" checked={this.state.availability.wednesday} onChange={this.onChangeHandler}/></li>
@@ -90,11 +90,9 @@ class AssociateShowPage extends Component{
                         </ul>
                     </div>
 
-                    {/* <div className='update-profile'></div> */}
-
                     <div className='wages-benefits'>
                         <h3>Wages and Benefits</h3>
-                        <ul style={{listStyleType:'none'}}>
+                        <ul style={{listStyleType:'none',fontSize:'1.2em', fontWeight:'bolder'}}>
                             <li>Pay rate <span style={{marginLeft:'5px'}}>$56/hr</span></li>
                             <li>Overtime rate <span style={{marginLeft:'5px'}}>$84/hr</span></li>
                             <hr/>

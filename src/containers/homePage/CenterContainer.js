@@ -24,7 +24,7 @@ class CenterContainer extends Component{
     }
 
     // onClickAvatarHandler =(e, associate)=>{
-    //     console.log(associate);
+    //     (associate);
         
     //     this.setState({
     //         associate:associate,
@@ -41,7 +41,7 @@ class CenterContainer extends Component{
 
     renderCenterPage=()=>{
         if(typeof(this.props.menuSelected)==="object"){
-            return <div className='showPage-container'>
+            return <div>
                         <AssociateShowPage associate={this.props.menuSelected}/>
                     </div>
         }
@@ -53,7 +53,6 @@ class CenterContainer extends Component{
         }
 
         if(this.props.menuSelected==='team'){
-            console.log('hello from center container');
             return this.props.deptAssociates.map(associate=>{
                 return (
                 <div key={associate.id} className='asso-card-wrapper'> 
@@ -67,12 +66,6 @@ class CenterContainer extends Component{
         }
     }
 
-    componentDidMount(){
-
-        console.log('center page', this.props.menuSelected);
-    }
-
-   
 
     render(){
         return ( 

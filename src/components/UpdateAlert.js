@@ -32,7 +32,6 @@ class UpdateAlert extends Component {
           </Alert>
           :null}
   
-          {/* {!this.state.show && <Button onClick={handleShow}>Show Alert</Button>} */}
         </>
       );
     }

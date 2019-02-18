@@ -4,16 +4,13 @@ import './App.css';
 import Calendar from './components/Calendar';
 import ScheduleRightSideContainer from './containers/ScheduleRightSideContainer';
 import NavContainer from './containers/NavContainer';
-import {BrowserRouter as Router, Route, Switch, withRouter} from 'react-router-dom';
+import {Route, Switch, withRouter} from 'react-router-dom';
 import {fetchGetEvents} from './thunk/event';
 import {logUserOut} from './action/actionCreater';
 import {connect} from 'react-redux';
 import dateFns from 'date-fns';
 import HomePageMainContainer from './containers/homePage/HomePageMainContainer';
 import Authenticate from './containers/authenticate/Authenticate';
-import LeftSideContainer from './containers/homePage/LeftSideContainer';
-import CenterContainer from './containers/homePage/CenterContainer';
-import RightSideContainer from './containers/homePage/RightSideContainer';
 
 class App extends Component {
   state={
@@ -32,10 +29,7 @@ class App extends Component {
   }
 
   ifDateIsGreater=(passedDate)=>{
-    console.log('current date', this.state.currentDate);
     return passedDate >= new Date() ? true:false
-    // return dateFns.format(this.state.currentDate, 'DDD')- dateFns.format(new Date(),'DDD') >= 0 ? true:false
-    // return dateFns.subDays(this.state.currentDate, dateFns.format(new Date(),'DDD')) > 0 ? true:false
   }
 
   selectDateChangeHandler=(e)=>{
@@ -72,7 +66,6 @@ class App extends Component {
   }
 
   render() {
-    // console.log('currentDate in App render',this.state.currentDate);
     return (
           <div className="App">
               <Switch>

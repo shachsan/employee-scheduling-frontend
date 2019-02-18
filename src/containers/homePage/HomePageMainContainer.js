@@ -24,13 +24,11 @@ class HomePageMainContainer extends Component {
         }
         this.props.fetchGetEvents(token)
         this.props.fetchGetSchedulesOnly(token)
-        console.log('homepage location props',this.props.location.state);
         if(this.props.location.state!==undefined)
             this.setState({clickedMenuItem:this.props.location.state.emp})
     }
     
     render() {
-        console.log('homepage state',this.state);
         return (
             <React.Fragment>
                 {this.props.currentUser.user ?

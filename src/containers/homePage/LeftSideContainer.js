@@ -8,8 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import {Group, Block} from '@material-ui/icons';
+import {Group} from '@material-ui/icons';
 import {Link} from 'react-router-dom';
 
 
@@ -32,8 +31,6 @@ class LeftSideContainer extends Component{
   
   
   render(){
-    console.log('props inside leftside container', this.props);
-    console.log('props inside leftside container', this.props);
     const { classes } = this.props;
 
   return (
@@ -46,7 +43,7 @@ class LeftSideContainer extends Component{
                     </ListItemIcon>
                     <ListItemText onClick={()=>this.props.menuClicked('team')}classes={{ primary: classes.primary }} primary="Team" />
                 </MenuItem>
-                <Link className="nav-left-container" to='/schedule'>
+                <Link style={{textDecoration: 'none'}} to='/schedule'>
                     <MenuItem className={classes.menuItem}>
                     <ListItemIcon className={classes.icon}>
                     <i className="material-icons">
@@ -56,12 +53,6 @@ class LeftSideContainer extends Component{
                     <ListItemText classes={{ primary: classes.primary }} inset primary="Schedule" />
                     </MenuItem>
                   </Link>
-                {/* <MenuItem className={classes.menuItem}>
-                <ListItemIcon className={classes.icon}>
-                    <InboxIcon />
-                </ListItemIcon>
-                <ListItemText classes={{ primary: classes.primary }} inset primary="Inbox" />
-                </MenuItem> */}
             </MenuList>
         </Paper>
     </div>

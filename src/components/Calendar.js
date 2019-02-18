@@ -16,7 +16,6 @@ import './Calendar.css';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import { getShiftColor, getShiftTime } from '../helper_functions/Helper';
 import pointer from '../img/pointer.jpeg';
-// import plus from '../img/plus.png';
 
 
 class Calendar extends React.Component {
@@ -37,6 +36,7 @@ class Calendar extends React.Component {
     needUpdate:false,
     stagedShifts:[],
     trash:false,
+    trashInstructions:true,
   }
 
 
@@ -72,11 +72,9 @@ class Calendar extends React.Component {
     //if not update redux store schedules with the selectedWeekSchedules from the local state
     const daysDiff=dateFns.differenceInCalendarDays(dateFns.startOfWeek(this.props.currentDate), this.state.copiedWeek)
     const cloneCopiedWeek=JSON.parse(JSON.stringify(this.state.selectedWeekShifts))//this makes a copy of an object without referencing same object
-    //console.log("clone", cloneCopiedWeek);
     cloneCopiedWeek.forEach(schedule=>{
       const parseDate=dateFns.parse(schedule.date)//parse schedule date to add days in next step
       const addDays=dateFns.addDays(parseDate,daysDiff)
-      // //console.log('updatedSch', updatedSch);
       delete schedule.id;//remove id for post method
       schedule.date=dateFns.format(addDays, 'YYYY-MM-DD')//convert to string to match database type
       newShifts.push(schedule)
@@ -104,28 +102,19 @@ class Calendar extends React.Component {
     this.resetEdittedShiftHandler()
   }
 
-  // onDragHandler=(e, shift)=>{
-  //   e.preventDefault();
-
-  //   this.setState({renderAlert:false})
-    
-  //   //store currently dragged shift in redux store
-  //   this.props.setDraggedShift(shift);
-  // }
-
-  // test codes starts
   onDragStart=(e, shift)=>{
     this.setState({renderAlert:false})
     e.dataTransfer.setData('text/plain', JSON.stringify(shift))
     e.dataTransfer.effectAllowed='copy'
-      // console.log(e.dataTransfer.get);
+  
   }
   
   handleDragEnter=(e)=>{
     if(e.target.id ==='unassigned'){
       e.target.style.opacity='0.3'
-      // e.target.style.backgroundImage=`url(${plus})`
-      
+    }else if(e.target.className ==='shifts-stage'){
+      this.setState({trashInstructions:false})
+      e.target.style.border='2px dotted red'
     }
   }
 
@@ -134,16 +123,11 @@ class Calendar extends React.Component {
       e.target.style.opacity='1'
     }
   }
-  //test codes end
 
   onDropHandler=(e, newDate, associateId)=>{
     e.preventDefault();
     e.target.style.opacity='1'
-    //test start
     const draggedShift=JSON.parse(e.dataTransfer.getData('text/plain'))
-    console.log('dataTransfer',draggedShift);
-    //test end
-    // const draggedSch=this.props.schedules.find(sch=>sch===this.props.draggedShift)//
     const newSch = Object.assign({}, draggedShift) // creates new object not referrenced to draggedSch
     this.setState({originalSchedules:[...this.state.originalSchedules, newSch]})
 
@@ -171,6 +155,7 @@ class Calendar extends React.Component {
       switchUpdateShifts:true,
       renderAlert:true,
       trash:true,
+      trashInstructions:true,
     })
   }
 
@@ -199,7 +184,6 @@ class Calendar extends React.Component {
   checkIfUpdatedEdit=(e)=>{
     if(this.state.edittedShifts.length>0){
       this.setState({needUpdate:true})
-      // alert("Please update the changes made to the shifts")
     }else if(e.target.id==='prev-week'){
       this.props.onClickPrevWeekHandler();
     }else if(e.target.id==='next-week'){
@@ -225,7 +209,7 @@ class Calendar extends React.Component {
   renderHeader() {
       const dateFormat = "MM/DD/YY";
         return (
-          <div className="header-wrap">
+          
             <div className="header row flex-middle schedule-page">
                 <div>
                   <span id="select-label">Jump to Schedules</span>
@@ -237,7 +221,7 @@ class Calendar extends React.Component {
 
               <div className="week-nav-wrap">
                 <div className="col-start">
-                  <div id="prev-week" className="icon" onClick={(e)=>this.checkIfUpdatedEdit(e)}>
+                  <div id='prev-week' className="icon" onClick={(e)=>this.checkIfUpdatedEdit(e)}>
                     chevron_left
                   </div>
                 </div>
@@ -251,7 +235,7 @@ class Calendar extends React.Component {
                 </div>
 
                 <div className="col-end">
-                  <div id="next-week" className="icon" onClick={(e)=>this.checkIfUpdatedEdit(e)}>chevron_right</div>
+                  <div id='next-week' className="icon" onClick={(e)=>this.checkIfUpdatedEdit(e)}>chevron_right</div>
                 </div>
               </div>
               <button className="autoGen" onClick={this.handleAutoGenerateShifts}>Auto Generate Schedule</button>
@@ -261,14 +245,14 @@ class Calendar extends React.Component {
                   <div className="paste"><Button variant='info' onClick={this.pasteHandler}>Paste Schedules</Button></div>
               </div>
             </div>
-          </div>
+          
         );
       }
       
       
       renderDays=()=>{
         const dateFormat = "ddd";
-        const days = [<div className="name-header">NAME</div>];
+        const days = [<div key={'name'} className="name-header">NAME</div>];
         let startDate = dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1});
         for (let i = 0; i < 7; i++) {
           days.push(
@@ -330,7 +314,6 @@ class Calendar extends React.Component {
                   <div key={i} className={`shift ${dateFns.format(i, 'ddd')+ associate.id} col ${getShiftColor(associateShifts.shift_id)}`}
                   draggable={this.state.draggable} onDragStart={(e)=>this.onDragStart(e, associateShifts)} 
                   onClick={this.onClickShiftHandler}>
-                  {/* onDrag={(e)=>this.onDragHandler(e, associateShifts)} */}
                        {getShiftTime(associateShifts.shift_id)} 
                   </div>)
               }else if(!associate[avail]){
@@ -496,6 +479,7 @@ class Calendar extends React.Component {
 
       onStageDropHandler=(e)=>{
         e.preventDefault();
+        e.target.style.border="2px solid red"
         const draggedShift=JSON.parse(e.dataTransfer.getData('text/plain'))
         if(this.state.stagedShifts.length<6){
           const duplicateShift=this.state.stagedShifts.filter(shft=>shft.id===draggedShift.id)
@@ -515,9 +499,7 @@ class Calendar extends React.Component {
       }
 
       onStagedDragHandler=(e,draggedShift)=>{
-        // e.preventDefault();
         e.dataTransfer.setData('text/plain', JSON.stringify(draggedShift))
-        // this.props.setDraggedShift(draggedShift);
       }
       
       render() {
@@ -528,7 +510,6 @@ class Calendar extends React.Component {
               {this.state.needUpdate ? <UpdateAlert resetEdittedShiftHandler={this.resetEdittedShiftHandler}
                   updateShiftsHandler={this.updateShiftsHandler}/>:null}
               {this.renderDays()}
-              {/* <div className="name-header">NAME</div> */}
               <div className='all-shifts'>{this.renderShift()}</div>
               <div className='bottom-nav'>
                   {this.state.trash ?
@@ -543,13 +524,14 @@ class Calendar extends React.Component {
                       <div style={{display:'inline-block', marginBottom:'50px'}}><img src={pointer} width={'100px'} height={'100px'} alt='hand'/></div>
                       <div className="stage-wrapper">
                         <div className="shifts-stage" onDrop={(e)=>this.onStageDropHandler(e)}
-                          onDragOver={(e)=>this.onDragOverHandler(e)}>
-
-                            {/* <span className='trash-instruction'>This is a stagging area. You could drag and drop shifts here 
+                          onDragOver={(e)=>this.onDragOverHandler(e)}
+                          onDragEnter={this.handleDragEnter}>
+                            {this.state.trashInstructions?
+                            <span className='trash-instruction'>This is a stagging area. You could drag and drop shifts here 
                                   and assign back to anyone.<br/><br/>
                                   Note: Any shifts left here will be removed upon update.
-
-                            </span> */}
+                            </span>
+                            :null}
                           
                           {this.state.stagedShifts.map(shift=>
                             (<div key={shift.id} draggable className={`shift ${getShiftColor(shift.shift_id)}`}

@@ -27,7 +27,7 @@ class CompanyCalendar extends React.Component {
       const dateFormat = "MMMM YYYY";
       return (
         <div className={this.getClassName(this.state.currentMonth)}>
-          <div className="header rows flex-middle">
+          <div className="header home-cal-days flex-middle">
             <div className="cols col-centers">
               <span>
                 {dateFns.format(this.state.currentMonth, dateFormat)}
@@ -49,7 +49,7 @@ class CompanyCalendar extends React.Component {
         </div>
       );
     }
-    return <div className="days rows">{days}</div>;
+    return <div className="days home-cal-days">{days}</div>;
   }
 
   renderCells=()=>{
@@ -83,7 +83,7 @@ class CompanyCalendar extends React.Component {
               day = dateFns.addDays(day, 1);
             }
             rows.push(
-              <div className="rows" key={day}>
+              <div className="home-cal-days" key={day}>
                 {days}
               </div>
             );
