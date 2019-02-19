@@ -513,13 +513,6 @@ class Calendar extends React.Component {
               <div className='bottom-nav'>
                   {this.state.trash ?
                       <>
-                      <div style={{border:'1px dotted', marginTop:'10px',display:'inline-block', width:'20%', marginLeft:'10%'}}>
-                      <span>This is a stagging area. You could drag and drop shifts here 
-                        and assign back to anyone.<br/><br/>
-                        Note: Any shifts left here will be removed upon update.
-
-                        </span>
-                      </div>
                       <div style={{display:'inline-block', marginBottom:'50px'}}><img src={pointer} width={'100px'} height={'100px'} alt='hand'/></div>
                       <div className="stage-wrapper">
                         <div className="shifts-stage" onDrop={(e)=>this.onStageDropHandler(e)}
