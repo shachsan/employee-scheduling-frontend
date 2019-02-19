@@ -5,7 +5,7 @@ export const auth=(username, password)=>{
     ('inside thunk');
     return function (dispatch) {
 
-        fetch('http://localhost:3000/api/v1/login',{
+        fetch('https://employee-auto-scheduling.herokuapp.com/api/v1/login',{
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
@@ -22,7 +22,7 @@ export const auth=(username, password)=>{
 export const getCurrentUser=(token)=>{
     return function (dispatch) {
 
-        fetch("http://localhost:3000/api/v1/current_user", {
+        fetch("https://employee-auto-scheduling.herokuapp.com/api/v1/current_user", {
             method: 'GET',
             headers:{
                 "Content-Type":"application/json",

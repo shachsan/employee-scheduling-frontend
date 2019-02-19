@@ -6,7 +6,7 @@ import {
 export const fetchGetSchedules = (token) => {
         return function (dispatch) {
 
-         fetch(`http://localhost:3000/api/v1/departments`
+         fetch(`https://employee-auto-scheduling.herokuapp.com/api/v1/departments`
          ,{
            method:'GET',
            headers:{
@@ -25,7 +25,7 @@ export const fetchGetSchedules = (token) => {
 export const fetchGetSchedulesOnly = (token) => {
   return function (dispatch) {
 
-   fetch('http://localhost:3000/api/v1/schedules',{
+   fetch('https://employee-auto-scheduling.herokuapp.com/api/v1/schedules',{
     method:'GET',
     headers:{
      "Content-Type":"application/json",
@@ -42,7 +42,7 @@ export const fetchGetSchedulesOnly = (token) => {
 export const fetchGetDeptShifts = (token) => {
   return function (dispatch) {
 
-    fetch('http://localhost:3000/api/v1/dept_shifts',{
+    fetch('https://employee-auto-scheduling.herokuapp.com/api/v1/dept_shifts',{
       method:'GET',
       headers:{
        "Content-Type":"application/json",
@@ -58,7 +58,7 @@ export const fetchGetDeptShifts = (token) => {
 
 export const fetchPostSchedules=(token, schedule)=>{
   return function(dispatch){
-    fetch('http://localhost:3000/api/v1/schedules',{
+    fetch('https://employee-auto-scheduling.herokuapp.com/api/v1/schedules',{
       method:'POST',
       headers:{"Content-Type":"application/json",
       'Authorization': token},
@@ -71,7 +71,7 @@ export const fetchPostSchedules=(token, schedule)=>{
 export const fetchGetDeptAssociates = (deptId,token) => {
   return function (dispatch) {
 
-   fetch(`http://localhost:3000/api/v1/associates/${deptId}`
+   fetch(`https://employee-auto-scheduling.herokuapp.com/api/v1/associates/${deptId}`
    ,{
      method:'GET',
      headers:{
@@ -90,7 +90,7 @@ export const fetchGetDeptAssociates = (deptId,token) => {
 export const fetchUpdateEdittedShifts=(token, edittedShifts)=>{
   return function (dispatch) {
 
-    fetch(`http://localhost:3000/api/v1/updateBatchSchs`,{
+    fetch(`https://employee-auto-scheduling.herokuapp.com/api/v1/updateBatchSchs`,{
       method:'POST',
       headers:{
        "Content-Type":"application/json",

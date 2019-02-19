@@ -275,7 +275,7 @@ class Calendar extends React.Component {
       }
       
       deleteWholeWeekShiftsFromBackEnd=(idsToBeDeleted)=>{
-        fetch(`http://localhost:3000/api/v1/schedules/${idsToBeDeleted}`,{
+        fetch(`https://employee-auto-scheduling.herokuapp.com/api/v1/schedules/${idsToBeDeleted}`,{
           method:'DELETE', 
           headers:{
             "Content-Type":"application/json",

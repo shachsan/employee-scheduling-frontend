@@ -3,7 +3,7 @@ import {getEvents} from '../action/actionCreater';
 export const fetchGetEvents = (token) => {
     return function (dispatch) {
   
-      fetch('http://localhost:3000/api/v1/calendar_events',{
+      fetch('https://employee-auto-scheduling.herokuapp.com/api/v1/calendar_events',{
         method:'GET',
         headers:{
          "Content-Type":"application/json",

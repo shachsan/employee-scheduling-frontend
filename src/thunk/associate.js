@@ -2,7 +2,7 @@ import {postNewAssociate, updateAvailability} from '../action/actionCreater';
 
 export const removeAssociate=(token, id)=>{
     return function(dispatch){
-      fetch(`http://localhost:3000/api/v1/associates/${id}`,{
+      fetch(`https://employee-auto-scheduling.herokuapp.com/api/v1/associates/${id}`,{
         method:'DELETE',
         headers:{"Content-Type":"application/json",
         'Authorization': token},
@@ -12,7 +12,7 @@ export const removeAssociate=(token, id)=>{
 
 export const addNewTeamMember=(token, newAss)=>{
     return function(dispatch){
-      fetch('http://localhost:3000/api/v1/associates',{
+      fetch('https://employee-auto-scheduling.herokuapp.com/api/v1/associates',{
         method:'POST',
         headers:{"Content-Type":"application/json",
         'Authorization': token},
@@ -24,7 +24,7 @@ export const addNewTeamMember=(token, newAss)=>{
 
   export const fetchUpdateAvailability=(token, assoId, availability)=>{
     return function(dispatch){
-      fetch(`http://localhost:3000/api/v1/associates/${assoId}`,{
+      fetch(`https://employee-auto-scheduling.herokuapp.com/api/v1/associates/${assoId}`,{
         method:'PATCH',
         headers:{"Content-Type":"application/json",
         'Authorization': token},
