@@ -19,11 +19,12 @@ const styles = {
     flexGrow: 1,
   },
   appbarDeptHeader: {
+    flexGrow:1,
     alignCenter:'center',
-    marginLeft:'200px',
-    marginRight:'200px',
+    margin:'0 10%'
   },
   logout:{
+    flexGrow:1,
     color:'white',
   },
   menuButton: {

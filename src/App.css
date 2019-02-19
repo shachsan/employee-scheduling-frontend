@@ -562,7 +562,7 @@ form input[type='submit']:enabled:hover{
   float:right;
   margin-top: 40px;
   margin-bottom: 10px;
-  
+  max-width: 20%;
 }
 .update-cancel-toolbar{
   float: right;
@@ -933,11 +933,12 @@ div[draggable='true']:hover{
   background-color: lightgreen;
   color:black;
   font-weight: bolder;
+  /* font-size: 10%; */
 }
 
 .mid{
   background-color: yellow;
-  color: black;
+  color: rgb(48, 15, 15);
   font-weight: bolder;
 }
 
@@ -991,10 +992,10 @@ div[draggable='true']:hover{
 }
 
 .roaster-shift span{
-  width:120px;
+  width:35%;
   margin: 10px;
   font-weight: bolder;
-  font-size: 1.3em;
+  font-size: 100%;
   display: inline-block;
 }
 
@@ -1235,7 +1236,9 @@ div[draggable='true']:hover{
 
 .calendars .body .cells {
   position: relative;
-  height: 7.8em;
+  margin: 0 auto;
+  height: 13vh;
+  width: 13vh;
   border-right: 1px solid grey;
   overflow: hidden;
   background: var(--neutral-color);
@@ -1259,17 +1262,17 @@ div[draggable='true']:hover{
 .calendars .body .cells .number {
   font-weight: 700;
   position: absolute;
-  font-size: 1em;
+  font-size: 100%;
   line-height: 1;
-  top:3em;
-  right: 3.5em;
   letter-spacing: -.07em;
+  top:50%;
+  left:50%;
 } 
 
 .calendars .body .selected .number {
   font-weight: 900;
   position: absolute;
-  font-size: 2.2em;
+  font-size: 180%;
   line-height: 1;
   text-align: center;
   vertical-align: middle; 

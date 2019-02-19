@@ -513,7 +513,7 @@ class Calendar extends React.Component {
               <div className='bottom-nav'>
                   {this.state.trash ?
                       <>
-                      <div style={{display:'inline-block', marginBottom:'50px'}}><img src={pointer} width={'100px'} height={'100px'} alt='hand'/></div>
+                      <div style={{display:'inline-block', verticalAlign:'top', marginLeft:'25%'}}><img src={pointer} width={'100px'} height={'100px'} alt='hand'/></div>
                       <div className="stage-wrapper">
                         <div className="shifts-stage" onDrop={(e)=>this.onStageDropHandler(e)}
                           onDragOver={(e)=>this.onDragOverHandler(e)}
@@ -547,8 +547,8 @@ class Calendar extends React.Component {
                 :null}
                 {this.state.switchUpdateShifts ? 
                 <ButtonToolbar className='update-cancel-toolbar'>
-                  <Button className="edit-update-cancel-btn" variant="success"onClick={this.updateShiftsHandler}>Update Shifts</Button>
                   <Button className="edit-update-cancel-btn" variant="danger" onClick={this.cancelEditHandler}>Cancel</Button>
+                  <Button className="edit-update-cancel-btn" variant="success"onClick={this.updateShiftsHandler}>Update Shifts</Button>
                 </ButtonToolbar>
                 :null}
               </div> 
