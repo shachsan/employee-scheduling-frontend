@@ -1,7 +1,4 @@
 
-<figure class="video_container">
-  <iframe src="https://www.youtube.com/embed/q6v8HQtlfus" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
 
 This was my solo final project built during coding bootcamp at Flatiron school.
 
