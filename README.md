@@ -1,4 +1,4 @@
-[project](https://auto-generate-employee-shifts.herokuapp.com/)  [Demo](https://youtu.be/q6v8HQtlfus)
+[project](https://auto-generate-employee-shifts.herokuapp.com/)  |  [Demo](https://youtu.be/q6v8HQtlfus)
 
 This was my solo final project built during coding bootcamp at Flatiron school.
 
