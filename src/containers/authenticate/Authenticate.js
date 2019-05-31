@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {auth} from '../../thunk/auth';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
+import * as actionTypes from '../../action/actionTypes'
 
 
 class Authenticate extends Component {
@@ -63,7 +64,8 @@ const mapStateToProps=(state)=>{
 
 const mapDispatchToProps=(dispatch)=>{
     return{
-        onAuth:(username, password)=>dispatch(auth(username, password)),
+        // onAuth:(username, password)=>dispatch(auth(username, password)),
+        onAuth:(username, password)=>dispatch({type:actionTypes.LOGIN_START, username:username, password:password}),
     }
 }
 

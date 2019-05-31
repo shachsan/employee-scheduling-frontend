@@ -9,10 +9,15 @@ import thunk from 'redux-thunk';
 import {BrowserRouter as Router} from 'react-router-dom';
 import rootReducer from '../src/store/reducer/rootReducer';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import createSagaMiddleware from 'redux-saga';
+import mySaga from './sagas.js';
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(rootReducer,  composeEnhancers(applyMiddleware(thunk)))
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(rootReducer,  composeEnhancers(applyMiddleware(thunk, sagaMiddleware)))
+
+sagaMiddleware.run(mySaga)
 
 
 ReactDOM.render(
