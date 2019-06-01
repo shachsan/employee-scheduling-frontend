@@ -1,1 +1,2 @@
 export const LOGIN_START = 'LOGIN_START';
+export const DELETE_ASSOCIATE = 'DELETE_ASSOCIATE';

@@ -2,8 +2,6 @@ import {put} from 'redux-saga/effects';
 import * as actionCreaters from '../action/actionCreater';
 
 export function* authLoginSaga(action){
-    // console.log('user inside saga:', action);
-
     try{
         const response = yield fetch('https://employee-auto-scheduling.herokuapp.com/api/v1/login',{
                 method:'POST',
@@ -20,5 +18,20 @@ export function* authLoginSaga(action){
             yield put(actionCreaters.updateStoreWithCurrentUser(responseData.user));
     }catch(err){
         console.log('login saga fetch error:', err);
+    }
+}
+
+export function* removeAssociateSaga(action){
+    let token = yield localStorage.getItem('token');
+    try {
+        yield fetch(`https://employee-auto-scheduling.herokuapp.com/api/v1/associates/${action.id}`,{
+                    method:'DELETE',
+                    headers:{"Content-Type":"application/json",
+                            'Authorization': token},
+      })
+    //   console.log('removeAssociateSaga response:', response.json());
+      yield put(actionCreaters.removeAssociate(action.id));
+    } catch (error) {
+        console.log('remove Associate Error:', error);
     }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {auth} from '../../thunk/auth';
+// import {auth} from '../../thunk/auth';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import * as actionTypes from '../../action/actionTypes'
@@ -14,14 +14,10 @@ class Authenticate extends Component {
         }
     }
 
-
-
     onSubmitHandler=(e)=>{
         e.preventDefault();
         this.props.onAuth(this.state.form.username, this.state.form.password)
     }
-
-    
 
     inputChangeHandler=(e)=>{
         const newState={...this.state.form}
@@ -30,6 +26,7 @@ class Authenticate extends Component {
     }
 
     render() {
+        console.log('currentUser:', this.props.currentUser.user);
         return (
             <React.Fragment>
             {this.props.currentUser.user ? <Redirect to='/home'/> :

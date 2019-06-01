@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import {removeAssociate} from '../../thunk/associate';
-import {removeAssFromStore} from '../../action/actionCreater';
+// import {removeAssociate} from '../../thunk/associate';
+// import * as actions from '../../action/actionCreater';
+// import {removeAssFromStore} from '../../action/actionCreater';
+import * as actionTypes from '../../action/actionTypes';
 import {connect} from 'react-redux';
 import CompanyCalendar from '../../components/CompanyCalendar';
 import AssociateShowPage from '../../components/AssociateShowPage';
@@ -13,14 +15,14 @@ class CenterContainer extends Component{
     //     associate:'',
     // }
 
-    removeTeamHandler = (e, associate)=>{
+    removeTeamHandler = (e, associateId)=>{
 
+        // let token=localStorage.getItem('token')
+        this.props.removeAssociate(associateId)
         //optimistic removal
-        this.props.removeAssFromStore(associate)
+        // this.props.removeAssFromStore(associate)
 
         //remove from database
-        let token=localStorage.getItem('token')
-        this.props.removeAssociate(token, associate.id)
     }
 
     // onClickAvatarHandler =(e, associate)=>{
@@ -59,7 +61,7 @@ class CenterContainer extends Component{
                     <div onClick={
                     ()=>this.props.menuClicked(associate)}><img src={getImage(associate)} width='200px' height='200px'alt='avatar'/></div>
                     <h1>{associate.name}</h1>
-                    <button className='btn-del' onClick={(e)=>this.removeTeamHandler(e, associate)}>Remove {associate.name}</button>
+                    <button className='btn-del' onClick={(e)=>this.removeTeamHandler(e, associate.id)}>Remove {associate.name}</button>
                 </div>
                 )
             })
@@ -86,8 +88,8 @@ const mapStateToProps=(state)=>{
 
 const mapDispatchToProps=(dispatch)=>{
     return {
-        removeAssociate:(token, id)=>dispatch(removeAssociate(token, id)),
-        removeAssFromStore:(associate)=>dispatch(removeAssFromStore(associate))
+        removeAssociate:(id)=>dispatch({type:actionTypes.DELETE_ASSOCIATE, id}),
+        // remove:(associate)=>dispatch(actions.removeAssociate(associate))
     }
 }
  

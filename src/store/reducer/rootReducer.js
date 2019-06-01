@@ -63,7 +63,7 @@ export default function rootReducer(state=initialState, action){
         case 'REMOVE_ASSOCIATE':
         return{
             ...state,
-            deptAssociates:[...state.deptAssociates.filter(ass=>ass!==action.payload)]
+            deptAssociates:[...state.deptAssociates.filter(ass=>ass.id!==action.payload)]
         }
 
         case 'FETCH_ADD_ASSOCIATE':
