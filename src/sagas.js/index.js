@@ -7,8 +7,8 @@ import {authLoginSaga, removeAssociateSaga} from './associateSagas'
 
 
 export default function* mySaga(){
-    yield takeEvery(actions.LOGIN_START, (action)=>authLoginSaga(action));//takeEvery will pass
+    yield takeEvery(actions.LOGIN_START, authLoginSaga);//takeEvery will pass
     //action object to the callback function
 
-    yield takeEvery(actions.DELETE_ASSOCIATE, (action)=>removeAssociateSaga(action));
+    yield takeEvery(actions.DELETE_ASSOCIATE, removeAssociateSaga);
 }

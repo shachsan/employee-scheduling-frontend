@@ -26,10 +26,14 @@ class Authenticate extends Component {
     }
 
     render() {
-        console.log('currentUser:', this.props.currentUser);
+        // console.log('currentUser:', this.props.currentUser);
+        const token=localStorage.getItem('token')
+        const expiration=localStorage.getItem('expiration')
+        // console.log('token:', token, 'expiration:', expiration);
+        // console.log('condition:', token && (new Date(expiration) > new Date()));
         return (
             <React.Fragment>
-            {this.props.currentUser ? <Redirect to='/home'/> :
+            {token && (new Date(expiration) > new Date()) ? <Redirect to='/home'/> :
                     <form className="login" onSubmit={this.onSubmitHandler}>
                         <div style={{paddingTop:'15px', height:'50px', margin:'0px', backgroundColor:'yellowgreen', outline:'none', textAlign:'center'}}>
                         <h3 style={{color:'midnightblue'}}>Welcome</h3></div>
@@ -61,7 +65,6 @@ const mapStateToProps=(state)=>{
 
 const mapDispatchToProps=(dispatch)=>{
     return{
-        // onAuth:(username, password)=>dispatch(auth(username, password)),
         onAuth:(username, password)=>dispatch({type:actionTypes.LOGIN_START, username:username, password:password}),
     }
 }

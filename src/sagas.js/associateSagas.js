@@ -1,5 +1,8 @@
 import {put} from 'redux-saga/effects';
+import dateFns from 'date-fns';
 import * as actionCreaters from '../action/actionCreater';
+// import { dateFns } from 'date-fns';
+import { ListItemIcon } from '@material-ui/core/ListItemIcon';
 
 export function* authLoginSaga(action){
     try{
@@ -12,9 +15,9 @@ export function* authLoginSaga(action){
                 })
             })
             const responseData = yield response.json();
-            // const data = yield responseJson.data();
-            // console.log('login saga fetch response:', responseData.user);
             yield localStorage.setItem("token", responseData.jwt);
+            yield localStorage.setItem("expiration", dateFns.addDays(new Date(), 1));
+            yield localStorage.setItem('user', JSON.stringify(responseData.user));
             yield put(actionCreaters.updateStoreWithCurrentUser(responseData.user));
     }catch(err){
         console.log('login saga fetch error:', err);
@@ -29,7 +32,6 @@ export function* removeAssociateSaga(action){
                     headers:{"Content-Type":"application/json",
                             'Authorization': token},
       })
-    //   console.log('removeAssociateSaga response:', response.json());
       yield put(actionCreaters.removeAssociate(action.id));
     } catch (error) {
         console.log('remove Associate Error:', error);

@@ -41,6 +41,8 @@ class MenuAppBar extends React.Component {
 
   handleChange = event => {
     localStorage.removeItem('token');
+    localStorage.removeItem('expiration');
+    localStorage.removeItem('user');
     this.props.logoutHandler();
     this.setState({ auth: event.target.checked });
   };
@@ -73,7 +75,7 @@ class MenuAppBar extends React.Component {
       <div className={classes.root}>
         <AppBar style={{ background: '#2E3B55' }} position="static">
           <Toolbar>
-            {this.props.currentUser.user ? 
+            {this.props.currentUser ? 
             <React.Fragment>
             <Link className="nav-mods" to='/home'>
               <Typography variant="h6" color="inherit" className={classes.grow}>
@@ -88,10 +90,10 @@ class MenuAppBar extends React.Component {
             </Link>
 
                 <Typography variant="h3" color="inherit" className={classes.appbarDeptHeader}>
-                {this.getDeptName(this.props.currentUser.user.dept_manager_id)}
+                {this.getDeptName(this.props.currentUser.dept_manager_id)}
                     
                 </Typography>
-                {this.props.currentUser.user.username}
+                {this.props.currentUser.username}
 
             {auth && (
               <div>

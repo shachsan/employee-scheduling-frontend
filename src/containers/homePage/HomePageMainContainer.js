@@ -29,9 +29,10 @@ class HomePageMainContainer extends Component {
     }
     
     render() {
+        console.log('home page:', this.props.currentUser);
         return (
             <React.Fragment>
-                {this.props.currentUser ?
+                {localStorage.getItem('user') ?
                     <div className="hp-main-container">
                         <LeftSideContainer menuClicked={this.clickHandlerForTeam}
                             />
