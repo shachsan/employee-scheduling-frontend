@@ -36,6 +36,7 @@ class Calendar extends React.Component {
     stagedShifts:[],
     trash:false,
     trashInstructions:true,
+   
   }
 
 
@@ -294,9 +295,10 @@ class Calendar extends React.Component {
         let shift=[];
         let row=[];
         let shiftContainerCounter=0;
+        const managerId = this.props.currentUser.dept_manager_id;
         const startOfWeek = dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1})
         const endOfWeek = dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1})
-        const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.props.currentUser.user.dept_manager_id)//hard code 1, 1 is department id
+        const dept=this.props.dept_asso_schedules.find(dept=>dept.id===managerId)
         if(dept){
           dept.associates.forEach(associate=>{
             
@@ -383,7 +385,7 @@ class Calendar extends React.Component {
       
       
       handleAutoGenerateShifts=()=>{  //right name for this function would be 'setupDataForAutoScheduling'
-      
+        const managerId = this.props.currentUser.dept_manager_id;
         const shiftsExist=this.getSelectedWeekSchedules();
         if(shiftsExist.length>0){
           return alert("Shifts already exist for this week. Please clear the schedules before proceeding.")
@@ -394,10 +396,10 @@ class Calendar extends React.Component {
         let shiftsObj={};
         let newShifts=[];
         
-        const dept=this.props.dept_asso_schedules.find(dept=>dept.id===this.props.currentUser.user.dept_manager_id)
+        const dept=this.props.dept_asso_schedules.find(dept=>dept.id===managerId)
         const deptAssociatesId=dept.associates.map(associate=>associate.id)
         const all_dept_shifts=this.props.dept_shifts;
-        const deptShifts=all_dept_shifts.filter(ds=>ds.department_id===this.props.currentUser.user.dept_manager_id)
+        const deptShifts=all_dept_shifts.filter(ds=>ds.department_id===managerId)
         
         deptShifts.forEach(shift=>{
           for(let i=1;i<=shift.no_of_shift;i++){
@@ -457,20 +459,21 @@ class Calendar extends React.Component {
     }
     
     handleDeleteAllShifts=()=>{
-      let idsToBeDeleted=[]
+      let idsToBeDeleted=[];
+      const managerId = this.props.currentUser.dept_manager_id;
       const startOfWeek = dateFns.startOfWeek(this.props.currentDate, {weekStartsOn:1})
       const endOfWeek = dateFns.endOfWeek(this.props.currentDate, {weekStartsOn:1})
       const remainingShiftsAfterDeletion=this.props.schedules.filter(
         schedule=>{
           if((dateFns.parse(schedule.date) >= startOfWeek && 
           dateFns.parse(schedule.date) <= endOfWeek) && 
-          schedule.department_id===this.props.currentUser.user.dept_manager_id){
+          schedule.department_id===managerId){
             
             idsToBeDeleted.push(schedule.id)
           }
           return (!(dateFns.parse(schedule.date) >= startOfWeek && 
           dateFns.parse(schedule.date) <= endOfWeek) && 
-          schedule.department_id===this.props.currentUser.user.dept_manager_id)
+          schedule.department_id===managerId)
         })
         this.deleteWholeWeekShiftsFromBackEnd(idsToBeDeleted);//for pessimistic operation
         this.props.deleteWholeWeekShifts(remainingShiftsAfterDeletion)//for optimistic rendering, this will update redux store

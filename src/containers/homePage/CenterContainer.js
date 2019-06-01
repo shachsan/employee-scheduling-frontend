@@ -11,41 +11,18 @@ import {getImage} from '../../helper_functions/Helper';
 
 class CenterContainer extends Component{
 
-    // state={
-    //     associate:'',
-    // }
-
     removeTeamHandler = (e, associateId)=>{
-
-        // let token=localStorage.getItem('token')
         this.props.removeAssociate(associateId)
-        //optimistic removal
-        // this.props.removeAssFromStore(associate)
-
-        //remove from database
     }
 
-    // onClickAvatarHandler =(e, associate)=>{
-    //     (associate);
-        
-    //     this.setState({
-    //         associate:associate,
-    //     })
-    // }
-
-  
-
     renderAssociateShowPage=(associate)=>{
-        return <div>
-            <AssociateShowPage associate={associate}/>
-        </div>
+        return <div><AssociateShowPage associate={associate}/></div>
     }
 
     renderCenterPage=()=>{
         if(typeof(this.props.menuSelected)==="object"){
-            return <div>
-                        <AssociateShowPage associate={this.props.menuSelected}/>
-                    </div>
+            return <div><AssociateShowPage associate={this.props.menuSelected}/>
+</div>
         }
 
         if(this.props.menuSelected===''){
@@ -89,7 +66,6 @@ const mapStateToProps=(state)=>{
 const mapDispatchToProps=(dispatch)=>{
     return {
         removeAssociate:(id)=>dispatch({type:actionTypes.DELETE_ASSOCIATE, id}),
-        // remove:(associate)=>dispatch(actions.removeAssociate(associate))
     }
 }
  

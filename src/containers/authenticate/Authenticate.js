@@ -26,10 +26,10 @@ class Authenticate extends Component {
     }
 
     render() {
-        console.log('currentUser:', this.props.currentUser.user);
+        console.log('currentUser:', this.props.currentUser);
         return (
             <React.Fragment>
-            {this.props.currentUser.user ? <Redirect to='/home'/> :
+            {this.props.currentUser ? <Redirect to='/home'/> :
                     <form className="login" onSubmit={this.onSubmitHandler}>
                         <div style={{paddingTop:'15px', height:'50px', margin:'0px', backgroundColor:'yellowgreen', outline:'none', textAlign:'center'}}>
                         <h3 style={{color:'midnightblue'}}>Welcome</h3></div>

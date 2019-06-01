@@ -20,7 +20,7 @@ class HomePageMainContainer extends Component {
     componentDidMount(){
         let token = localStorage.getItem("token")
         if (this.props.currentUser) {
-            this.props.fetchGetDeptAssociates(this.props.currentUser.user.dept_manager_id,token);
+            this.props.fetchGetDeptAssociates(this.props.currentUser.dept_manager_id,token);
         }
         this.props.fetchGetEvents(token)
         this.props.fetchGetSchedulesOnly(token)
@@ -31,7 +31,7 @@ class HomePageMainContainer extends Component {
     render() {
         return (
             <React.Fragment>
-                {this.props.currentUser.user ?
+                {this.props.currentUser ?
                     <div className="hp-main-container">
                         <LeftSideContainer menuClicked={this.clickHandlerForTeam}
                             />
@@ -41,7 +41,7 @@ class HomePageMainContainer extends Component {
                             menuClicked={this.clickHandlerForTeam}
                             deptAssociates={this.props.deptAssociates}/>
                         <RightSideContainer menuSelected={this.state.clickedMenuItem}
-                            deptId={this.props.currentUser.user.dept_manager_id}
+                            deptId={this.props.currentUser.dept_manager_id}
                             schedules={this.props.schedules}
                             deptAssociates={this.props.deptAssociates}/>
 
